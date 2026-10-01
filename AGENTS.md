@@ -6,7 +6,7 @@
 
 1. `README.md`에서 실행 방법과 현재 구현 범위를 확인한다.
 2. 첫 작업이나 인수인계 후에는 `docs/codex-handoff.md`를 읽는다. 여기에 제품 맥락, 파일 책임, 데이터 규칙, 다음 작업과 시작 프롬프트가 있다.
-3. 화면 변경은 `docs/design-handoff.md`와 `design/figma-manifest.json`, 기능 범위는 `docs/roadmap.md`를 참고한다. 요청된 작업과 관련된 소스와 문서만 추가로 읽는다.
+3. 화면 변경은 `docs/design-handoff.md`, `docs/ui-refresh.md`와 `design/figma-manifest.json`, 기능 범위는 `docs/roadmap.md`를 참고한다. 요청된 작업과 관련된 소스와 문서만 추가로 읽는다.
 4. `git status`와 현재 브랜치를 확인하고 다른 사람의 변경을 보존한다. 이미 변경된 파일을 덮어쓰거나 unrelated 작업을 되돌리지 않는다.
 
 ## 제품과 데이터 규칙
@@ -24,7 +24,9 @@
 - 사용자 요청이 별도 경로를 정하지 않았다면 기능별 브랜치에서 하나의 흐름을 PR로 만든다. 작업 중인 파일과 범위를 인수인계에 기록한다. 원격 `main`에 강제 푸시하지 않는다.
 - 디자인 토큰 원본은 `design/tokens.json`이다. 변경 후 `npm run tokens:generate`로 `src/theme/tokens.ts`를 함께 갱신한다. 생성 파일을 단독 편집하지 않는다.
 - SCR/CMP ID를 유지하고 파일 이동 시 `design/component-map.json`, Figma manifest와 인수인계 표를 갱신한다. 이 매핑은 양방향 자동 동기화나 Code Connect 게시를 뜻하지 않는다.
-- 현재 Figma의 핵심 화면 3개만 시각 검증되어 있다. 비어 있는 Brief/Flows/Handoff, 클릭 프로토타입, 일부 컴포넌트의 검증 상태는 manifest에 기록되어 있다. 파일 전체가 확정되었다고 가정하지 않는다.
+- 현재 앱은 두 번째 UI이며 실제 Figma는 호출 한도로 갱신하지 못한 이전 디자인이다. 이전 Figma 핵심 3개 화면의 검증을 현재 코드의 시각 검증으로 대신하지 않는다. `design/moa-ui-refresh.svg`와 `docs/ui-refresh.md`는 새 UI 전달 초안·갱신 계획이다. 자동 동기화·프로토타입·Code Connect 설정 완료를 뜻하지 않는다.
+- 기존 SCR/CMP node ID를 보존해 원격 갱신할 계획이다. `CMP-006 CategoryStamp`는 앱의 공통 시각 helper이며 코드 매핑을 기록했지만 Figma node는 아직 없다. 비어 있는 Brief/Flows/Handoff와 미검증 보드는 manifest·전달 문서의 범위를 확인한다.
+- 전체 저장/방문 완료 탭과 검색·분류·출처 조건을 함께 적용한다. 출처 메뉴·선택 입력의 펼침 상태를 접근성 정보로 제공하고, 선택 입력을 접어도 값을 유지한다. 고정 하단 액션·오류 초점 이동은 좁은 화면·키보드에서 검증한다.
 - 새 외부 서비스나 AI 제공자 연결은 해당 작업이 필요할 때 결정한다. 비밀값은 커밋하지 않고 예시 설정에는 변수 이름과 설명만 둔다.
 
 ## 작업 완료와 인수인계

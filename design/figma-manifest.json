@@ -3,49 +3,176 @@
   "fileUrl": "https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt",
   "fileName": "모아 · 앱 디자인 & 개발",
   "planKey": "team::1244167478772511573",
-  "status": "core-screens-verified; remote-documentation-blocked-by-starter-quota",
+  "status": "previous-figma-core-screens-verified; current-app-ui-refresh-pending-figma-sync",
   "pages": {
-    "brief": {"id": "0:1", "name": "00 Brief", "contentStatus": "empty"},
-    "flows": {"id": "2:2", "name": "01 Flows", "contentStatus": "empty"},
-    "design": {"id": "2:3", "name": "02 Design & Handoff", "contentStatus": "foundations-components-screens-created"}
+    "brief": {
+      "id": "0:1",
+      "name": "00 Brief",
+      "contentStatus": "empty"
+    },
+    "flows": {
+      "id": "2:2",
+      "name": "01 Flows",
+      "contentStatus": "empty"
+    },
+    "design": {
+      "id": "2:3",
+      "name": "02 Design & Handoff",
+      "contentStatus": "foundations-components-screens-created"
+    }
   },
-  "sections": {"foundations": "3:2", "components": "3:3", "screens": "3:4", "handoff": "3:5"},
+  "sections": {
+    "foundations": "3:2",
+    "components": "3:3",
+    "screens": "3:4",
+    "handoff": "3:5"
+  },
   "reviewNodeId": "4:26",
   "componentReviewNodeId": "9:116",
-  "screenNodes": {"SCR-001 Library": "4:32", "SCR-002 AddLink": "4:35", "SCR-003 ContentDetail": "4:38"},
-  "componentNodes": {"CMP-001 ContentCard": "4:18", "CMP-002 FilterChip": "3:63", "CMP-003 PrimaryButton": "3:76", "CMP-004 SourceBadge": "3:58", "CMP-005 EmptyState": "4:19", "__FormField": "3:85"},
-  "collections": {"primitives": "VariableCollectionId:2:4", "tokens": "VariableCollectionId:2:5"},
+  "screenNodes": {
+    "SCR-001 Library": "4:32",
+    "SCR-002 AddLink": "4:35",
+    "SCR-003 ContentDetail": "4:38"
+  },
+  "componentNodes": {
+    "CMP-001 ContentCard": "4:18",
+    "CMP-002 FilterChip": "3:63",
+    "CMP-003 PrimaryButton": "3:76",
+    "CMP-004 SourceBadge": "3:58",
+    "CMP-005 EmptyState": "4:19",
+    "__FormField": "3:85"
+  },
+  "collections": {
+    "primitives": "VariableCollectionId:2:4",
+    "tokens": "VariableCollectionId:2:5"
+  },
   "tokenSource": "design/tokens.json",
   "generatedTokenSource": "src/theme/tokens.ts",
   "variableCount": 43,
   "textStyleCount": 6,
-  "tokenNotes": ["Figma semantic colors alias primitive colors; variable scopes and Web/Android/iOS code syntax are configured.", "Color, spacing, radius, font sizes and control values follow design/tokens.json. font/family is a Figma-only supplementary variable; app fonts use NotoSansKR_400Regular, NotoSansKR_500Medium and NotoSansKR_700Bold."],
+  "tokenNotes": [
+    "Recorded Figma variables describe the initial design revision. Current design/tokens.json and src/theme/tokens.ts are the second UI revision and have not been written to Figma.",
+    "Initial Figma semantic colors alias primitives; variable scopes and Web/Android/iOS code syntax were configured. Existing collection IDs must be preserved during refresh.",
+    "Current app fonts remain NotoSansKR_400Regular, NotoSansKR_500Medium and NotoSansKR_700Bold."
+  ],
   "componentVariants": {
-    "ContentCard": {"Saved": "4:2", "Visited": "4:10"},
-    "FilterChip": {"Selected=True": "3:59", "Selected=False": "3:61"},
-    "PrimaryButton": {"Primary/Default": "3:64", "Primary/Pressed": "3:66", "Primary/Disabled": "3:68", "Secondary/Default": "3:70", "Secondary/Pressed": "3:72", "Secondary/Disabled": "3:74"},
-    "SourceBadge": {"Instagram": "3:50", "YouTube": "3:52", "네이버": "3:54", "웹": "3:56"},
-    "FormField": {"Default": "3:77", "Error": "3:81"}
+    "ContentCard": {
+      "Saved": "4:2",
+      "Visited": "4:10"
+    },
+    "FilterChip": {
+      "Selected=True": "3:59",
+      "Selected=False": "3:61"
+    },
+    "PrimaryButton": {
+      "Primary/Default": "3:64",
+      "Primary/Pressed": "3:66",
+      "Primary/Disabled": "3:68",
+      "Secondary/Default": "3:70",
+      "Secondary/Pressed": "3:72",
+      "Secondary/Disabled": "3:74"
+    },
+    "SourceBadge": {
+      "Instagram": "3:50",
+      "YouTube": "3:52",
+      "네이버": "3:54",
+      "웹": "3:56"
+    },
+    "FormField": {
+      "Default": "3:77",
+      "Error": "3:81"
+    }
   },
   "componentProperties": {
-    "ContentCard": {"Title": "Title#4:0", "Category": "Category#4:3", "Place": "Place#4:6", "Status": "Status"},
-    "FilterChip": {"Label": "Label#3:5", "Selected": "Selected"},
-    "PrimaryButton": {"Label": "Label#3:8", "Icon": "Icon#7:0", "ShowIcon": "ShowIcon#7:7", "Style": "Style", "State": "State"},
-    "SourceBadge": {"Label": "Label#3:0", "Source": "Source"},
-    "EmptyState": {"Title": "Title#4:9", "Description": "Description#4:10"},
-    "FormField": {"Label": "Label#3:15", "Value": "Value#3:18", "State": "State"}
+    "ContentCard": {
+      "Title": "Title#4:0",
+      "Category": "Category#4:3",
+      "Place": "Place#4:6",
+      "Status": "Status"
+    },
+    "FilterChip": {
+      "Label": "Label#3:5",
+      "Selected": "Selected"
+    },
+    "PrimaryButton": {
+      "Label": "Label#3:8",
+      "Icon": "Icon#7:0",
+      "ShowIcon": "ShowIcon#7:7",
+      "Style": "Style",
+      "State": "State"
+    },
+    "SourceBadge": {
+      "Label": "Label#3:0",
+      "Source": "Source"
+    },
+    "EmptyState": {
+      "Title": "Title#4:9",
+      "Description": "Description#4:10"
+    },
+    "FormField": {
+      "Label": "Label#3:15",
+      "Value": "Value#3:18",
+      "State": "State"
+    }
   },
   "codeMappings": [
-    {"componentId": "CMP-001", "figmaNodeId": "4:18", "component": "ContentCard", "source": "src/components/ContentCard.tsx"},
-    {"componentId": "CMP-002", "figmaNodeId": "3:63", "component": "FilterChip", "source": "src/components/FilterChip.tsx"},
-    {"componentId": "CMP-003", "figmaNodeId": "3:76", "component": "PrimaryButton", "source": "src/components/PrimaryButton.tsx"},
-    {"componentId": "CMP-004", "figmaNodeId": "3:58", "component": "SourceBadge", "source": "src/components/SourceBadge.tsx"},
-    {"componentId": "CMP-005", "figmaNodeId": "4:19", "component": "EmptyState", "source": "src/components/EmptyState.tsx"}
+    {
+      "componentId": "CMP-001",
+      "figmaNodeId": "4:18",
+      "component": "ContentCard",
+      "source": "src/components/ContentCard.tsx"
+    },
+    {
+      "componentId": "CMP-002",
+      "figmaNodeId": "3:63",
+      "component": "FilterChip",
+      "source": "src/components/FilterChip.tsx"
+    },
+    {
+      "componentId": "CMP-003",
+      "figmaNodeId": "3:76",
+      "component": "PrimaryButton",
+      "source": "src/components/PrimaryButton.tsx"
+    },
+    {
+      "componentId": "CMP-004",
+      "figmaNodeId": "3:58",
+      "component": "SourceBadge",
+      "source": "src/components/SourceBadge.tsx"
+    },
+    {
+      "componentId": "CMP-005",
+      "figmaNodeId": "4:19",
+      "component": "EmptyState",
+      "source": "src/components/EmptyState.tsx"
+    },
+    {
+      "componentId": "CMP-006",
+      "figmaNodeId": null,
+      "component": "CategoryStamp",
+      "source": "src/components/CategoryStamp.tsx",
+      "status": "implemented-in-code; Figma component pending"
+    }
   ],
   "screenMappings": [
-    {"screenId": "SCR-001", "figmaNodeId": "4:32", "source": "src/app/index.tsx", "state": "empty-first-launch"},
-    {"screenId": "SCR-002", "figmaNodeId": "4:35", "source": "src/app/add.tsx", "state": "add-link"},
-    {"screenId": "SCR-003", "figmaNodeId": "4:38", "source": "src/app/content/[id].tsx", "state": "clearly-labeled-example-content"}
+    {
+      "screenId": "SCR-001",
+      "figmaNodeId": "4:32",
+      "source": "src/app/index.tsx",
+      "state": "empty-first-launch"
+    },
+    {
+      "screenId": "SCR-002",
+      "figmaNodeId": "4:35",
+      "source": "src/app/add.tsx",
+      "state": "add-link"
+    },
+    {
+      "screenId": "SCR-003",
+      "figmaNodeId": "4:38",
+      "source": "src/app/content/[id].tsx",
+      "state": "clearly-labeled-example-content"
+    }
   ],
   "codeConnectStatus": "Local node-to-code mappings recorded; native Code Connect publishing was not performed.",
   "prototypeStatus": "Editable screens created; click-through reactions were not created before quota was reached.",
@@ -55,8 +182,21 @@
     "width": 1574,
     "height": 1203,
     "result": "passing visual review after fixing multiline headline auto-resize and outline icon stroke scaling",
-    "covers": ["SCR-001 Library", "SCR-002 AddLink", "SCR-003 ContentDetail"],
-    "doesNotCover": ["foundations specimen", "component state review", "post-snapshot ContentCard refinements", "Brief", "Flows", "Handoff"]
+    "covers": [
+      "SCR-001 Library",
+      "SCR-002 AddLink",
+      "SCR-003 ContentDetail"
+    ],
+    "doesNotCover": [
+      "foundations specimen",
+      "component state review",
+      "post-snapshot ContentCard refinements",
+      "Brief",
+      "Flows",
+      "Handoff"
+    ],
+    "revision": "initial-design-before-mmm-ui-refresh",
+    "appSyncStatus": "previous Figma revision; not the current app refresh"
   },
   "verifiedScreenStructure": {
     "source": "Readback before visual fix; dimensions below are from the successful visual-fix mutation response.",
@@ -66,28 +206,134 @@
     "textOverflowBeforeFix": 0,
     "note": "Structural bounds did not detect the textAutoResize NONE rendering issue; the screenshot revealed and verified its repair.",
     "screens": [
-      {"id": "4:32", "width": 390, "height": 961, "descendants": 68, "instances": 18, "texts": 25, "vectors": 9},
-      {"id": "4:35", "width": 390, "height": 991, "descendants": 46, "instances": 10, "texts": 20, "vectors": 2},
-      {"id": "4:38", "width": 390, "height": 764, "descendants": 42, "instances": 8, "texts": 15, "vectors": 7}
-    ]
+      {
+        "id": "4:32",
+        "width": 390,
+        "height": 961,
+        "descendants": 68,
+        "instances": 18,
+        "texts": 25,
+        "vectors": 9
+      },
+      {
+        "id": "4:35",
+        "width": 390,
+        "height": 991,
+        "descendants": 46,
+        "instances": 10,
+        "texts": 20,
+        "vectors": 2
+      },
+      {
+        "id": "4:38",
+        "width": 390,
+        "height": 764,
+        "descendants": 42,
+        "instances": 8,
+        "texts": 15,
+        "vectors": 7
+      }
+    ],
+    "revision": "initial-design-before-mmm-ui-refresh"
   },
   "lastRemoteMutation": {
     "description": "ContentCard changed to horizontal native layout and component state review created after the passing screen snapshot.",
-    "cardVariantIds": ["4:2", "4:10"],
+    "cardVariantIds": [
+      "4:2",
+      "4:10"
+    ],
     "componentReviewNodeId": "9:116",
-    "componentReviewReturnedCounts": {"descendants": 103, "instances": 28, "texts": 34},
+    "componentReviewReturnedCounts": {
+      "descendants": 103,
+      "instances": 28,
+      "texts": 34
+    },
     "visualVerification": "unverified: the next screenshot call was blocked by Starter MCP quota",
-    "screenSnapshotStillApplicable": "The three reviewed screens do not contain ContentCard instances; their visible content was not changed by this mutation."
+    "screenSnapshotStillApplicable": "Still applies to the initial Figma revision only. The current app UI refresh has not been written to this file.",
+    "revision": "initial-design-before-mmm-ui-refresh"
   },
-  "font": {"family": "Noto Sans KR", "weights": [400, 500, 700], "styles": ["Regular", "Medium", "Bold"]},
+  "font": {
+    "family": "Noto Sans KR",
+    "weights": [
+      400,
+      500,
+      700
+    ],
+    "styles": [
+      "Regular",
+      "Medium",
+      "Bold"
+    ]
+  },
   "limitations": [
     "Starter plan allows 3 pages; Components, Screens and Handoff are named sections on the Design page.",
     "Starter MCP tool-call quota was reached after creating the component state review. whoami confirmed an admin Full seat on the selected Starter team. Further use_figma and screenshot calls were rejected.",
     "00 Brief and 01 Flows remain empty pages. The 05 Handoff section is empty. Product brief, flows and collaboration instructions are supplied in local project documentation.",
     "The component state review and post-snapshot ContentCard refinements have mutation-returned structural evidence but no final visual verification. Foundations has not had visual screenshot review.",
-    "Figma is a native editable first design iteration; minor source details such as source-logo glyphs and native keyboard behavior are not represented."
+    "Figma is a native editable first design iteration; minor source details such as source-logo glyphs and native keyboard behavior are not represented.",
+    "2026-10-01 UI refresh: a single remote read was rejected by the existing Starter MCP quota. No Figma nodes or variables were changed for this revision. Local SVG and app screenshots are the current handoff."
   ],
-  "completedSteps": ["file-created", "discovery", "foundations", "components", "native-screen-composition", "screen-structural-readback", "screen-visual-fixes", "passing-core-screen-screenshot", "component-state-review-created"],
-  "pendingValidations": ["foundations-screenshot", "component-state-review-screenshot", "post-snapshot-content-card-layout-readback"],
-  "pendingRemoteWork": ["Brief content", "Flows content", "Handoff content", "click-through prototype reactions"]
+  "completedSteps": [
+    "file-created",
+    "discovery",
+    "foundations",
+    "components",
+    "native-screen-composition",
+    "screen-structural-readback",
+    "screen-visual-fixes",
+    "passing-core-screen-screenshot",
+    "component-state-review-created"
+  ],
+  "pendingValidations": [
+    "foundations-screenshot",
+    "component-state-review-screenshot",
+    "post-snapshot-content-card-layout-readback"
+  ],
+  "pendingRemoteWork": [
+    "Brief content",
+    "Flows content",
+    "Handoff content",
+    "click-through prototype reactions",
+    "Refresh tokens and native screen/component composition to current app revision while preserving existing IDs",
+    "Create CMP-006 CategoryStamp and record its actual remote node ID"
+  ],
+  "figmaDesignRevision": "initial-design-before-mmm-ui-refresh",
+  "appDesignRevision": "mmm-inspired-2026-10-01",
+  "codeSyncStatus": "out-of-sync: current app tokens and layout changed; remote Figma refresh blocked by Starter MCP quota",
+  "localRefreshHandoff": {
+    "revision": "mmm-inspired-2026-10-01",
+    "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
+    "vectorDraft": "design/moa-ui-refresh.svg",
+    "guide": "docs/ui-refresh.md",
+    "renderedPreview": "design/ui-refresh-preview.png",
+    "canvas": {
+      "width": 1234,
+      "height": 900
+    },
+    "screenSize": {
+      "width": 390,
+      "height": 844
+    },
+    "status": "local-vector-draft-visually-reviewed; Figma import not verified; no remote mutation",
+    "limitations": [
+      "Static 3-screen draft does not include all states or native Auto Layout/component instances.",
+      "SVG text may become outlines or vary with available fonts when imported to Figma.",
+      "Current app and prior Figma are intentionally recorded as out of sync until remote refresh is completed."
+    ]
+  },
+  "currentAppSnapshots": {
+    "revision": "mmm-inspired-2026-10-01",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "paths": [
+      "design/app-preview.png",
+      "design/app-add-preview.png",
+      "design/app-detail-preview.png"
+    ],
+    "exampleData": "Screenshots use explicitly labeled UI examples entered locally; production installs have no seed content.",
+    "narrowScreenReview": "320 × 800 detail with long Korean title; clientWidth and scrollWidth both 320",
+    "platform": "web only; native iOS/Android, large text, keyboard and screen-reader behavior not verified"
+  }
 }

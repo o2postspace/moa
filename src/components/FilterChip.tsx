@@ -8,8 +8,8 @@ export function FilterChip({ label, selected, onPress }: { label: string; select
   </Pressable>;
 }
 const styles = StyleSheet.create({
-  chip: { minHeight: tokens.control.chipHeight, paddingHorizontal: tokens.spacing.lg, borderRadius: tokens.radius.pill, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: tokens.color.border, backgroundColor: tokens.color.surface },
-  selected: { backgroundColor: tokens.color.ink, borderColor: tokens.color.ink },
+  chip: { minHeight: tokens.control.chipHeight, paddingHorizontal: tokens.spacing.lg, borderRadius: tokens.radius.pill, alignItems: 'center', justifyContent: 'center', backgroundColor: tokens.color.surfaceMuted },
+  selected: { backgroundColor: tokens.color.accentSoft },
   label: { fontSize: 13, color: tokens.color.secondary, fontFamily: tokens.font.medium },
-  selectedLabel: { color: tokens.color.surface },
+  selectedLabel: { color: tokens.color.accentInk, fontFamily: tokens.font.bold },
 });
