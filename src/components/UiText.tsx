@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   body: { fontSize: tokens.fontSize.body, lineHeight: 23 },
   caption: { fontSize: tokens.fontSize.caption, lineHeight: 20 },
   subtitle: { fontSize: tokens.fontSize.subtitle, lineHeight: 26, fontFamily: tokens.font.medium },
-  title: { fontSize: tokens.fontSize.title, lineHeight: 31, fontFamily: tokens.font.bold },
-  hero: { fontSize: tokens.fontSize.hero, lineHeight: 43, fontFamily: tokens.font.bold, letterSpacing: -1 },
+  title: { fontSize: tokens.fontSize.title, lineHeight: 32, fontFamily: tokens.font.bold, letterSpacing: -0.5 },
+  hero: { fontSize: tokens.fontSize.hero, lineHeight: 39, fontFamily: tokens.font.bold, letterSpacing: -0.8 },
   muted: { color: tokens.color.secondary },
 });

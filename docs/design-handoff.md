@@ -6,6 +6,14 @@
 - GitHub 저장소: [o2postspace/moa](https://github.com/o2postspace/moa). 기능별 브랜치·PR로 협업하며 [Codex 인수인계](codex-handoff.md)를 시작점으로 사용
 - 제품 / 디자인 / 개발 담당자: 팀 지정 후 기록
 
+## 두 번째 UI와 현재 전달 상태
+
+앱 코드에 흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하는 리디자인을 반영했다. 전체 저장/방문 완료 탭, 펼쳐지는 출처 메뉴, CategoryStamp 분류 종이 아이콘, 장소·메모 선택 입력 접기, 추가·상세의 고정 하단 액션, 필수 입력 오류의 초점 이동을 제공한다. 모아의 브랜드색 `#C94C2B`는 유지하며 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`을 사용한다.
+
+**실제 Figma 파일은 호출 한도로 수정하지 못한 이전 디자인이다.** 아래 기존 node 링크는 유지하지만 현재 코드와 일치하는 화면으로 보지 않는다. [새 UI 전달 안내](ui-refresh.md)와 [3화면 SVG 초안](../design/moa-ui-refresh.svg)은 텍스트·벡터로 구성한 로컬 전달물이다. 자동 동기화·라이브 Figma 수정·클릭 프로토타입·Code Connect 게시 완료를 뜻하지 않는다. SVG 가져오기 후 글꼴·텍스트 편집 가능 여부·Auto Layout·변수·인스턴스를 확인해야 한다.
+
+원격 갱신 시 기존 SCR/CMP 화면 루트·메인 컴포넌트·변수 컬렉션 ID를 보존하고 토큰 → 컴포넌트 → 화면 순으로 수정한다. `CategoryStamp`의 새 네이티브 컴포넌트와 출처 메뉴·선택 정보 펼침·오류·방문 완료 상태를 추가한 뒤 390px·320px에서 비교한다. 실제 반영과 구조·시각 검증이 끝난 후 manifest의 새 상태와 캡처를 기록한다. 상세 순서는 [UI 리디자인 전달](ui-refresh.md)을 따른다.
+
 ## Figma 파일 구조
 
 | 페이지 | 역할 | 현재 상태 |
@@ -18,7 +26,7 @@
 
 ## 현재 Figma 검증 상태
 
-[3개 화면 리뷰 보드](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-26)는 시각 검증을 통과했다. 검증 캡처와 범위는 `design/figma-manifest.json`에 기록되어 있다. 이 검증은 첫 실행의 빈 저장함, 링크 추가, 예시 콘텐츠 상세를 포함한다.
+[이전 3개 화면 리뷰 보드](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-26)는 첫 UI의 시각 검증을 통과했다. 검증 캡처와 범위는 `design/figma-manifest.json`에 기록되어 있다. 이 검증은 첫 실행의 빈 저장함, 링크 추가, 예시 콘텐츠 상세를 포함하며 이번 리디자인은 포함하지 않는다.
 
 [컴포넌트 상태 보드](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=9-116)와 이후 ContentCard 가로 배치 수정은 생성 응답으로 구조를 확인했지만 최종 시각 재검증 전이다. Figma Starter의 도구 호출 한도로 다음 캡처가 막혔다. Foundations도 시각 캡처 검증 전이다. 앞서 검증한 3개 화면에는 ContentCard 인스턴스가 없어 이 수정으로 화면 내용은 바뀌지 않았다.
 
@@ -38,16 +46,17 @@
 | CMP-003 | PrimaryButton | [3:76](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-76) | `src/components/PrimaryButton.tsx` |
 | CMP-004 | SourceBadge | [3:58](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-58) | `src/components/SourceBadge.tsx` |
 | CMP-005 | EmptyState | [4:19](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-19) | `src/components/EmptyState.tsx` |
+| CMP-006 | CategoryStamp | 원격 생성·매핑 대기 | `src/components/CategoryStamp.tsx` |
 
-위 링크와 코드 매핑은 실제 `design/figma-manifest.json`을 기준으로 기록했다. ID는 유지하고 코드 이동 시 표와 manifest를 함께 갱신한다. 네이티브 Code Connect 게시 작업은 아직 수행하지 않았다.
+위 링크와 코드 매핑은 실제 `design/figma-manifest.json`을 기준으로 기록했다. 기존 연결의 node ID는 유지하고 코드 이동 시 표와 manifest를 함께 갱신한다. 새 `CMP-006 CategoryStamp`는 코드 매핑만 추가했으며 `figmaNodeId`는 `null`이다. 네이티브 Code Connect 게시 작업은 아직 수행하지 않았다.
 
 ## 첫 기능의 상태별 UX
 
 | 화면 | 준비할 상태와 동작 |
 | --- | --- |
-| Library | 처음 불러오는 중, 저장 항목 있음, 저장함 비어 있음, 검색 결과 없음, 불러오기 실패·재시도 |
-| AddLink | 입력 전, 입력 중, 잘못된 URL, 이미 저장한 링크, 저장 중, 저장 실패·재시도, 저장 완료 |
-| ContentDetail | 항목 있음, 방문 전·완료, 상태 변경 실패, 원본 열기 실패, 없는 항목 |
+| Library | 전체 저장/방문 완료 탭·개수, 출처 메뉴 접힘/펼침, 분류·검색 조건, 첫 빈 저장함, 방문 항목 없음, 검색 결과 없음, 불러오는 중·실패·재시도 |
+| AddLink | 추가/수정, 선택 장소·메모 접힘/펼침·입력 유지, 필수 입력 오류·초점 이동, 중복·기존 항목 열기, 고정 저장 액션의 저장 중·실패·완료 |
+| ContentDetail | 항목 있음, 상단 수정 액션, 방문 전·완료, 원본·방문 처리 고정 액션과 오류, 없는 항목 |
 
 저장 실패 시 입력을 유지한다. 중복은 기존 항목을 열 수 있게 한다. 필터 결과가 없을 때는 필터 해제를 제안한다. 장소·기간이 없는 링크도 저장하고, 미확인 정보를 확정된 사실처럼 표시하지 않는다. 현재는 로컬 저장 단계이므로 자동 추출·계정 연동·근처 알림을 사용 가능한 기능처럼 표시하지 않는다. 삭제·보관·일괄 정리는 다음 정리 기능 단계에서 추가한다.
 

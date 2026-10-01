@@ -1,7 +1,18 @@
 {
   "version": "0.1.0",
   "figmaManifest": "design/figma-manifest.json",
-  "screens": { "SCR-001": "src/app/index.tsx", "SCR-002": "src/app/add.tsx", "SCR-003": "src/app/content/[id].tsx" },
-  "components": { "CMP-001": "src/components/ContentCard.tsx", "CMP-002": "src/components/FilterChip.tsx", "CMP-003": "src/components/PrimaryButton.tsx", "CMP-004": "src/components/SourceBadge.tsx", "CMP-005": "src/components/EmptyState.tsx" },
-  "note": "ID 기반 협업 매핑. Figma Code Connect가 자동 설정되었다는 의미는 아닙니다."
+  "screens": {
+    "SCR-001": "src/app/index.tsx",
+    "SCR-002": "src/app/add.tsx",
+    "SCR-003": "src/app/content/[id].tsx"
+  },
+  "components": {
+    "CMP-001": "src/components/ContentCard.tsx",
+    "CMP-002": "src/components/FilterChip.tsx",
+    "CMP-003": "src/components/PrimaryButton.tsx",
+    "CMP-004": "src/components/SourceBadge.tsx",
+    "CMP-005": "src/components/EmptyState.tsx",
+    "CMP-006": "src/components/CategoryStamp.tsx"
+  },
+  "note": "ID 기반 협업 매핑. CMP-006은 코드에 추가했으며 Figma 노드는 아직 없습니다. 현재 앱과 이전 Figma의 차이는 manifest를 확인하세요. Figma Code Connect 자동 설정을 뜻하지 않습니다."
 }

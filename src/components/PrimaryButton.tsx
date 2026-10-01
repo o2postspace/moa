@@ -14,9 +14,9 @@ export function PrimaryButton({ label, onPress, disabled, loading, secondary, ic
 }
 const styles = StyleSheet.create({
   button: { minHeight: tokens.control.height, borderRadius: tokens.radius.md, backgroundColor: tokens.color.accent, alignItems: 'center', justifyContent: 'center', paddingHorizontal: tokens.spacing.xl, paddingVertical: tokens.spacing.md },
-  row: { flexDirection: 'row', alignItems: 'center', gap: tokens.spacing.sm },
-  label: { fontFamily: tokens.font.medium, color: tokens.color.surface, fontSize: 15 },
-  secondary: { backgroundColor: tokens.color.surface, borderColor: tokens.color.border, borderWidth: 1 },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: tokens.spacing.sm, maxWidth: '100%' },
+  label: { fontFamily: tokens.font.bold, color: tokens.color.surface, fontSize: 15, flexShrink: 1, textAlign: 'center' },
+  secondary: { backgroundColor: tokens.color.surfaceMuted },
   secondaryLabel: { color: tokens.color.ink },
   pressed: { opacity: 0.8 },
   disabled: { opacity: 0.55 },
