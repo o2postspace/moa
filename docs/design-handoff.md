@@ -10,7 +10,7 @@
 
 앱 코드에 흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하는 리디자인을 반영했다. 전체 저장/방문 완료 탭, 펼쳐지는 출처 메뉴, CategoryStamp 분류 종이 아이콘, 장소·메모 선택 입력 접기, 추가·상세의 고정 하단 액션, 필수 입력 오류의 초점 이동을 제공한다. 모아의 브랜드색 `#C94C2B`는 유지하며 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`을 사용한다.
 
-**실제 Figma 파일은 호출 한도로 수정하지 못한 이전 디자인이다.** 아래 기존 node 링크는 유지하지만 현재 코드와 일치하는 화면으로 보지 않는다. [새 UI 전달 안내](ui-refresh.md)와 [3화면 SVG 초안](../design/moa-ui-refresh.svg)은 텍스트·벡터로 구성한 로컬 전달물이다. 자동 동기화·라이브 Figma 수정·클릭 프로토타입·Code Connect 게시 완료를 뜻하지 않는다. SVG 가져오기 후 글꼴·텍스트 편집 가능 여부·Auto Layout·변수·인스턴스를 확인해야 한다.
+**실제 Figma 파일은 이전 디자인이다.** 앞선 UI 리디자인은 호출 한도 때문에 갱신하지 못했고, 현재 새 계정은 기존 파일 편집 권한이 없어 갱신하지 못했다. [최신 연결 상태](figma-sync.md)를 따른다. 아래 기존 node 링크는 유지하지만 현재 코드와 일치하는 화면으로 보지 않는다. [새 UI 전달 안내](ui-refresh.md)와 [3화면 SVG 초안](../design/moa-ui-refresh.svg)은 로컬 전달물이며 API 연결 화면을 포함하지 않는다. 자동 동기화·클릭 프로토타입·Code Connect 게시 완료를 뜻하지 않는다.
 
 원격 갱신 시 기존 SCR/CMP 화면 루트·메인 컴포넌트·변수 컬렉션 ID를 보존하고 토큰 → 컴포넌트 → 화면 순으로 수정한다. `CategoryStamp`의 새 네이티브 컴포넌트와 출처 메뉴·선택 정보 펼침·오류·방문 완료 상태를 추가한 뒤 390px·320px에서 비교한다. 실제 반영과 구조·시각 검증이 끝난 후 manifest의 새 상태와 캡처를 기록한다. 상세 순서는 [UI 리디자인 전달](ui-refresh.md)을 따른다.
 
@@ -41,12 +41,15 @@
 | SCR-001 | Library | [4:32](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-32) | `src/app/index.tsx` |
 | SCR-002 | AddLink | [4:35](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-35) | `src/app/add.tsx` |
 | SCR-003 | ContentDetail | [4:38](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-38) | `src/app/content/[id].tsx` |
+| SCR-004 | Integrations | 원격 생성·매핑 대기 | `src/app/integrations.tsx` |
+| SCR-005 | Places | 원격 생성·매핑 대기 | `src/app/places.tsx` |
 | CMP-001 | ContentCard | [4:18](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-18) | `src/components/ContentCard.tsx` |
 | CMP-002 | FilterChip | [3:63](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-63) | `src/components/FilterChip.tsx` |
 | CMP-003 | PrimaryButton | [3:76](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-76) | `src/components/PrimaryButton.tsx` |
 | CMP-004 | SourceBadge | [3:58](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-58) | `src/components/SourceBadge.tsx` |
 | CMP-005 | EmptyState | [4:19](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-19) | `src/components/EmptyState.tsx` |
 | CMP-006 | CategoryStamp | 원격 생성·매핑 대기 | `src/components/CategoryStamp.tsx` |
+| CMP-007 | InstagramEmbed | 원격 생성·매핑 대기 | `src/components/InstagramEmbed.tsx` |
 
 위 링크와 코드 매핑은 실제 `design/figma-manifest.json`을 기준으로 기록했다. 기존 연결의 node ID는 유지하고 코드 이동 시 표와 manifest를 함께 갱신한다. 새 `CMP-006 CategoryStamp`는 코드 매핑만 추가했으며 `figmaNodeId`는 `null`이다. 네이티브 Code Connect 게시 작업은 아직 수행하지 않았다.
 
@@ -58,7 +61,17 @@
 | AddLink | 추가/수정, 선택 장소·메모 접힘/펼침·입력 유지, 필수 입력 오류·초점 이동, 중복·기존 항목 열기, 고정 저장 액션의 저장 중·실패·완료 |
 | ContentDetail | 항목 있음, 상단 수정 액션, 방문 전·완료, 원본·방문 처리 고정 액션과 오류, 없는 항목 |
 
-저장 실패 시 입력을 유지한다. 중복은 기존 항목을 열 수 있게 한다. 필터 결과가 없을 때는 필터 해제를 제안한다. 장소·기간이 없는 링크도 저장하고, 미확인 정보를 확정된 사실처럼 표시하지 않는다. 현재는 로컬 저장 단계이므로 자동 추출·계정 연동·근처 알림을 사용 가능한 기능처럼 표시하지 않는다. 삭제·보관·일괄 정리는 다음 정리 기능 단계에서 추가한다.
+저장 실패 시 입력을 유지한다. 중복은 기존 항목을 열 수 있게 한다. 필터 결과가 없을 때는 필터 해제를 제안한다. 장소·기간이 없는 링크도 저장하고, 미확인 정보를 확정된 사실처럼 표시하지 않는다. 현재 API 연결은 로컬 웹 개발 미리보기 범위다. 계정 설정 상태와 실제 로그인 완료를 구분한다. 인스타·네이버 개인 저장 목록 전체 동기화와 위치·기간 알림을 사용 가능한 기능처럼 표시하지 않는다.
+
+## API 연결 디자인 추가분
+
+SCR-004는 서비스 설정 전·연결됨·실패·재시도, 공개/계정 재생목록 선택, 페이지 추가, 후보 전체/개별 선택, 이미 저장된 링크 제외, 일괄 저장 실패·성공, 연결 해제 확인을 제공한다. 계정 연결로 가져온 모든 로컬 항목·메모를 먼저 삭제하고 Google 토큰 revoke를 요청한다. 원격 해제 실패는 실제 연결 상태를 유지하며 재시도한다. 파일 후보는 사용자 확인 후 저장하며 실제 내보내기 파일 규격 검증 완료를 뜻하지 않는다.
+
+SCR-002에는 사용자가 누를 때만 클립보드를 읽는 붙여넣기와 YouTube 제목 요청을 추가했다. API 제목과 사용자가 적은 제목을 구분하며 URL/제목 수정 중 오래된 요청 응답으로 덮어쓰지 않는다. SCR-003은 요청 시 공개 Instagram 원문을 화면에서만 표시하고 장소가 있으면 네이버 지도 열기를 제공한다. CMP-007의 HTML은 저장하거나 제목·장소 추출에 사용하지 않는다.
+
+SCR-005는 장소 검색·빈 결과·실패, 최대 5개 후보의 주소 확인, 분류 선택, 좌표가 확인된 장소 저장을 제공한다. 좌표가 없으면 저장할 수 없는 이유와 직접 링크 저장 경로를 안내한다. 근처 거리나 행사 기간을 추정해서 표시하지 않는다.
+
+2026-10-01 새 계정 연결은 확인했으나 기존 파일 편집 권한이 없어 이번 코드 화면을 원격 Figma에 반영하지 못했다. 앞선 호출 한도와 이번 권한 오류를 구분한다. [연결 상태](figma-sync.md)와 manifest의 최신 확인을 따른다. SCR-004~005/CMP-007은 코드 ID만 있으며 기존 원격 node를 변경하지 않았다.
 
 ## 리뷰에서 검증까지
 

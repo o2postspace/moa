@@ -34,6 +34,7 @@ export default function LibraryScreen() {
     </View>
 
     <View style={styles.intro}><UiText variant="hero">모아 둔 취향</UiText><UiText muted style={styles.description}>좋아한 순간들을 한곳에.</UiText></View>
+    <Pressable accessibilityRole="button" accessibilityLabel="서비스 연결하고 콘텐츠 가져오기" onPress={() => router.push('/integrations')} style={styles.integrations}><Ionicons name="albums-outline" size={20} color={tokens.color.accent} /><View style={{ flex: 1 }}><UiText style={{ fontFamily: tokens.font.medium }}>흩어진 저장함 모아보기</UiText><UiText variant="caption" muted>서비스 연결 · 파일 가져오기 · 장소 검색</UiText></View><Ionicons name="chevron-forward" size={18} color={tokens.color.secondary} /></Pressable>
     <View style={styles.tabs}>
       <CollectionTab label="전체 저장" count={items.length} selected={!visitedOnly} onPress={() => setVisitedOnly(false)} />
       <CollectionTab label="방문 완료" count={visitedCount} selected={visitedOnly} onPress={() => setVisitedOnly(true)} />
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
   addLabel: { color: tokens.color.accentInk, fontFamily: tokens.font.bold, flexShrink: 1 },
   intro: { paddingTop: tokens.spacing.xl, paddingBottom: tokens.spacing.lg },
   description: { marginTop: tokens.spacing.xs },
+  integrations: { flexDirection: 'row', alignItems: 'center', gap: tokens.spacing.md, padding: tokens.spacing.lg, borderRadius: tokens.radius.md, backgroundColor: tokens.color.accentSoft, marginBottom: tokens.spacing.lg },
   tabs: { flexDirection: 'row', borderBottomWidth: 1, borderColor: tokens.color.border, marginBottom: tokens.spacing.xl },
   tab: { flex: 1, minHeight: tokens.control.touchMin, paddingVertical: tokens.spacing.md, borderBottomWidth: 2, borderBottomColor: 'transparent', alignItems: 'center', justifyContent: 'center' },
   tabSelected: { borderBottomColor: tokens.color.accent },

@@ -295,11 +295,41 @@
     "Handoff content",
     "click-through prototype reactions",
     "Refresh tokens and native screen/component composition to current app revision while preserving existing IDs",
-    "Create CMP-006 CategoryStamp and record its actual remote node ID"
+    "Create CMP-006 CategoryStamp and record its actual remote node ID",
+    "Create SCR-004 Integrations, SCR-005 Places and CMP-007 InstagramEmbed from the final API UI; remote nodes do not yet exist"
   ],
   "figmaDesignRevision": "initial-design-before-mmm-ui-refresh",
   "appDesignRevision": "mmm-inspired-2026-10-01",
-  "codeSyncStatus": "out-of-sync: current app tokens and layout changed; remote Figma refresh blocked by Starter MCP quota",
+  "apiIntegrationHandoff": {
+    "revision": "content-integrations-2026-10-01",
+    "codeMapping": "design/component-map.json",
+    "guide": "docs/api-setup.md",
+    "screens": { "SCR-004": null, "SCR-005": null },
+    "components": { "CMP-007": null },
+    "remoteMutationCount": 0,
+    "status": "code-only; current connected account lacks edit permission for existing file",
+    "webEvidence": ["design/integration-youtube-preview.png", "design/integration-instagram-preview.png"],
+    "verification": "Actual public YouTube title response and official Instagram sample embed rendered in web preview; OAuth and Naver live requests require credentials; native verification pending."
+  },
+  "codeSyncStatus": "out-of-sync: current app tokens and layout changed; new connected account has no edit access to existing Figma file",
+  "latestConnectionCheck": {
+    "date": "2026-10-01",
+    "authenticatedPlan": {
+      "name": "23010843의 팀",
+      "key": "team::1687325519407076016",
+      "tier": "student",
+      "seat": "View",
+      "role": "admin"
+    },
+    "targetFileKey": "sNrklbLn8Fd9HXMU3GLQUt",
+    "readTool": "get_metadata",
+    "attempts": 1,
+    "result": "permission-denied: file owner must share with connected account as editor",
+    "quotaStatus": "not established; latest rejected call reported file edit permission, not quota",
+    "remoteMutationCount": 0,
+    "nextAction": "Restore editor access to the existing file, or use a new file only after user selects that destination.",
+    "guide": "docs/figma-sync.md"
+  },
   "localRefreshHandoff": {
     "revision": "mmm-inspired-2026-10-01",
     "referenceUrl": "https://wwit.design/2025/03/04/mmm/",

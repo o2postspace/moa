@@ -1,4 +1,4 @@
-# 첫 기능 검증 기록
+# 모아 검증 기록
 
 2026-10-01, Windows / Node.js 24.15.0. 앱 버전 0.1.0. 실제 iOS·Android 기기 검증 전이며 스토어 설치 파일을 만들거나 배포하지 않았다.
 
@@ -8,12 +8,26 @@
 | --- | --- |
 | `npm run typecheck` | 통과 |
 | `npm run lint` | 통과 |
-| `npm test` | 콘텐츠 규칙 8개 통과 |
+| `npm test` | 콘텐츠·가져오기·저장소·서버 40개 통과 |
 | `npm run tokens:check` | 토큰 원본과 생성 코드 일치 |
 | `npm run build:web` | `dist/` 웹 내보내기 완료 |
 | `npx expo-doctor` | 21개 검사 통과 |
 
-테스트는 HTTPS·호스트 경계 검증, YouTube 공유 URL 중복 판별, 의미 있는 쿼리 보존, 입력 오류, 복합 검색, 저장 데이터 손상 검출을 다룬다. 저장 실패·권한·네이티브 접근성의 실제 기기 검증을 대신하지 않는다. 위 표는 Windows 로컬 검사 기록이다. 최신 원격 커밋의 CI 결과는 [GitHub Actions](https://github.com/o2postspace/moa/actions)에서 따로 확인한다.
+테스트는 HTTPS·호스트 경계, URL 중복·쿼리 보존, 검색, v1/v2 마이그레이션, 손상·쓰기 실패 원본 보존, 배치 전체 실패·중복 제외, 보존 기한·계정 삭제, JSON/TXT 제한, 고정 API 주소·OAuth state/PKCE/replay·cookie·토큰 refresh/revoke 실패와 Naver 좌표를 다룬다. 모의 제공자 응답과 저장소로 검증한 항목은 실제 Google 계정·NAVER 키·네이티브 기기의 검증을 대신하지 않는다. 위 표는 Windows 로컬 검사 기록이며 원격 head 검사는 GitHub Actions에서 확인한다.
+
+## API 연결 단계 · 2026-10-01
+
+- 키 없이 로컬 서버에서 YouTube `dQw4w9WgXcQ`의 실제 oEmbed 제목·작성자 조회 성공. 앱에서 제목 불러오기 → 저장 → 목록의 실제 API 제목 표시 → 페이지 재실행 후 유지까지 확인했다. `design/integration-youtube-preview.png`는 390×844 웹 화면이다.
+- Instagram 공식 문서의 공개 예시 `https://www.instagram.com/p/fA9uwTtkSN/`에 실제 tokenless oEmbed 요청이 성공했다. 앱 상세의 사용자가 누른 요청에서만 HTML을 받고 공식 게시물의 사진·제공자 UI가 표시되는 것을 확인했다. `design/integration-instagram-preview.png`는 현재 웹 원문 표시 증거다. HTML을 로컬 저장소나 파일에 보관하거나 제목·장소를 추출하지 않았다.
+- opaque sandbox는 same-origin을 허용하지 않는다. 초기 시각 검증에서 제공자의 높이 handshake가 되지 않아 내부 frame 높이가 1px인 문제를 발견해, 내부 스크롤 표시 영역을 적용한 뒤 실제 게시물 표시를 재확인했다.
+- 공개 링크 4줄의 TXT fixture에서 후보 2개·중복 1개·위장 도메인 제외 1개를 확인했다. 이미 저장한 YouTube 후보는 선택이 차단됐고, 전체 선택 해제 → Instagram 후보 개별 선택 → 1개 저장 성공을 확인했다. 재실행 후 총 4개가 유지되어 기존 2개도 보존됐다. fixture는 개발용 공개 샘플이며 실제 사용자 export가 아니다.
+- 서비스 연결 화면 320×800에서 clientWidth/scrollWidth 모두 320으로 가로 넘침이 없었다. YouTube/Instagram 실제 흐름은 390×844에서 확인했다. `design/integration-preview.png`는 최종 390×844 연결 화면이다.
+- 자격 증명이 없는 status에서 Google 계정·공개 재생목록·네이버 검색 버튼이 준비 전 상태로 표시됐다. API 설정 있음과 실제 계정 연결 완료는 별도의 상태다.
+- Google 실제 OAuth·계정/공개 재생목록 paging/import/revoke, NAVER 실제 검색·quota·영업 장소 검증은 발급 키가 없어 미실행이다. iOS/Android의 파일 선택·클립보드 권한·지도 앱/미설치 fallback·OAuth callback·AppState와 장시간 기한 정리·화면 읽기는 미실행이다.
+- 계정 해제 시 이 기기의 모든 계정 재생목록 항목을 먼저 저장소에서 삭제하고 remote revoke를 요청한다. 로컬 쓰기 실패는 revoke를 요청하지 않으며, 원격 실패는 실제 연결 상태를 유지하고 재시도한다. 모의 서버·저장소 테스트 범위와 실제 계정 미검증을 구분한다.
+- 새 Figma 계정 연결을 확인했지만 기존 파일 edit 권한 거부로 원격 갱신은 하지 않았다. 이번 권한 오류를 이전 Starter 호출 한도와 구분하며 `docs/figma-sync.md`와 manifest를 따른다.
+
+이하 기록은 이전 링크 저장·UI 리디자인 단계의 동작 검사다. 아래 과거 Figma 캡처나 CI를 현재 API 화면의 증거로 사용하지 않는다.
 
 ## 실제 브라우저 동작
 

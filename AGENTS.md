@@ -1,40 +1,60 @@
 # 모아 · 개발 에이전트 지침
 
-이 저장소는 사용자가 저장한 콘텐츠를 정리하고 장소·시기에 맞춰 다시 발견하게 하는 앱이다. React Native + Expo + TypeScript로 작은 사용자 흐름씩 추가한다. 작업 설명과 인수인계는 한국어로 쓴다.
+사용자가 저장한 콘텐츠를 정리하고 장소·시기에 맞춰 다시 발견하게 하는 앱이다. React Native + Expo + TypeScript로 작은 사용자 흐름씩 추가하며 설명·인수인계는 한국어로 쓴다.
 
-## 작업을 시작할 때
+## 작업 시작
 
-1. `README.md`에서 실행 방법과 현재 구현 범위를 확인한다.
-2. 첫 작업이나 인수인계 후에는 `docs/codex-handoff.md`를 읽는다. 여기에 제품 맥락, 파일 책임, 데이터 규칙, 다음 작업과 시작 프롬프트가 있다.
-3. 화면 변경은 `docs/design-handoff.md`, `docs/ui-refresh.md`와 `design/figma-manifest.json`, 기능 범위는 `docs/roadmap.md`를 참고한다. 요청된 작업과 관련된 소스와 문서만 추가로 읽는다.
-4. `git status`와 현재 브랜치를 확인하고 다른 사람의 변경을 보존한다. 이미 변경된 파일을 덮어쓰거나 unrelated 작업을 되돌리지 않는다.
+1. README.md와 docs/codex-handoff.md를 읽고 구현 범위·실행·브랜치/base를 확인한다.
+2. git status와 현재 브랜치를 확인하고 다른 개발자의 변경을 보존한다. 현재 codex/content-integrations는 열린 UI draft PR #1의 head 835dd81에서 시작한 기능 브랜치이며 main에는 미병합이다.
+3. API 작업은 docs/api-server.md, docs/storage-v2.md, docs/import-files.md와 관련 어댑터·도메인·테스트를 읽는다.
+4. 화면 변경은 docs/design-handoff.md, docs/ui-refresh.md, docs/figma-sync.md와 디자인 manifest·컴포넌트 매핑을 읽는다. 기능 순서는 docs/roadmap.md를 따른다.
 
-## 제품과 데이터 규칙
+## 현재 제품·API 범위
 
-- 현재는 사용자가 직접 입력한 링크를 로컬 기기에 저장한다. 새 설치의 저장함은 비어 있다. 샘플을 실제 가져온 데이터처럼 보이게 하지 않는다.
-- 기존 저장 정리와 네이버 장소 통합이 제품의 우선 관심사다. 계정 연동·일괄 가져오기는 공식 지원과 실제 샘플로 가능 범위를 확인한 뒤 구현한다.
-- 위치 좌표·지도·행사 날짜·근처 알림·AI 분석·클라우드 동기화는 미구현이다. UI와 문서에서 동작하는 기능처럼 설명하지 않는다.
-- 링크 검증과 중복 판별은 `src/domain/content.ts`에서 유지한다. 의미 있는 URL 쿼리를 제거하거나, 같은 장소와 같은 URL을 같은 중복 기준으로 취급하지 않는다.
-- 저장 키는 `moa.library.v1`이며 현재 JSON 배열이다. 저장 형식을 바꿀 때 기존 항목을 유지하는 마이그레이션을 마련한다. 읽기 오류를 빈 저장함으로 바꾸거나 손상된 값을 덮어쓰지 않는다.
-- 저장 성공 후 화면 상태를 갱신하는 `LibraryProvider`의 순서를 유지한다. 저장 실패 시 입력과 기존 내용이 유지되어야 한다.
-- 미확인 장소·기간은 나중에 별도 상태로 표현한다. 콘텐츠 원본과 장소·행사 관계를 분리하는 방향으로 확장한다.
+- 새 설치의 저장함은 비어 있다. 예시·모의 응답·실제 가져온 결과를 구분한다.
+- 기본 수동 링크 저장·정리와 웹 개발 API 코드가 있다. 공개 YouTube 제목·Instagram tokenless oEmbed 실제 응답 성공을 확인했으며 OAuth·재생목록·NAVER 검색은 키 설정과 실제 계정 검증이 남았다.
+- Instagram 소비자 저장함·NAVER 지도 개인 저장 목록·YouTube Watch Later를 공식 API로 읽는 기능을 제공한다고 설명하지 않는다. 좋아요 영상은 이번 재생목록 흐름 밖이다.
+- 파일은 확인 전 후보이며 공식 export 규격으로 단정하지 않는다. JSON/TXT UTF-8 2MiB·200건 제한과 비재귀 탐색·검토·선택을 유지한다.
+- NAVER 지역 검색은 주소·좌표 후보다. 사용자가 지점을 확인하며 같은 장소 합치기와 같은 URL 중복을 구분한다. 지도 앱/웹 열기를 앱 내 지도 SDK 완료로 설명하지 않는다.
+- 근처 알림·행사 기간·지도 SDK·AI·클라우드·운영 로그인/배포는 미구현이다. 실기기 파일 선택·지도 앱·OAuth·접근성은 웹 검사와 구분한다.
 
-## 디자인과 협업
+## 비밀값·서버 경계
 
-- 사용자 요청이 별도 경로를 정하지 않았다면 기능별 브랜치에서 하나의 흐름을 PR로 만든다. 작업 중인 파일과 범위를 인수인계에 기록한다. 원격 `main`에 강제 푸시하지 않는다.
-- 디자인 토큰 원본은 `design/tokens.json`이다. 변경 후 `npm run tokens:generate`로 `src/theme/tokens.ts`를 함께 갱신한다. 생성 파일을 단독 편집하지 않는다.
-- SCR/CMP ID를 유지하고 파일 이동 시 `design/component-map.json`, Figma manifest와 인수인계 표를 갱신한다. 이 매핑은 양방향 자동 동기화나 Code Connect 게시를 뜻하지 않는다.
-- 현재 앱은 두 번째 UI이며 실제 Figma는 호출 한도로 갱신하지 못한 이전 디자인이다. 이전 Figma 핵심 3개 화면의 검증을 현재 코드의 시각 검증으로 대신하지 않는다. `design/moa-ui-refresh.svg`와 `docs/ui-refresh.md`는 새 UI 전달 초안·갱신 계획이다. 자동 동기화·프로토타입·Code Connect 설정 완료를 뜻하지 않는다.
-- 기존 SCR/CMP node ID를 보존해 원격 갱신할 계획이다. `CMP-006 CategoryStamp`는 앱의 공통 시각 helper이며 코드 매핑을 기록했지만 Figma node는 아직 없다. 비어 있는 Brief/Flows/Handoff와 미검증 보드는 manifest·전달 문서의 범위를 확인한다.
-- 전체 저장/방문 완료 탭과 검색·분류·출처 조건을 함께 적용한다. 출처 메뉴·선택 입력의 펼침 상태를 접근성 정보로 제공하고, 선택 입력을 접어도 값을 유지한다. 고정 하단 액션·오류 초점 이동은 좁은 화면·키보드에서 검증한다.
-- 새 외부 서비스나 AI 제공자 연결은 해당 작업이 필요할 때 결정한다. 비밀값은 커밋하지 않고 예시 설정에는 변수 이름과 설명만 둔다.
+- Node.js 24의 npm run api와 기본 환경 파일 loader를 사용한다. .env.example은 변수 설명만, 실제 .env.local과 토큰·사용자 export는 Git에 넣지 않는다. 비밀값을 출력하지 않는다.
+- 서버 비밀값에 EXPO_PUBLIC_를 붙이지 않는다. OAuth 토큰은 앱 코드·URL·AsyncStorage·브라우저 응답·로그에 보내지 않는다.
+- 현재 서버는 localhost 웹 개발용이며 기본 앱8081/API8787이다. Origin·cookie·Google callback과 호스트를 함께 맞춘다. 설정됨·연결됨·실제 응답 성공을 구분한다.
+- OAuth state·PKCE·cookie·단회 callback·refresh/revoke와 고정 제공자 endpoint, 입력/응답/시간/페이지 제한을 유지한다.
+- Instagram HTML은 사용자 요청의 원문 표시 전용이다. 제목·장소·썸네일·작성자를 추출·저장·분석하지 않는다. 실패 시 원본 열기를 제공한다.
+- 운영 배포는 HTTPS·사용자별 인증/격리·토큰 보호·취소 감지·네이티브 callback·출시 검증을 따로 마련한다. 개발 서버를 그대로 외부에 노출하지 않는다.
 
-## 작업 완료와 인수인계
+## 데이터·실패 규칙
 
-- 코드 작업은 typecheck·lint와 변경에 맞는 의미 있는 동작 검사를 통과시킨다. 관련 토큰과 웹 화면이 바뀌면 `tokens:check`, `build:web`도 확인한다.
-- 정상·빈 화면·오류·로딩, 재실행 후 유지, 긴 한국어·큰 글자·키보드·접근성을 변경 범위에 맞춰 확인한다. 웹 검사와 실제 iOS/Android 검증을 구분한다.
-- PR에는 문제와 결과, 관련 SCR/CMP ID·디자인 링크, 수행한 검사, 남은 한계를 적는다. 미실행 검사를 통과했다고 기록하지 않는다.
-- 다른 개발자에게 넘길 때 이슈/브랜치/커밋, 변경 파일, 검증 결과, 남은 작업을 남긴다. 구현 상태가 바뀌면 관련 README·인수인계·로드맵을 함께 갱신한다.
+- URL 검증·출처·중복은 src/domain/content.ts에 유지한다. 실제 hostname 경계를 사용하고 의미 있는 query·fragment를 제거하지 않는다.
+- 키 moa.library.v1을 유지하며 값은 { version: 2, items: [...] }다. 기존 배열 이동은 모든 항목 검증·교체 쓰기 성공 뒤에만 ready로 전환한다. ID·사용자 텍스트·방문·생성일·순서를 유지한다.
+- unknown version·손상·항목 오류·이동/정리 쓰기 실패를 빈 저장함으로 바꾸거나 덮어쓰지 않는다. ready 전 변경은 막고 재시도한다.
+- 모든 변경은 저장 성공 후 상태를 갱신한다. 배치는 전체 검증·중복 제외 후 한 번 저장하며 실패 시 목록·입력을 유지한다. 동시 변경 잠금을 보존한다.
+- 사용자 기본 제목과 external 캐시·titleMode, importedFrom provenance, 확인된 place 좌표를 구분한다. API 응답 아닌 값으로 출처·시각을 확정하지 않는다.
+- API 캐시는 30일 뒤 제거한다. 수동 링크는 기본 제목·메모를 유지하고 API 가져오기 항목은 전체 항목·메모·분류·방문 표시를 삭제한다. 자동 갱신은 없다. UI에 이 의미를 설명한다.
+- 기한 정리는 로드·성공한 변경 저장·전경 복귀·전경 주기 확인에 적용한다. 수정·중복 재가져오기로 기한을 늘리지 않는다. 종료 중 백그라운드 정리를 보장하지 않는다.
+- 단일 YouTube 연결 MVP의 명시적 해제는 이 기기의 모든 account-playlist 항목 삭제를 먼저 저장한 뒤 remote revoke한다. 현재 서버 connectionId 하나만 대상으로 삼지 않는다.
+- 로컬 삭제 실패 시 remote 해제를 요청하지 않는다. remote 실패 시 연결 상태를 유지하고 재시도한다. 공개 재생목록·수동 링크는 유지하며 일시적 offline·서버 재시작만으로 즉시 삭제하지 않는다.
+- 제목 수동 변경·URL/장소 변경·API 데이터 복사본의 기한/삭제 정책 최종 검증을 남긴다. 입력과 API 정보의 경계를 바꾸면 UI·모델·테스트·문서를 함께 수정한다.
+
+## 디자인·협업
+
+- 기능별 브랜치와 리뷰 가능한 PR을 사용한다. 기존 UI PR을 base로 한 API PR의 의존관계를 기록하고 main에 강제 푸시하지 않는다.
+- 토큰 원본은 design/tokens.json이다. 변경 후 npm run tokens:generate로 생성 코드를 함께 갱신한다.
+- SCR-001~003을 보존하고 SCR-004 서비스 연결, SCR-005 장소 검색, CMP-007 InstagramEmbed를 현재 코드 매핑에 기록한다. 실제 node가 없는 매핑은 Figma 완료로 표시하지 않는다.
+- 새 Figma 계정 김찬결/23010843의 팀 연결은 확인했으나 기존 모아 파일 요청은 편집 권한 부족으로 거부됐다. 이전 quota 오류와 구분한다. docs/figma-sync.md를 따르고 권한이나 사용자 지정 파일이 준비되면 실제 node를 확인한다.
+- 기존 node·스타일을 보존하며 갱신한다. SVG·이전 Figma 캡처는 최신 API 화면 동기화 증거가 아니다. 자동 동기화·프로토타입·Code Connect 게시 완료를 주장하지 않는다.
+- 전체/방문 탭과 검색·분류·출처 조건을 함께 적용하고 선택 입력을 접어도 값을 보존한다. 상태·설정 전 안내·로딩·오류·고정 액션·초점을 검증한다.
+
+## 완료·인수인계
+
+- typecheck·lint와 변경에 맞는 의미 있는 검사, 화면/토큰 변경의 tokens:check·build:web를 수행한다.
+- 정상·빈·오류·로딩·재실행·중복·페이지·보존 기한·삭제·읽기/쓰기 실패를 변경 범위에 맞춰 확인한다. 모의 응답·웹·실제 계정·실기기를 구분한다.
+- 공개 API 성공은 OAuth/키 기능 성공을 뜻하지 않는다. 실제 export·Google 계정·NAVER 키·네이티브·API 제목 수동 변경 정책의 남은 검증을 명시한다.
+- README·Codex 인수인계·로드맵·검증 기록·SCR/CMP와 관련 계약을 함께 갱신한다. PR에 문제·결과·검사·남은 한계·브랜치/base를 적는다.
 
 This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
