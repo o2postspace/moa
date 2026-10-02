@@ -1,0 +1,1786 @@
+{
+  "schemaVersion": 2,
+  "fileKey": "ejriXVtLOBDSwZ336vDKlZ",
+  "fileUrl": "https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ",
+  "fileName": "모아 · 저장 콘텐츠 & 서비스 연동",
+  "planKey": "team::1687325519407076016",
+  "status": "native-editable-design-draft; core-and-state-boards-visually-reviewed",
+  "date": "2026-10-03",
+  "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
+  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp",
+  "codeSyncStatus": "source-informed-design-draft; not-pixel-identical-or-automatically-synced",
+  "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
+  "pages": {
+    "design": {
+      "id": "0:1",
+      "name": "모아 · 화면 & 디자인 시스템"
+    }
+  },
+  "sections": {
+    "brief": "4:250",
+    "screens": "4:256",
+    "states": "4:577",
+    "components": "2:929",
+    "fullScroll": "4:797",
+    "handoff": "4:902"
+  },
+  "reviewNodeId": "4:256",
+  "componentReviewNodeId": "2:929",
+  "screenNodes": {
+    "SCR-001 Library": "4:262",
+    "SCR-002 AddLink": "4:343",
+    "SCR-003 ContentDetail": "4:416",
+    "SCR-004 Integrations": "4:480",
+    "SCR-005 Places": "4:533"
+  },
+  "stateNodes": {
+    "STATE-LibraryEmpty": "4:583",
+    "STATE-AddError": "4:608",
+    "STATE-ImportPreview": "4:646",
+    "STATE-PlaceResults": "4:741"
+  },
+  "reviewScreenNodes": {
+    "SCR-001": "4:982",
+    "SCR-002": "4:1008",
+    "SCR-003": "4:1034",
+    "SCR-004": "4:1056",
+    "SCR-005": "4:1071",
+    "STATE-LibraryEmpty": "4:1091",
+    "STATE-AddError": "4:1098",
+    "STATE-ImportPreview": "4:1118",
+    "STATE-PlaceResults": "4:1132"
+  },
+  "componentNodes": {
+    "CMP-003 PrimaryButton": "2:659",
+    "CMP-002 FilterChip": "2:664",
+    "CMP-004 SourceBadge": "2:691",
+    "CMP-006 CategoryStamp": "2:820",
+    "CMP-001 ContentCard": "2:864",
+    "CMP-005 EmptyState": "2:888",
+    "CMP-007 InstagramEmbed": "2:928"
+  },
+  "helperComponentNodes": {
+    "FormField": "2:877",
+    "ServiceInfo": "4:242"
+  },
+  "codeMappings": [
+    {
+      "componentId": "CMP-003",
+      "figmaNodeId": "2:659",
+      "component": "PrimaryButton",
+      "source": "src/components/PrimaryButton.tsx"
+    },
+    {
+      "componentId": "CMP-002",
+      "figmaNodeId": "2:664",
+      "component": "FilterChip",
+      "source": "src/components/FilterChip.tsx"
+    },
+    {
+      "componentId": "CMP-004",
+      "figmaNodeId": "2:691",
+      "component": "SourceBadge",
+      "source": "src/components/SourceBadge.tsx"
+    },
+    {
+      "componentId": "CMP-006",
+      "figmaNodeId": "2:820",
+      "component": "CategoryStamp",
+      "source": "src/components/CategoryStamp.tsx"
+    },
+    {
+      "componentId": "CMP-001",
+      "figmaNodeId": "2:864",
+      "component": "ContentCard",
+      "source": "src/components/ContentCard.tsx"
+    },
+    {
+      "componentId": "CMP-005",
+      "figmaNodeId": "2:888",
+      "component": "EmptyState",
+      "source": "src/components/EmptyState.tsx"
+    },
+    {
+      "componentId": "CMP-007",
+      "figmaNodeId": "2:928",
+      "component": "InstagramEmbed",
+      "source": "src/components/InstagramEmbed.tsx"
+    }
+  ],
+  "screenMappings": [
+    {
+      "screenId": "SCR-001",
+      "figmaNodeId": "4:262",
+      "reviewNodeId": "4:982",
+      "source": "src/app/index.tsx",
+      "state": "populated-ui-example; first-launch-state-is-4:583"
+    },
+    {
+      "screenId": "SCR-002",
+      "figmaNodeId": "4:343",
+      "reviewNodeId": "4:1008",
+      "source": "src/app/add.tsx",
+      "state": "youtube-link-and-title-example"
+    },
+    {
+      "screenId": "SCR-003",
+      "figmaNodeId": "4:416",
+      "reviewNodeId": "4:1034",
+      "source": "src/app/content/[id].tsx",
+      "state": "manual-content-ui-example"
+    },
+    {
+      "screenId": "SCR-004",
+      "figmaNodeId": "4:480",
+      "reviewNodeId": "4:1056",
+      "source": "src/app/integrations.tsx",
+      "state": "public-playlist-configured; OAuth not configured; NAVER card hidden"
+    },
+    {
+      "screenId": "SCR-005",
+      "figmaNodeId": "4:533",
+      "reviewNodeId": "4:1071",
+      "source": "src/app/places.tsx",
+      "state": "naver-deferred; no API call; return-to-import"
+    }
+  ],
+  "collections": {
+    "primitives": "VariableCollectionId:2:485",
+    "tokens": "VariableCollectionId:2:486"
+  },
+  "variableCount": 62,
+  "collectionCounts": [
+    {
+      "id": "VariableCollectionId:2:485",
+      "name": "Moa Primitives",
+      "count": 31
+    },
+    {
+      "id": "VariableCollectionId:2:486",
+      "name": "Moa Tokens",
+      "count": 31
+    }
+  ],
+  "semanticVariables": [
+    {
+      "id": "VariableID:2:488",
+      "name": "color/background",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:487"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-background)",
+        "ANDROID": "tokens.color.background",
+        "iOS": "tokens.color.background"
+      }
+    },
+    {
+      "id": "VariableID:2:490",
+      "name": "color/surface",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:489"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-surface)",
+        "ANDROID": "tokens.color.surface",
+        "iOS": "tokens.color.surface"
+      }
+    },
+    {
+      "id": "VariableID:2:492",
+      "name": "color/surfaceMuted",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:491"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-surfaceMuted)",
+        "ANDROID": "tokens.color.surfaceMuted",
+        "iOS": "tokens.color.surfaceMuted"
+      }
+    },
+    {
+      "id": "VariableID:2:494",
+      "name": "color/ink",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:493"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-ink)",
+        "ANDROID": "tokens.color.ink",
+        "iOS": "tokens.color.ink"
+      }
+    },
+    {
+      "id": "VariableID:2:496",
+      "name": "color/secondary",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:495"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-secondary)",
+        "ANDROID": "tokens.color.secondary",
+        "iOS": "tokens.color.secondary"
+      }
+    },
+    {
+      "id": "VariableID:2:498",
+      "name": "color/accent",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:497"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-accent)",
+        "ANDROID": "tokens.color.accent",
+        "iOS": "tokens.color.accent"
+      }
+    },
+    {
+      "id": "VariableID:2:500",
+      "name": "color/accentInk",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:499"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-accentInk)",
+        "ANDROID": "tokens.color.accentInk",
+        "iOS": "tokens.color.accentInk"
+      }
+    },
+    {
+      "id": "VariableID:2:502",
+      "name": "color/accentSoft",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:501"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-accentSoft)",
+        "ANDROID": "tokens.color.accentSoft",
+        "iOS": "tokens.color.accentSoft"
+      }
+    },
+    {
+      "id": "VariableID:2:504",
+      "name": "color/border",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:503"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-border)",
+        "ANDROID": "tokens.color.border",
+        "iOS": "tokens.color.border"
+      }
+    },
+    {
+      "id": "VariableID:2:506",
+      "name": "color/green",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:505"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-green)",
+        "ANDROID": "tokens.color.green",
+        "iOS": "tokens.color.green"
+      }
+    },
+    {
+      "id": "VariableID:2:508",
+      "name": "color/greenSoft",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:507"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-greenSoft)",
+        "ANDROID": "tokens.color.greenSoft",
+        "iOS": "tokens.color.greenSoft"
+      }
+    },
+    {
+      "id": "VariableID:2:510",
+      "name": "color/error",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:509"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-color-error)",
+        "ANDROID": "tokens.color.error",
+        "iOS": "tokens.color.error"
+      }
+    },
+    {
+      "id": "VariableID:2:512",
+      "name": "spacing/xs",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:511"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-xs)",
+        "ANDROID": "tokens.spacing.xs",
+        "iOS": "tokens.spacing.xs"
+      }
+    },
+    {
+      "id": "VariableID:2:514",
+      "name": "spacing/sm",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:513"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-sm)",
+        "ANDROID": "tokens.spacing.sm",
+        "iOS": "tokens.spacing.sm"
+      }
+    },
+    {
+      "id": "VariableID:2:516",
+      "name": "spacing/md",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:515"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-md)",
+        "ANDROID": "tokens.spacing.md",
+        "iOS": "tokens.spacing.md"
+      }
+    },
+    {
+      "id": "VariableID:2:518",
+      "name": "spacing/lg",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:517"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-lg)",
+        "ANDROID": "tokens.spacing.lg",
+        "iOS": "tokens.spacing.lg"
+      }
+    },
+    {
+      "id": "VariableID:2:520",
+      "name": "spacing/xl",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:519"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-xl)",
+        "ANDROID": "tokens.spacing.xl",
+        "iOS": "tokens.spacing.xl"
+      }
+    },
+    {
+      "id": "VariableID:2:522",
+      "name": "spacing/xxl",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:521"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-xxl)",
+        "ANDROID": "tokens.spacing.xxl",
+        "iOS": "tokens.spacing.xxl"
+      }
+    },
+    {
+      "id": "VariableID:2:524",
+      "name": "spacing/xxxl",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:523"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-spacing-xxxl)",
+        "ANDROID": "tokens.spacing.xxxl",
+        "iOS": "tokens.spacing.xxxl"
+      }
+    },
+    {
+      "id": "VariableID:2:526",
+      "name": "radius/sm",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:525"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-radius-sm)",
+        "ANDROID": "tokens.radius.sm",
+        "iOS": "tokens.radius.sm"
+      }
+    },
+    {
+      "id": "VariableID:2:528",
+      "name": "radius/md",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:527"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-radius-md)",
+        "ANDROID": "tokens.radius.md",
+        "iOS": "tokens.radius.md"
+      }
+    },
+    {
+      "id": "VariableID:2:530",
+      "name": "radius/lg",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:529"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-radius-lg)",
+        "ANDROID": "tokens.radius.lg",
+        "iOS": "tokens.radius.lg"
+      }
+    },
+    {
+      "id": "VariableID:2:532",
+      "name": "radius/pill",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:531"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-radius-pill)",
+        "ANDROID": "tokens.radius.pill",
+        "iOS": "tokens.radius.pill"
+      }
+    },
+    {
+      "id": "VariableID:2:534",
+      "name": "fontSize/caption",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:533"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-fontSize-caption)",
+        "ANDROID": "tokens.fontSize.caption",
+        "iOS": "tokens.fontSize.caption"
+      }
+    },
+    {
+      "id": "VariableID:2:536",
+      "name": "fontSize/body",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:535"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-fontSize-body)",
+        "ANDROID": "tokens.fontSize.body",
+        "iOS": "tokens.fontSize.body"
+      }
+    },
+    {
+      "id": "VariableID:2:538",
+      "name": "fontSize/subtitle",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:537"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-fontSize-subtitle)",
+        "ANDROID": "tokens.fontSize.subtitle",
+        "iOS": "tokens.fontSize.subtitle"
+      }
+    },
+    {
+      "id": "VariableID:2:540",
+      "name": "fontSize/title",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:539"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-fontSize-title)",
+        "ANDROID": "tokens.fontSize.title",
+        "iOS": "tokens.fontSize.title"
+      }
+    },
+    {
+      "id": "VariableID:2:542",
+      "name": "fontSize/hero",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:541"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-fontSize-hero)",
+        "ANDROID": "tokens.fontSize.hero",
+        "iOS": "tokens.fontSize.hero"
+      }
+    },
+    {
+      "id": "VariableID:2:544",
+      "name": "control/height",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:543"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-control-height)",
+        "ANDROID": "tokens.control.height",
+        "iOS": "tokens.control.height"
+      }
+    },
+    {
+      "id": "VariableID:2:546",
+      "name": "control/chipHeight",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:545"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-control-chipHeight)",
+        "ANDROID": "tokens.control.chipHeight",
+        "iOS": "tokens.control.chipHeight"
+      }
+    },
+    {
+      "id": "VariableID:2:548",
+      "name": "control/touchMin",
+      "alias": {
+        "type": "VARIABLE_ALIAS",
+        "id": "VariableID:2:547"
+      },
+      "codeSyntax": {
+        "WEB": "var(--moa-control-touchMin)",
+        "ANDROID": "tokens.control.touchMin",
+        "iOS": "tokens.control.touchMin"
+      }
+    }
+  ],
+  "tokenSource": "design/tokens.json",
+  "generatedTokenSource": "src/theme/tokens.ts",
+  "tokenNotes": [
+    "31 semantic tokens alias 31 primitives; code syntax and scopes configured.",
+    "WEB var(--moa-...) syntax is a mapping hint; the application does not implement that CSS variable sheet.",
+    "Change source tokens and generated app tokens together, then reconcile Figma values."
+  ],
+  "textStyleCount": 8,
+  "textStyles": [
+    {
+      "id": "S:97d23e6cbfac729831815699989d59a8339b121d,",
+      "name": "Moa/Caption"
+    },
+    {
+      "id": "S:68cc5c9ab9345b2ac5afd884b7e4e2d0f5dd5ced,",
+      "name": "Moa/Body"
+    },
+    {
+      "id": "S:60f4b01fe0814b569b57e19c076a7ee9cada0cd2,",
+      "name": "Moa/BodyBold"
+    },
+    {
+      "id": "S:58d4192cb80e0943c8d41aca28fa384cce448f75,",
+      "name": "Moa/Subtitle"
+    },
+    {
+      "id": "S:92b6e558bb805e185f5ab28de2829b55a84c4f3e,",
+      "name": "Moa/Title"
+    },
+    {
+      "id": "S:5f748e2c5812a9f25a5a41aa583f67fcb14bceba,",
+      "name": "Moa/Hero"
+    },
+    {
+      "id": "S:6df5a5066508af8d76fbeaacfa91c1fa3fe9bd88,",
+      "name": "Moa/Detail"
+    },
+    {
+      "id": "S:b4a0e7c7bb5a2e5e5d0946c99e6d4498516509ef,",
+      "name": "Moa/Micro"
+    }
+  ],
+  "componentVariants": {
+    "CMP-003 PrimaryButton": [
+      {
+        "id": "2:617",
+        "name": "Style=Primary, State=Default"
+      },
+      {
+        "id": "2:624",
+        "name": "Style=Primary, State=Pressed"
+      },
+      {
+        "id": "2:631",
+        "name": "Style=Primary, State=Disabled"
+      },
+      {
+        "id": "2:638",
+        "name": "Style=Secondary, State=Default"
+      },
+      {
+        "id": "2:645",
+        "name": "Style=Secondary, State=Pressed"
+      },
+      {
+        "id": "2:652",
+        "name": "Style=Secondary, State=Disabled"
+      }
+    ],
+    "CMP-002 FilterChip": [
+      {
+        "id": "2:660",
+        "name": "Selected=True"
+      },
+      {
+        "id": "2:662",
+        "name": "Selected=False"
+      }
+    ],
+    "CMP-004 SourceBadge": [
+      {
+        "id": "2:665",
+        "name": "Source=Instagram"
+      },
+      {
+        "id": "2:672",
+        "name": "Source=YouTube"
+      },
+      {
+        "id": "2:677",
+        "name": "Source=네이버"
+      },
+      {
+        "id": "2:684",
+        "name": "Source=웹"
+      }
+    ],
+    "CMP-006 CategoryStamp": [
+      {
+        "id": "2:692",
+        "name": "Category=Food, Visited=False, Size=Normal"
+      },
+      {
+        "id": "2:703",
+        "name": "Category=Food, Visited=False, Size=Large"
+      },
+      {
+        "id": "2:714",
+        "name": "Category=Food, Visited=True, Size=Normal"
+      },
+      {
+        "id": "2:721",
+        "name": "Category=Food, Visited=True, Size=Large"
+      },
+      {
+        "id": "2:728",
+        "name": "Category=Cafe, Visited=False, Size=Normal"
+      },
+      {
+        "id": "2:737",
+        "name": "Category=Cafe, Visited=False, Size=Large"
+      },
+      {
+        "id": "2:746",
+        "name": "Category=Cafe, Visited=True, Size=Normal"
+      },
+      {
+        "id": "2:753",
+        "name": "Category=Cafe, Visited=True, Size=Large"
+      },
+      {
+        "id": "2:760",
+        "name": "Category=Event, Visited=False, Size=Normal"
+      },
+      {
+        "id": "2:769",
+        "name": "Category=Event, Visited=False, Size=Large"
+      },
+      {
+        "id": "2:778",
+        "name": "Category=Event, Visited=True, Size=Normal"
+      },
+      {
+        "id": "2:785",
+        "name": "Category=Event, Visited=True, Size=Large"
+      },
+      {
+        "id": "2:792",
+        "name": "Category=Other, Visited=False, Size=Normal"
+      },
+      {
+        "id": "2:799",
+        "name": "Category=Other, Visited=False, Size=Large"
+      },
+      {
+        "id": "2:806",
+        "name": "Category=Other, Visited=True, Size=Normal"
+      },
+      {
+        "id": "2:813",
+        "name": "Category=Other, Visited=True, Size=Large"
+      }
+    ],
+    "CMP-001 ContentCard": [
+      {
+        "id": "2:821",
+        "name": "Status=Saved"
+      },
+      {
+        "id": "2:843",
+        "name": "Status=Visited"
+      }
+    ],
+    "__FormField FormField": [
+      {
+        "id": "2:865",
+        "name": "State=Default"
+      },
+      {
+        "id": "2:875",
+        "name": "State=Error"
+      }
+    ],
+    "CMP-005 EmptyState": [
+      {
+        "id": "2:878",
+        "name": "State=FirstSave"
+      }
+    ],
+    "CMP-007 InstagramEmbed": [
+      {
+        "id": "2:889",
+        "name": "State=Collapsed"
+      },
+      {
+        "id": "2:903",
+        "name": "State=Loading"
+      },
+      {
+        "id": "2:917",
+        "name": "State=Error"
+      }
+    ]
+  },
+  "componentProperties": {
+    "CMP-003 PrimaryButton": {
+      "Label#2:58": "TEXT",
+      "ShowIcon#2:59": "BOOLEAN",
+      "Icon#2:60": "INSTANCE_SWAP",
+      "Style": "VARIANT",
+      "State": "VARIANT"
+    },
+    "CMP-002 FilterChip": {
+      "Label#2:63": "TEXT",
+      "Selected": "VARIANT"
+    },
+    "CMP-004 SourceBadge": {
+      "Source": "VARIANT"
+    },
+    "CMP-006 CategoryStamp": {
+      "Category": "VARIANT",
+      "Visited": "VARIANT",
+      "Size": "VARIANT"
+    },
+    "CMP-001 ContentCard": {
+      "Title#2:70": "TEXT",
+      "Place#2:71": "TEXT",
+      "Stamp#2:72": "INSTANCE_SWAP",
+      "SourceBadge#7:0": "INSTANCE_SWAP",
+      "Category#7:3": "TEXT",
+      "Status": "VARIANT"
+    },
+    "__FormField FormField": {
+      "Value#2:75": "TEXT",
+      "State": "VARIANT"
+    },
+    "CMP-005 EmptyState": {
+      "Title#2:78": "TEXT",
+      "Description#2:79": "TEXT",
+      "State": "VARIANT"
+    },
+    "CMP-007 InstagramEmbed": {
+      "State": "VARIANT"
+    }
+  },
+  "iconComponents": [
+    {
+      "id": "2:557",
+      "name": "Icon/add-outline"
+    },
+    {
+      "id": "2:561",
+      "name": "Icon/arrow-back-outline"
+    },
+    {
+      "id": "2:565",
+      "name": "Icon/bookmark-outline"
+    },
+    {
+      "id": "2:568",
+      "name": "Icon/cafe-outline"
+    },
+    {
+      "id": "2:573",
+      "name": "Icon/checkmark-outline"
+    },
+    {
+      "id": "2:576",
+      "name": "Icon/chevron-down-outline"
+    },
+    {
+      "id": "2:579",
+      "name": "Icon/document-outline"
+    },
+    {
+      "id": "2:583",
+      "name": "Icon/link-outline"
+    },
+    {
+      "id": "2:588",
+      "name": "Icon/logo-instagram"
+    },
+    {
+      "id": "2:593",
+      "name": "Icon/logo-youtube"
+    },
+    {
+      "id": "2:596",
+      "name": "Icon/map-outline"
+    },
+    {
+      "id": "2:601",
+      "name": "Icon/restaurant-outline"
+    },
+    {
+      "id": "2:608",
+      "name": "Icon/search-outline"
+    },
+    {
+      "id": "2:612",
+      "name": "Icon/sparkles-outline"
+    }
+  ],
+  "iconSource": {
+    "library": "Ionicons",
+    "type": "individual-svg-to-native-vectors",
+    "url": "https://github.com/ionic-team/ionicons/tree/main/src/svg",
+    "count": 14
+  },
+  "font": {
+    "family": "Noto Sans KR",
+    "weights": [
+      400,
+      500,
+      700
+    ],
+    "styles": [
+      "Regular",
+      "Medium",
+      "Bold"
+    ]
+  },
+  "prototype": {
+    "authoredNavigationLinks": [
+      {
+        "source": "4:268",
+        "destination": "4:343"
+      },
+      {
+        "source": "4:272",
+        "destination": "4:480"
+      },
+      {
+        "source": "4:294",
+        "destination": "4:416"
+      },
+      {
+        "source": "4:345",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:402",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:418",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:482",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:501",
+        "destination": "4:343"
+      },
+      {
+        "source": "4:535",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:598",
+        "destination": "4:343"
+      },
+      {
+        "source": "4:610",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:648",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:731",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:802",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:821",
+        "destination": "4:343"
+      },
+      {
+        "source": "4:849",
+        "destination": "4:343"
+      },
+      {
+        "source": "4:895",
+        "destination": "4:646"
+      },
+      {
+        "source": "4:547",
+        "destination": "4:480"
+      }
+    ],
+    "authoredLinkCount": 18,
+    "reactionSourceNodeCountIncludingCopies": 36,
+    "reactionSourceNodes": [
+      "4:986",
+      "4:989",
+      "4:1005",
+      "4:1010",
+      "4:1033",
+      "4:1036",
+      "4:1058",
+      "4:1065",
+      "10:864",
+      "10:871",
+      "4:1073",
+      "4:1081",
+      "4:1097",
+      "4:1100",
+      "4:1120",
+      "4:1131",
+      "4:802",
+      "4:821",
+      "4:849",
+      "4:895",
+      "4:268",
+      "4:272",
+      "4:294",
+      "4:345",
+      "4:402",
+      "4:418",
+      "4:482",
+      "4:501",
+      "10:854",
+      "10:861",
+      "4:535",
+      "4:547",
+      "4:598",
+      "4:610",
+      "4:648",
+      "4:731"
+    ],
+    "flowStartingPoints": [
+      {
+        "nodeId": "4:262",
+        "name": "저장함에서 시작"
+      },
+      {
+        "nodeId": "4:583",
+        "name": "첫 저장"
+      },
+      {
+        "nodeId": "4:646",
+        "name": "가져오기 확인"
+      }
+    ],
+    "scrolling": "VERTICAL; fixed footer on add/detail/import frames",
+    "verification": "18 authored navigation links; 36 reaction source nodes read back after NAVER defer patch; presentation playback not verified.",
+    "behavior": "design navigation only; does not execute login, storage, import or APIs",
+    "removedNavigationLinks": [
+      {
+        "source": "4:569",
+        "destination": "4:343",
+        "removedBy": "naver-memory-only-2026-10-03"
+      },
+      {
+        "source": "4:789",
+        "destination": "4:262",
+        "removedBy": "naver-memory-only-2026-10-03"
+      },
+      {
+        "source": "4:447",
+        "destination": "4:533",
+        "removedBy": "naver-deferred-mvp-2026-10-03"
+      },
+      {
+        "source": "4:743",
+        "destination": "4:262",
+        "removedBy": "naver-deferred-mvp-2026-10-03"
+      },
+      {
+        "source": "4:876",
+        "destination": "4:343",
+        "removedBy": "naver-deferred-mvp-2026-10-03"
+      }
+    ],
+    "apiActionBehavior": "Refresh/public playlist and future NAVER specimens are design-only; no provider requests or fabricated URLs. Deferred places notice navigates only to content import."
+  },
+  "verifiedSnapshots": [
+    {
+      "key": "screens",
+      "nodeId": "4:256",
+      "width": 2250,
+      "height": 1032,
+      "covers": [
+        "SCR-001",
+        "SCR-002",
+        "SCR-003",
+        "SCR-004",
+        "SCR-005"
+      ],
+      "localPath": "design/figma-current-screens.png",
+      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "date": "2026-10-03",
+      "revision": "naver-deferred-mvp-2026-10-03"
+    },
+    {
+      "key": "states",
+      "nodeId": "4:577",
+      "width": 2250,
+      "height": 1032,
+      "covers": [
+        "STATE-LibraryEmpty",
+        "STATE-AddError",
+        "STATE-ImportPreview",
+        "STATE-PlaceResults"
+      ],
+      "localPath": "design/figma-current-states.png",
+      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "date": "2026-10-03",
+      "revision": "naver-deferred-mvp-2026-10-03"
+    },
+    {
+      "key": "components",
+      "nodeId": "2:929",
+      "width": 2250,
+      "height": 814,
+      "covers": [
+        "CMP-003",
+        "CMP-002",
+        "CMP-004",
+        "CMP-006",
+        "CMP-001",
+        "CMP-005",
+        "CMP-007"
+      ],
+      "localPath": "design/figma-current-components.png",
+      "result": "visually-reviewed-after-repairs",
+      "date": "2026-10-03"
+    },
+    {
+      "key": "fullScroll",
+      "nodeId": "4:797",
+      "width": 440,
+      "height": 1362,
+      "covers": [
+        "SCR-004 current MVP full content: YouTube, Instagram, file import"
+      ],
+      "localPath": "design/figma-current-fullScroll.png",
+      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "date": "2026-10-03",
+      "revision": "naver-deferred-mvp-2026-10-03"
+    },
+    {
+      "key": "handoff",
+      "nodeId": "4:902",
+      "width": 1530,
+      "height": 503,
+      "covers": [
+        "screen/component mappings",
+        "collaboration notes",
+        "brand palette"
+      ],
+      "localPath": "design/figma-current-handoff.png",
+      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "date": "2026-10-03",
+      "revision": "naver-deferred-mvp-2026-10-03"
+    }
+  ],
+  "verifiedScreenStructure": {
+    "source": "Baseline plus scoped NAVER defer readback; native descendant counts from type-indexed traversal, excluding hidden instance children.",
+    "allRenderedFonts": [
+      "Noto Sans KR"
+    ],
+    "wholeUiRasterNodes": 0,
+    "imageFilledNodes": [],
+    "screens": [
+      {
+        "id": "4:262",
+        "name": "SCR-001 Library",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 16,
+          "INSTANCE": 18,
+          "VECTOR": 11,
+          "TEXT": 28,
+          "RECTANGLE": 2
+        },
+        "descendantCount": 75
+      },
+      {
+        "id": "4:343",
+        "name": "SCR-002 AddLink",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 1,
+        "types": {
+          "FRAME": 8,
+          "INSTANCE": 13,
+          "VECTOR": 3,
+          "TEXT": 18
+        }
+      },
+      {
+        "id": "4:416",
+        "name": "SCR-003 ContentDetail",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 1,
+        "types": {
+          "FRAME": 11,
+          "INSTANCE": 10,
+          "VECTOR": 8,
+          "TEXT": 15,
+          "RECTANGLE": 1
+        }
+      },
+      {
+        "id": "4:480",
+        "name": "SCR-004 Integrations",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 13,
+          "INSTANCE": 17,
+          "VECTOR": 8,
+          "TEXT": 20
+        },
+        "descendantCount": 58
+      },
+      {
+        "id": "4:533",
+        "name": "SCR-005 Places · NAVER 보류 안내",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 4,
+          "INSTANCE": 3,
+          "VECTOR": 2,
+          "TEXT": 7
+        },
+        "descendantCount": 16
+      },
+      {
+        "id": "4:583",
+        "name": "STATE-LibraryEmpty 새 설치 · 빈 저장함",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 3,
+          "TEXT": 7,
+          "INSTANCE": 4,
+          "RECTANGLE": 1,
+          "VECTOR": 1
+        }
+      },
+      {
+        "id": "4:608",
+        "name": "STATE-AddError 필수 링크 오류",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 6,
+          "INSTANCE": 8,
+          "VECTOR": 2,
+          "TEXT": 13
+        }
+      },
+      {
+        "id": "4:646",
+        "name": "STATE-ImportPreview 파일 확인 · UI 예시",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 1,
+        "types": {
+          "FRAME": 19,
+          "INSTANCE": 18,
+          "VECTOR": 14,
+          "TEXT": 22,
+          "RECTANGLE": 3
+        }
+      },
+      {
+        "id": "4:741",
+        "name": "STATE-PlaceResults · 보류 · 향후 검토용",
+        "width": 390,
+        "height": 844,
+        "scroll": "VERTICAL",
+        "fixedChildren": 0,
+        "types": {
+          "FRAME": 7,
+          "INSTANCE": 7,
+          "VECTOR": 5,
+          "TEXT": 10
+        },
+        "descendantCount": 29
+      }
+    ],
+    "activeMvpScreens": 4,
+    "deferredScreens": 1
+  },
+  "visualRepairs": [
+    "Explicit HUG/FILL/FIXED sizing for Auto Layout and text.",
+    "Scaled SVG outline stroke widths from the 512-unit source to icon dimensions; removed inherited fills on outline swaps.",
+    "Fixed 72/104px category paper height and saved/visited stamp selection.",
+    "Exposed card source/category properties and corrected example source badges.",
+    "Pinned import selection CTA and widened component review rows to prevent clipping."
+  ],
+  "codeConnectStatus": "local-node-to-source-map-only; not-published",
+  "collaborationStatus": {
+    "location": "connected-account-draft-file",
+    "teamInvitation": "not-performed",
+    "sharingPermissionChanges": "not-performed",
+    "libraryPublication": "not-performed",
+    "canonicalScreens": "page-level SCR/STATE roots",
+    "reviewCopies": "native editable clones; keep originals and copies aligned"
+  },
+  "limitations": [
+    "Design draft based on current app source; some spacing, copy and sample states differ from the running application.",
+    "Fixed 390x844 viewports intentionally show partial scrolling content; full integrations specimen is supplied separately.",
+    "Not all application loading, disconnect, migration/storage failure, filter or API states are represented.",
+    "Presentation playback, 320px layout, large text, keyboard, safe area, screen readers and iOS/Android remain unverified.",
+    "Nearby notifications, event-date matching, AI personalization, cloud sync and app-store delivery remain outside the implementation.",
+    "Current draft shows a public-playlist-configured / OAuth-not-configured specimen. NAVER API/results are deferred; preserved result designs are future examples only.",
+    "Hidden future native nodes are preserved. Current route /places has no search request; manual content map links still open an external map."
+  ],
+  "pendingValidations": [
+    "prototype-presentation-playback",
+    "additional-app-states",
+    "native-accessibility-and-device-layout",
+    "real-google-oauth"
+  ],
+  "previousFile": {
+    "fileKey": "sNrklbLn8Fd9HXMU3GLQUt",
+    "fileUrl": "https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt",
+    "manifest": "design/history/figma-manifest-2026-10-01.json",
+    "status": "historical; connected account lacks edit access; file not modified or deleted"
+  },
+  "previousAppSnapshots": {
+    "revision": "mmm-inspired-2026-10-01",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "paths": [
+      "design/app-preview.png",
+      "design/app-add-preview.png",
+      "design/app-detail-preview.png"
+    ],
+    "exampleData": "Screenshots use explicitly labeled UI examples entered locally; production installs have no seed content.",
+    "narrowScreenReview": "320 × 800 detail with long Korean title; clientWidth and scrollWidth both 320",
+    "platform": "web only; native iOS/Android, large text, keyboard and screen-reader behavior not verified"
+  },
+  "apiIntegrationHandoff": {
+    "screens": {
+      "SCR-004": "4:480",
+      "SCR-005": "4:533"
+    },
+    "components": {
+      "CMP-007": "2:928"
+    },
+    "guide": "docs/api-setup.md",
+    "verification": "Current import MVP and NAVER defer notice mirrored by this manual patch. Figma executes no live requests. Actual web saved-selection evidence is in docs/verification.md."
+  },
+  "baselineRecord": {
+    "manifest": "design/history/figma-manifest-2026-10-03-baseline.json",
+    "snapshots": [
+      "design/history/figma-baseline-screens-2026-10-03.png",
+      "design/history/figma-baseline-states-2026-10-03.png",
+      "design/history/figma-baseline-fullScroll-2026-10-03.png"
+    ],
+    "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
+    "note": "Full initial design baseline is preserved; sourceAppCommit remains the baseline, not a claim of whole-app synchronization after this manual patch."
+  },
+  "manualPatches": [
+    {
+      "id": "naver-memory-only-2026-10-03",
+      "date": "2026-10-03",
+      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
+      "sourceFiles": [
+        "src/app/places.tsx",
+        "src/app/integrations.tsx"
+      ],
+      "scope": "Manual NAVER read-only memory-results and integration-status-refresh subset; no broad redesign or component-library replacement.",
+      "affectedRoots": [
+        "4:533",
+        "4:1071",
+        "4:741",
+        "4:1132",
+        "4:480",
+        "4:1056",
+        "4:800"
+      ],
+      "affectedBoards": [
+        "4:256",
+        "4:577",
+        "4:797"
+      ],
+      "createdNodeIds": [
+        "13:888",
+        "I13:888;2:644",
+        "13:895",
+        "I13:895;2:644",
+        "13:902",
+        "I13:902;2:644"
+      ],
+      "mutatedNodeIds": [
+        "4:576",
+        "4:1090",
+        "4:796",
+        "4:1150",
+        "4:558",
+        "4:1082",
+        "4:533",
+        "4:1071",
+        "4:741",
+        "4:1132",
+        "4:782",
+        "I4:782;2:644",
+        "4:1148",
+        "I4:1148;2:644",
+        "4:789",
+        "I4:789;2:644",
+        "4:1149",
+        "I4:1149;2:644",
+        "10:856",
+        "I10:856;4:243",
+        "I10:856;4:244",
+        "I10:856;4:244;2:597",
+        "I10:856;4:244;2:598",
+        "I10:856;4:244;2:599",
+        "I10:856;4:244;2:600",
+        "I10:856;4:247",
+        "I10:856;4:248",
+        "I10:856;4:249",
+        "10:866",
+        "I10:866;4:243",
+        "I10:866;4:244",
+        "I10:866;4:244;2:597",
+        "I10:866;4:244;2:598",
+        "I10:866;4:244;2:599",
+        "I10:866;4:244;2:600",
+        "I10:866;4:247",
+        "I10:866;4:248",
+        "I10:866;4:249",
+        "4:857",
+        "I4:857;4:243",
+        "I4:857;4:244",
+        "I4:857;4:244;2:597",
+        "I4:857;4:244;2:598",
+        "I4:857;4:244;2:599",
+        "I4:857;4:244;2:600",
+        "I4:857;4:247",
+        "I4:857;4:248",
+        "I4:857;4:249",
+        "10:857",
+        "I10:857;2:658",
+        "10:867",
+        "I10:867;2:658",
+        "4:869",
+        "I4:869;2:658",
+        "10:858",
+        "I10:858;2:644",
+        "10:868",
+        "I10:868;2:644",
+        "4:876",
+        "I4:876;2:644",
+        "13:888",
+        "I13:888;2:644",
+        "4:480",
+        "13:895",
+        "I13:895;2:644",
+        "4:1056",
+        "13:902",
+        "I13:902;2:644",
+        "4:800"
+      ],
+      "removedNodeIds": [
+        "4:559",
+        "4:560",
+        "4:561",
+        "I4:561;2:661",
+        "4:563",
+        "I4:563;2:663",
+        "4:565",
+        "I4:565;2:663",
+        "4:567",
+        "I4:567;2:663",
+        "4:569",
+        "I4:569;2:644",
+        "4:1083",
+        "4:1084",
+        "4:1085",
+        "I4:1085;2:661",
+        "4:1086",
+        "I4:1086;2:663",
+        "4:1087",
+        "I4:1087;2:663",
+        "4:1088",
+        "I4:1088;2:663",
+        "4:1089",
+        "I4:1089;2:644",
+        "4:760",
+        "4:761",
+        "I4:761;2:663",
+        "4:763",
+        "I4:763;2:661",
+        "4:765",
+        "I4:765;2:663",
+        "4:767",
+        "I4:767;2:663",
+        "4:1141",
+        "4:1142",
+        "I4:1142;2:663",
+        "4:1143",
+        "I4:1143;2:661",
+        "4:1144",
+        "I4:1144;2:663",
+        "4:1145",
+        "I4:1145;2:663"
+      ],
+      "refreshButtonNodeIds": [
+        "13:888",
+        "13:895",
+        "13:902"
+      ],
+      "changes": [
+        "Removed NAVER result classification and persistent-save actions, including the old save-to-library prototype navigation.",
+        "Displayed original-source and NAVER-map confirmation actions; design examples do not open a fabricated URL or execute a provider request.",
+        "Explained memory-only results cleared on screen exit/new query and after at most 24 hours.",
+        "Changed integration search CTA to 장소 검색하고 확인 and described that results are not kept in the library.",
+        "Added 연결 상태 다시 확인 with existing Secondary/Default native button instances to canonical, review and full-scroll integration frames."
+      ],
+      "verification": {
+        "sourceReviewPairs": [
+          {
+            "source": "4:480",
+            "copy": "4:1056",
+            "textParity": true,
+            "sourceChildren": 8,
+            "copyChildren": 8
+          },
+          {
+            "source": "4:533",
+            "copy": "4:1071",
+            "textParity": true,
+            "sourceChildren": 7,
+            "copyChildren": 7
+          },
+          {
+            "source": "4:741",
+            "copy": "4:1132",
+            "textParity": true,
+            "sourceChildren": 5,
+            "copyChildren": 5
+          }
+        ],
+        "rootDimensions": "All canonical and review mobile roots remain 390x844.",
+        "fonts": "Noto Sans KR only in patched roots.",
+        "imageFilledNodes": [],
+        "reactionSourceNodeCount": 41,
+        "screenshots": "screens, states and fullScroll recaptured and visually reviewed after this patch; components and handoff unchanged.",
+        "fullScrollBounds": {
+          "id": "4:797",
+          "width": 440,
+          "height": 1650
+        },
+        "prototypePlayback": "not-verified",
+        "liveApiCalls": "not-performed-by-this-Figma-task; setup-before and fictional-result labels preserved"
+      },
+      "evidence": [
+        "design/figma-current-screens.png",
+        "design/figma-current-states.png",
+        "design/figma-current-fullScroll.png"
+      ]
+    },
+    {
+      "id": "naver-deferred-mvp-2026-10-03",
+      "date": "2026-10-03",
+      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
+      "sourceFiles": [
+        "src/app/index.tsx",
+        "src/app/integrations.tsx",
+        "src/app/places.tsx",
+        "src/features/integrations/NaverPlacesScreen.tsx"
+      ],
+      "scope": "Manual current MVP subset: YouTube public playlist ready, Instagram links, file import; NAVER API deferred.",
+      "affectedRoots": [
+        "4:262",
+        "4:982",
+        "4:480",
+        "4:1056",
+        "4:800",
+        "4:533",
+        "4:1071",
+        "4:741",
+        "4:1132",
+        "4:902",
+        "4:250"
+      ],
+      "affectedBoards": [
+        "4:256",
+        "4:577",
+        "4:797",
+        "4:902"
+      ],
+      "mutatedNodeIds": [
+        "10:855",
+        "10:865",
+        "4:856",
+        "4:508",
+        "4:519",
+        "4:529",
+        "4:1066",
+        "4:1067",
+        "4:1070",
+        "4:828",
+        "4:835",
+        "4:543",
+        "4:558",
+        "4:576",
+        "4:1078",
+        "4:1082",
+        "4:1090",
+        "4:487",
+        "4:1060",
+        "4:807",
+        "4:489",
+        "4:1062",
+        "4:809",
+        "4:274",
+        "4:991",
+        "4:491",
+        "4:1064",
+        "4:811",
+        "4:522",
+        "4:1069",
+        "4:490",
+        "4:1063",
+        "4:810",
+        "4:540",
+        "4:1075",
+        "4:541",
+        "4:1076",
+        "4:542",
+        "4:1077",
+        "4:547",
+        "4:1081",
+        "4:533",
+        "4:1071",
+        "4:748",
+        "4:1136",
+        "4:741",
+        "4:1132",
+        "4:770",
+        "4:1147",
+        "4:1048",
+        "4:447",
+        "10:858",
+        "10:868",
+        "4:876",
+        "4:743",
+        "4:1134",
+        "4:904",
+        "4:255",
+        "4:253",
+        "4:252",
+        "20:832",
+        "10:853",
+        "10:863",
+        "4:837",
+        "10:860",
+        "10:870",
+        "4:884",
+        "10:861",
+        "10:871",
+        "4:895",
+        "4:479",
+        "4:532",
+        "4:740"
+      ],
+      "createdNodeIds": [
+        "20:830",
+        "20:832"
+      ],
+      "hiddenNodeIds": [
+        "10:855",
+        "10:865",
+        "4:856",
+        "4:508",
+        "4:519",
+        "4:529",
+        "4:1066",
+        "4:1067",
+        "4:1070",
+        "4:828",
+        "4:835",
+        "4:543",
+        "4:558",
+        "4:576",
+        "4:1078",
+        "4:1082",
+        "4:1090"
+      ],
+      "removedNavigationSources": [
+        "4:447",
+        "4:1048",
+        "10:858",
+        "10:868",
+        "4:876",
+        "4:743",
+        "4:1134"
+      ],
+      "changes": [
+        "Hidden NAVER service card and unconfigured OAuth/setup copy in canonical, review and full-scroll screens; existing native nodes preserved.",
+        "Kept public playlist input and empty-input disabled action; added native input/button clones to full-scroll specimen.",
+        "Replaced active places screen with no-API defer notice and return-to-import navigation.",
+        "Marked old place-result state as deferred future specimen and removed its navigation.",
+        "Aligned home import copy and Figma brief/handoff with current MVP; original/manual NAVER links remain usable.",
+        "Corrected outdated review captions and explicit two-line intro copy after visual inspection."
+      ],
+      "verification": {
+        "sourceReviewPairs": [
+          {
+            "source": "4:262",
+            "copy": "4:982",
+            "textParity": true
+          },
+          {
+            "source": "4:480",
+            "copy": "4:1056",
+            "textParity": true
+          },
+          {
+            "source": "4:533",
+            "copy": "4:1071",
+            "textParity": true
+          },
+          {
+            "source": "4:741",
+            "copy": "4:1132",
+            "textParity": true
+          }
+        ],
+        "integrationsFullScrollTextParity": true,
+        "rootDimensions": "Canonical and review mobile roots remain 390x844; full-content frame 390x1294.",
+        "fonts": [
+          "Noto Sans KR"
+        ],
+        "imageFilledNodes": [],
+        "reactionSourceNodeCount": 36,
+        "visibleReactionSourceNodeCount": 36,
+        "flowStartingPoints": [
+          {
+            "nodeId": "4:262",
+            "name": "저장함에서 시작"
+          },
+          {
+            "nodeId": "4:583",
+            "name": "첫 저장"
+          },
+          {
+            "nodeId": "4:646",
+            "name": "가져오기 확인"
+          }
+        ],
+        "fullScrollBounds": {
+          "id": "4:797",
+          "width": 440,
+          "height": 1362
+        },
+        "screenshots": "screens, states, fullScroll and handoff captured and visually reviewed; targeted caption and intro repair followed by affected composition screenshots.",
+        "prototypePlayback": "not-verified",
+        "liveApiCalls": "Figma performs no API, OAuth, file, storage or real URL actions."
+      },
+      "evidence": [
+        "design/figma-current-screens.png",
+        "design/figma-current-states.png",
+        "design/figma-current-fullScroll.png",
+        "design/figma-current-handoff.png"
+      ]
+    }
+  ],
+  "mvp": {
+    "activeScreens": [
+      "SCR-001",
+      "SCR-002",
+      "SCR-003",
+      "SCR-004"
+    ],
+    "deferredScreen": "SCR-005",
+    "deferredState": "STATE-PlaceResults",
+    "publicYouTubePlaylist": "configured; OAuth not configured",
+    "naver": "deferred; no current route API calls",
+    "preserved": "manual NAVER share links and existing saved records"
+  },
+  "deferredValidations": [
+    "naver-provisioning-and-live-search"
+  ],
+  "beforeDeferRecord": {
+    "manifest": "design/history/figma-manifest-2026-10-03-before-naver-defer.json",
+    "snapshots": [
+      "design/history/figma-before-naver-defer-screens-2026-10-03.png",
+      "design/history/figma-before-naver-defer-states-2026-10-03.png",
+      "design/history/figma-before-naver-defer-fullScroll-2026-10-03.png",
+      "design/history/figma-before-naver-defer-handoff-2026-10-03.png"
+    ]
+  }
+}

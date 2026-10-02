@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { ScrollView, View, StyleSheet, ActivityIndicator, Linking } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { CATEGORIES } from '../../domain/content';
+import { CATEGORIES, displayContentTitle } from '../../domain/content';
 import { useLibrary } from '../../features/library/LibraryProvider';
 import { Screen, ScreenHeader } from '../../components/Screen';
 import { UiText } from '../../components/UiText';
 import { SourceBadge } from '../../components/SourceBadge';
 import { PrimaryButton } from '../../components/PrimaryButton';
 import { CategoryStamp } from '../../components/CategoryStamp';
+import { InstagramEmbed } from '../../components/InstagramEmbed';
+import { openNaverPlace } from '../../features/integrations/maps';
 import { tokens } from '../../theme/tokens';
 
 export default function ContentDetailScreen() {
@@ -26,19 +28,21 @@ export default function ContentDetailScreen() {
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.page}>
           <View style={styles.hero}>
             <CategoryStamp category={item.category} visited={item.visited} large />
-            <UiText variant="hero" style={styles.title}>{item.title}</UiText>
+            <UiText variant="hero" style={styles.title}>{displayContentTitle(item)}</UiText>
             <View style={styles.meta}><SourceBadge source={item.source} /><UiText variant="caption" muted>· {CATEGORIES.find(category => category.id === item.category)?.label}</UiText></View>
             {item.visited && <View style={styles.visited}><Ionicons name="checkmark-circle" size={15} color={tokens.color.green} /><UiText variant="caption" style={styles.visitedText}>방문 완료</UiText></View>}
           </View>
           <View style={styles.location}>
             <View style={styles.locationSymbol}><Ionicons name="location-outline" size={23} color={tokens.color.accent} /></View>
-            <View style={styles.locationText}><UiText variant="caption" muted>저장한 장소</UiText><UiText variant="subtitle" style={styles.placeName}>{item.placeName || '장소 미등록'}</UiText><UiText variant="caption" muted>지도 연결 전 · 직접 적은 장소예요</UiText></View>
+            <View style={styles.locationText}><UiText variant="caption" muted>저장한 장소</UiText><UiText variant="subtitle" style={styles.placeName}>{item.placeName || '장소 미등록'}</UiText><UiText variant="caption" muted>{item.place ? item.place.address : '직접 적은 장소예요'}</UiText></View>
           </View>
+          {!!item.placeName && <View style={{ marginTop: tokens.spacing.sm }}><PrimaryButton label={item.place ? '네이버 지도에서 보기' : '네이버 지도에서 장소 검색'} secondary icon="map-outline" onPress={async () => { setError(''); try { await openNaverPlace(item.placeName, item.place?.address, item.place); } catch { setError('지도를 열지 못했어요. 다시 시도해 주세요.'); } }} /></View>}
+          {item.source === 'instagram' && <InstagramEmbed key={item.url} url={item.url} />}
           <View style={styles.memo}>
             <View style={styles.sectionHeading}><Ionicons name="chatbubble-ellipses-outline" size={18} color={tokens.color.secondary} /><UiText style={styles.sectionLabel}>나의 메모</UiText></View>
             <UiText style={styles.memoText}>{item.note || '저장한 이유를 적어보세요.\n나중의 내가 더 쉽게 기억할 수 있어요.'}</UiText>
           </View>
-          <View style={styles.origin}><UiText variant="caption" muted>원본 링크</UiText><UiText variant="caption" muted selectable style={styles.url}>{item.url}</UiText><UiText variant="caption" muted style={styles.date}>{new Date(item.createdAt).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })} 저장</UiText></View>
+          <View style={styles.origin}><UiText variant="caption" muted>원본 링크</UiText><UiText variant="caption" muted selectable style={styles.url}>{item.url}</UiText><UiText variant="caption" muted style={styles.date}>{new Date(item.createdAt).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })} 저장</UiText>{item.external && <UiText variant="caption" muted>YouTube 제공 · 제목을 수정하면 내가 적은 제목으로 저장돼요.</UiText>}{item.importedFrom && <UiText variant="caption" muted>서비스에서 가져온 항목 · {new Date(Date.parse(item.importedFrom.fetchedAt) + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul' })}까지 보관</UiText>}</View>
         </ScrollView>
         <View style={styles.actionBar}>
           {error ? <UiText variant="caption" accessibilityRole="alert" style={styles.error}>{error}</UiText> : null}
