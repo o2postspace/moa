@@ -1,22 +1,37 @@
-# Figma 계정 연결과 동기화 상태
+# Figma 작업 파일과 동기화 상태
 
-2026-10-01에 새 계정 연결을 확인했습니다. 연결된 플랜은 `23010843의 팀` (`team::1687325519407076016`), student tier, admin role, View seat입니다. 이 확인은 새 계정의 연결 상태를 뜻하며 기존 모아 파일의 편집 권한이나 전체 MCP 호출 한도를 보장하지 않습니다.
+2026-10-03, 연결된 `23010843의 팀` 계정에서 **새 편집 가능한 Design 파일**을 만들었다. 현재 작업 파일은 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이며 file key는 `ejriXVtLOBDSwZ336vDKlZ`다. `모아 · 화면 & 디자인 시스템` 페이지(`0:1`)에 네이티브 텍스트, Auto Layout, 컴포넌트 인스턴스, 변수와 스타일을 구성했다.
 
-[기존 모아 Figma 파일](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt)의 metadata 조회 1회가 편집 권한 부족으로 거부됐습니다. 응답은 파일 소유자가 연결 계정을 편집자로 공유해야 한다고 안내했습니다. 이번 연결 확인에서는 호출 한도 오류가 발생하지 않았고 원격 노드·변수·화면을 변경하지 않았습니다.
+앱 소스 `59205e5`를 기준으로 MMM 참고 UI와 서비스 연결 흐름을 정리한 **디자인 초안**이다. 실제 앱과 픽셀 단위로 일치하는 자동 동기화 결과가 아니며 Figma의 결과 예시는 실제 계정 요청 결과를 뜻하지 않는다. Google/NAVER 키와 실제 OAuth·지역 검색 검증은 여전히 남아 있다.
 
-## 다음 동기화 작업
+## 현재 파일의 실제 구성
 
-기존 파일 소유자가 새 계정을 편집자로 초대한 후 기존 파일을 갱신하면 화면·컴포넌트 링크와 노드 ID를 유지할 수 있습니다. 또는 사용자가 새 파일을 작업 대상으로 선택하면 새 파일의 실제 ID를 기록하고 이전 파일 매핑과 구분해야 합니다. 계정 변경만으로 기존 파일 소유권이 이전되거나 새 파일이 생성되지는 않습니다.
+| 대상 | 실제 node / 상태 |
+| --- | --- |
+| 핵심 5화면 리뷰 보드 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
+| 빈 저장함·필수 입력 오류·가져오기 후보·장소 결과 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
+| 공통 컴포넌트 상태 보드 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
+| 서비스 연결 전체 스크롤 구성 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
+| 디자인·개발 Handoff | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
+| SCR-001~005 / CMP-001~007 | 실제 원격 node 생성. [매핑](design-handoff.md#디자인-id--코드)과 [manifest](../design/figma-manifest.json) 참고 |
+| 변수·글자·아이콘 | primitive 31개 + semantic alias 31개, Noto Sans KR 텍스트 스타일 8개, Ionicons SVG 컴포넌트 14개 |
+| 프로토타입 | 화면 이동 reaction 22개 등록·읽기 확인. 재생 검증은 별도 |
 
-권한이 준비되면 다음 순서로 진행합니다.
+원본 화면은 페이지의 최상위 프레임으로 두었고 리뷰 보드 안에는 편집 가능한 복제본을 배치했다. 컴포넌트 인스턴스는 공통 메인 컴포넌트를 참조한다. **화면 내부를 수정할 때는 원본과 리뷰 복제본을 함께 관리**한다. 리뷰 보드만 수정하면 프로토타입 원본과 차이가 생긴다.
 
-1. `design/figma-manifest.json`의 기존 노드와 컬렉션을 실제 원격 파일에서 읽어 확인합니다.
-2. `design/tokens.json`을 기준으로 색·모서리·컨트롤 크기와 텍스트 스타일을 갱신합니다.
-3. 기존 CMP-001~005 컴포넌트를 보존하며 갱신하고 CMP-006 CategoryStamp를 네이티브 컴포넌트로 추가합니다.
-4. SCR-001 저장함, SCR-002 링크 추가, SCR-003 상세 화면을 편집 가능한 텍스트·Auto Layout·컴포넌트 인스턴스로 구성합니다.
-5. 실제 API 연동으로 변경되는 추가/상세 흐름은 최종 코드가 준비된 뒤 반영합니다. 현재 SVG 초안과 API 연동 완료 화면을 동일한 결과로 취급하지 않습니다.
-6. 원격 구조와 스크린샷을 검증한 뒤 manifest의 실제 동기화 상태와 노드 ID를 갱신합니다.
+## 협업 시 갱신 순서
 
-현재 코드에 반영된 MMM 참고 리디자인은 이전 Figma 파일과 아직 동기화되지 않았습니다. 전달 자료는 `design/moa-ui-refresh.svg`, `docs/ui-refresh.md`와 현재 앱 스크린샷입니다. `design/figma-preview.png`는 이전 Figma 디자인 검증 이미지이며 새 디자인 완료 증거가 아닙니다.
+1. 현재 file key와 `design/figma-manifest.json`의 실제 node를 확인한다. 예전 파일의 ID를 새 파일에 적용하지 않는다.
+2. 토큰 원본 `design/tokens.json`과 Figma primitive·alias를 함께 비교한다. 앱 토큰 변경은 `npm run tokens:generate`와 `npm run tokens:check`를 따른다.
+3. CMP 메인 컴포넌트의 variant·text·instance swap 속성을 갱신한 뒤 상태 보드에서 확인한다.
+4. SCR 원본과 리뷰 복제본을 함께 갱신하고 정상·빈·오류·설정 전 상태를 분리한다. 사용자 예시·모의 결과·실제 API 결과를 구분한다.
+5. 구조 읽기와 새 캡처로 수정 범위를 확인한다. 현재 검증 범위·미확인 항목·증거 파일은 manifest에 기록한다.
+6. 변경 이유·SCR/CMP ID·node 링크·캡처를 기능별 PR에 남긴다. 파일 생성이나 reaction 등록만으로 앱 구현·접근성·프로토타입 재생 검증을 완료 처리하지 않는다.
 
-이번 연결 확인에서는 새 파일 생성, 소유권 이전, 라이브러리 게시, Code Connect 게시, 프로토타입 설정을 수행하지 않았습니다.
+이 파일은 연결 계정의 draft 작업 파일이다. 팀원 초대·공유 권한 변경·팀 라이브러리 게시·Code Connect 게시는 수행하지 않았다. `design/component-map.json`은 로컬 코드 매핑이며 게시된 Code Connect가 아니다. Figma WEB code syntax는 토큰 대응을 돕는 표기이고 실제 CSS 변수 구현을 보장하지 않는다.
+
+## 이전 파일 기록
+
+[이전 모아 파일](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt)은 현재 연결 계정에서 편집 권한 부족으로 조회가 거부됐다. 그 이전 UI 갱신 시의 호출 한도 오류와 구분한다. 사용자가 새 계정에서 새로 만들도록 요청하여 현재 파일을 만들었으며 기존 파일의 소유권 이전·변경·삭제는 하지 않았다.
+
+이전 node·검증 기록은 `design/history/figma-manifest-2026-10-01.json`에 보존한다. `design/figma-preview.png`와 `design/moa-ui-refresh.svg`는 이전 전달 자료이고 새 5화면 작업 파일의 완료 증거로 사용하지 않는다.

@@ -45,8 +45,8 @@
 - 기능별 브랜치와 리뷰 가능한 PR을 사용한다. 기존 UI PR을 base로 한 API PR의 의존관계를 기록하고 main에 강제 푸시하지 않는다.
 - 토큰 원본은 design/tokens.json이다. 변경 후 npm run tokens:generate로 생성 코드를 함께 갱신한다.
 - SCR-001~003을 보존하고 SCR-004 서비스 연결, SCR-005 장소 검색, CMP-007 InstagramEmbed를 현재 코드 매핑에 기록한다. 실제 node가 없는 매핑은 Figma 완료로 표시하지 않는다.
-- 새 Figma 계정 김찬결/23010843의 팀 연결은 확인했으나 기존 모아 파일 요청은 편집 권한 부족으로 거부됐다. 이전 quota 오류와 구분한다. docs/figma-sync.md를 따르고 권한이나 사용자 지정 파일이 준비되면 실제 node를 확인한다.
-- 기존 node·스타일을 보존하며 갱신한다. SVG·이전 Figma 캡처는 최신 API 화면 동기화 증거가 아니다. 자동 동기화·프로토타입·Code Connect 게시 완료를 주장하지 않는다.
+- 현재 Figma는 연결 계정에 새로 만든 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이다. docs/figma-sync.md와 현재 manifest의 실제 node를 따른다. 기존 sNrklbLn8Fd9HXMU3GLQUt 파일은 권한 부족으로 변경하지 않았으며 역사 기록을 보존한다.
+- 새 파일의 SCR/CMP node·스타일·변수·인스턴스를 보존하며 갱신한다. 최상위 원본 화면과 리뷰 보드 복제본을 함께 관리한다. 5화면·4상태·7종 컴포넌트·62변수와 화면 이동 reaction 22개를 구성했으나 자동 픽셀 동기화·프로토타입 재생 검증·팀 라이브러리/Code Connect 게시 완료를 주장하지 않는다. SVG·이전 Figma 캡처는 새 파일의 검증 증거가 아니다.
 - 전체/방문 탭과 검색·분류·출처 조건을 함께 적용하고 선택 입력을 접어도 값을 보존한다. 상태·설정 전 안내·로딩·오류·고정 액션·초점을 검증한다.
 
 ## 완료·인수인계

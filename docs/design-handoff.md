@@ -1,57 +1,56 @@
 # 디자인 · 개발 협업
 
-2026-10-01 기준. 앱 작업명은 **모아**. React Native + Expo + TypeScript로 작은 기능 단위씩 만든다. Figma 파일과 GitHub 저장소를 생성했다. 업로드·CI 확인 상태는 `docs/github-setup.md`에 기록한다.
+2026-10-03 기준. 앱 작업명은 **모아**. React Native + Expo + TypeScript로 작은 기능 단위씩 만든다. 현재 UI/UX 작업 파일과 실제 코드 연결을 아래에 기록한다.
 
-- Figma 파일: [모아 · 앱 디자인 & 개발](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt)
-- GitHub 저장소: [o2postspace/moa](https://github.com/o2postspace/moa). 기능별 브랜치·PR로 협업하며 [Codex 인수인계](codex-handoff.md)를 시작점으로 사용
-- 제품 / 디자인 / 개발 담당자: 팀 지정 후 기록
+- 현재 Figma: [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ) — 연결 계정의 새 draft 파일
+- GitHub: [o2postspace/moa](https://github.com/o2postspace/moa), [API·디자인 draft PR #2](https://github.com/o2postspace/moa/pull/2)
+- 개발 시작점: [Codex 인수인계](codex-handoff.md), 제품 / 디자인 / 개발 담당자는 팀 지정 후 기록
 
-## 두 번째 UI와 현재 전달 상태
+## 현재 디자인 전달 상태
 
-앱 코드에 흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하는 리디자인을 반영했다. 전체 저장/방문 완료 탭, 펼쳐지는 출처 메뉴, CategoryStamp 분류 종이 아이콘, 장소·메모 선택 입력 접기, 추가·상세의 고정 하단 액션, 필수 입력 오류의 초점 이동을 제공한다. 모아의 브랜드색 `#C94C2B`는 유지하며 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`을 사용한다.
+흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하고 모아의 브랜드색 `#C94C2B`를 유지한다. 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`이다. 전체/방문 탭, 출처·분류, CategoryStamp, 선택 정보와 하단 주요 액션을 공통 기준으로 관리한다.
 
-**실제 Figma 파일은 이전 디자인이다.** 앞선 UI 리디자인은 호출 한도 때문에 갱신하지 못했고, 현재 새 계정은 기존 파일 편집 권한이 없어 갱신하지 못했다. [최신 연결 상태](figma-sync.md)를 따른다. 아래 기존 node 링크는 유지하지만 현재 코드와 일치하는 화면으로 보지 않는다. [새 UI 전달 안내](ui-refresh.md)와 [3화면 SVG 초안](../design/moa-ui-refresh.svg)은 로컬 전달물이며 API 연결 화면을 포함하지 않는다. 자동 동기화·클릭 프로토타입·Code Connect 게시 완료를 뜻하지 않는다.
+새 파일에는 편집 가능한 텍스트·Auto Layout·컴포넌트 인스턴스로 핵심 5화면과 4가지 상태, 서비스 연결 전체 스크롤 구성, 컴포넌트 상태·Handoff 보드를 만들었다. 앱 소스 `59205e5`를 기준으로 만든 디자인 초안이다. 모든 코드 상태나 반응형·키보드·safe area를 구현한 파일 또는 앱과 픽셀 단위로 일치하는 동기화 결과로 보지 않는다.
 
-원격 갱신 시 기존 SCR/CMP 화면 루트·메인 컴포넌트·변수 컬렉션 ID를 보존하고 토큰 → 컴포넌트 → 화면 순으로 수정한다. `CategoryStamp`의 새 네이티브 컴포넌트와 출처 메뉴·선택 정보 펼침·오류·방문 완료 상태를 추가한 뒤 390px·320px에서 비교한다. 실제 반영과 구조·시각 검증이 끝난 후 manifest의 새 상태와 캡처를 기록한다. 상세 순서는 [UI 리디자인 전달](ui-refresh.md)을 따른다.
+이전 파일은 현재 연결 계정에서 편집 권한이 없어 사용자 요청에 따라 새 파일을 만들었다. [이전 파일](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt)과 기존 기록은 보존한다. [Figma 작업 상태](figma-sync.md), [UI 전달](ui-refresh.md), [현재 manifest](../design/figma-manifest.json)를 따른다.
 
 ## Figma 파일 구조
 
-| 페이지 | 역할 | 현재 상태 |
+| 페이지 / 보드 | 역할 | 실제 node |
 | --- | --- | --- |
-| `00 Brief` | 사용자 문제, 이번 버전 범위, 완료 기준, 미확정 사항 | 페이지 생성, 내용은 비어 있음 |
-| `01 Flows` | 링크 추가 → 저장함 → 상세, 오류·취소·복구 흐름 | 페이지 생성, 내용은 비어 있음 |
-| `02 Design & Handoff` | Foundations / Components / Screens / Handoff 섹션 | 토큰·컴포넌트·3개 화면 생성. Handoff 섹션은 비어 있음 |
+| 모아 · 화면 & 디자인 시스템 | 현재 단일 페이지 | [0:1](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=0-1) |
+| 핵심 5화면 리뷰 | 저장함·추가·상세·서비스 연결·장소 검색 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
+| 상태 리뷰 | 빈 저장함·필수 입력 오류·가져오기 후보·장소 결과 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
+| 공통 컴포넌트 상태 | CMP-001~007 variant·보조 입력·아이콘 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
+| 서비스 연결 전체 스크롤 | 첫 뷰포트 아래 내용 확인 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
+| Handoff | 토큰·코드·검증 범위·협업 안내 | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
 
-현재 Figma Starter의 3페이지 제한에 맞춘 실제 구조다. 페이지를 추가할 수 있는 플랜으로 옮기면 네 섹션을 별도 페이지로 분리한다. 아래의 `05 Handoff`는 현재 세 번째 페이지 안의 `Handoff` 섹션을 뜻한다.
+페이지 최상위의 SCR/STATE 프레임은 프로토타입 원본이다. 리뷰 보드에는 편집 가능한 복제본을 배치했으며 컴포넌트 인스턴스는 메인 컴포넌트를 참조한다. 원본과 리뷰 복제본을 함께 갱신한다. 원본 화면의 실제 node를 아래 코드 표에 연결한다.
 
-## 현재 Figma 검증 상태
+## 현재 확인 범위
 
-[이전 3개 화면 리뷰 보드](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-26)는 첫 UI의 시각 검증을 통과했다. 검증 캡처와 범위는 `design/figma-manifest.json`에 기록되어 있다. 이 검증은 첫 실행의 빈 저장함, 링크 추가, 예시 콘텐츠 상세를 포함하며 이번 리디자인은 포함하지 않는다.
+원격 생성·구조 읽기로 실제 SCR/CMP node와 primitive 31개·semantic alias 31개, Noto Sans KR 텍스트 스타일 8개, Ionicons SVG 컴포넌트 14개를 확인했다. 화면 이동 reaction 22개를 등록하고 읽기 확인했다. 프로토타입 재생 검증은 별도이며 로그인·검색·저장은 디자인에서 실제로 실행되지 않는다. 최신 시각 검증과 캡처 범위는 manifest에 기록한다.
 
-[컴포넌트 상태 보드](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=9-116)와 이후 ContentCard 가로 배치 수정은 생성 응답으로 구조를 확인했지만 최종 시각 재검증 전이다. Figma Starter의 도구 호출 한도로 다음 캡처가 막혔다. Foundations도 시각 캡처 검증 전이다. 앞서 검증한 3개 화면에는 ContentCard 인스턴스가 없어 이 수정으로 화면 내용은 바뀌지 않았다.
-
-`00 Brief`, `01 Flows`, `Handoff` 내용과 클릭 이동 프로토타입 연결은 아직 작성하지 않았다. 기획·흐름·협업 기준은 현재 로컬 문서로 제공한다. 팀 리뷰 후 이 내용을 Figma에 옮기고 미검증 보드를 다시 확인해야 한다. 파일 생성이나 화면 검증을 전체 인수인계·프로토타입 완료로 처리하지 않는다.
-
-프레임 이름은 `SCR-001 / Library / Empty / iOS`처럼 쓴다. 컴포넌트는 `CMP-001 / ContentCard`로 이름을 고정한다. 모바일 크기는 팀의 작업 기준이며 특정 기기의 지원 보장은 아니다: iOS 390×844, Android 360×800. 320 폭, 큰 글자, safe area, 키보드 표시 상태도 별도로 확인한다.
+현재 연결 계정의 draft 파일이며 팀원 초대·공유 권한 변경·팀 라이브러리 게시·Code Connect 게시는 하지 않았다. 기본 화면은 390×844 기준이다. 320px·큰 글자·safe area·키보드·스크린 리더·실기기 동작은 별도 검증한다. Google/NAVER 키가 없어 실제 계정 OAuth·검색 성공을 Figma 결과로 주장하지 않는다.
 
 ## 디자인 ID ↔ 코드
 
 | ID | 이름 | Figma node | 코드 위치 |
 | --- | --- | --- | --- |
-| SCR-001 | Library | [4:32](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-32) | `src/app/index.tsx` |
-| SCR-002 | AddLink | [4:35](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-35) | `src/app/add.tsx` |
-| SCR-003 | ContentDetail | [4:38](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-38) | `src/app/content/[id].tsx` |
-| SCR-004 | Integrations | 원격 생성·매핑 대기 | `src/app/integrations.tsx` |
-| SCR-005 | Places | 원격 생성·매핑 대기 | `src/app/places.tsx` |
-| CMP-001 | ContentCard | [4:18](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-18) | `src/components/ContentCard.tsx` |
-| CMP-002 | FilterChip | [3:63](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-63) | `src/components/FilterChip.tsx` |
-| CMP-003 | PrimaryButton | [3:76](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-76) | `src/components/PrimaryButton.tsx` |
-| CMP-004 | SourceBadge | [3:58](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=3-58) | `src/components/SourceBadge.tsx` |
-| CMP-005 | EmptyState | [4:19](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt?node-id=4-19) | `src/components/EmptyState.tsx` |
-| CMP-006 | CategoryStamp | 원격 생성·매핑 대기 | `src/components/CategoryStamp.tsx` |
-| CMP-007 | InstagramEmbed | 원격 생성·매핑 대기 | `src/components/InstagramEmbed.tsx` |
+| SCR-001 | Library | [4:262](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-262) | `src/app/index.tsx` |
+| SCR-002 | AddLink | [4:343](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-343) | `src/app/add.tsx` |
+| SCR-003 | ContentDetail | [4:416](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-416) | `src/app/content/[id].tsx` |
+| SCR-004 | Integrations | [4:480](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-480) | `src/app/integrations.tsx` |
+| SCR-005 | Places | [4:533](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-533) | `src/app/places.tsx` |
+| CMP-001 | ContentCard | [2:864](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-864) | `src/components/ContentCard.tsx` |
+| CMP-002 | FilterChip | [2:664](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-664) | `src/components/FilterChip.tsx` |
+| CMP-003 | PrimaryButton | [2:659](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-659) | `src/components/PrimaryButton.tsx` |
+| CMP-004 | SourceBadge | [2:691](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-691) | `src/components/SourceBadge.tsx` |
+| CMP-005 | EmptyState | [2:888](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-888) | `src/components/EmptyState.tsx` |
+| CMP-006 | CategoryStamp | [2:820](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-820) | `src/components/CategoryStamp.tsx` |
+| CMP-007 | InstagramEmbed | [2:928](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-928) | `src/components/InstagramEmbed.tsx` |
 
-위 링크와 코드 매핑은 실제 `design/figma-manifest.json`을 기준으로 기록했다. 기존 연결의 node ID는 유지하고 코드 이동 시 표와 manifest를 함께 갱신한다. 새 `CMP-006 CategoryStamp`는 코드 매핑만 추가했으며 `figmaNodeId`는 `null`이다. 네이티브 Code Connect 게시 작업은 아직 수행하지 않았다.
+원격 node ID는 새 파일에서 확인한 값이다. 같은 SCR/CMP 제품 ID를 유지하되 이전 파일의 node와 혼용하지 않는다. 코드 이동·원본 교체 시 이 표와 manifest·component-map을 함께 갱신한다. 로컬 매핑은 게시된 Code Connect가 아니다.
 
 ## 첫 기능의 상태별 UX
 
@@ -65,17 +64,19 @@
 
 ## API 연결 디자인 추가분
 
+아래는 앱 코드의 UX 계약이다. 현재 Figma 초안에 모든 상태가 반영되었다는 뜻은 아니며 보드와 manifest에서 실제 생성 범위를 확인한다.
+
 SCR-004는 서비스 설정 전·연결됨·실패·재시도, 공개/계정 재생목록 선택, 페이지 추가, 후보 전체/개별 선택, 이미 저장된 링크 제외, 일괄 저장 실패·성공, 연결 해제 확인을 제공한다. 계정 연결로 가져온 모든 로컬 항목·메모를 먼저 삭제하고 Google 토큰 revoke를 요청한다. 원격 해제 실패는 실제 연결 상태를 유지하며 재시도한다. 파일 후보는 사용자 확인 후 저장하며 실제 내보내기 파일 규격 검증 완료를 뜻하지 않는다.
 
 SCR-002에는 사용자가 누를 때만 클립보드를 읽는 붙여넣기와 YouTube 제목 요청을 추가했다. API 제목과 사용자가 적은 제목을 구분하며 URL/제목 수정 중 오래된 요청 응답으로 덮어쓰지 않는다. SCR-003은 요청 시 공개 Instagram 원문을 화면에서만 표시하고 장소가 있으면 네이버 지도 열기를 제공한다. CMP-007의 HTML은 저장하거나 제목·장소 추출에 사용하지 않는다.
 
 SCR-005는 장소 검색·빈 결과·실패, 최대 5개 후보의 주소 확인, 분류 선택, 좌표가 확인된 장소 저장을 제공한다. 좌표가 없으면 저장할 수 없는 이유와 직접 링크 저장 경로를 안내한다. 근처 거리나 행사 기간을 추정해서 표시하지 않는다.
 
-2026-10-01 새 계정 연결은 확인했으나 기존 파일 편집 권한이 없어 이번 코드 화면을 원격 Figma에 반영하지 못했다. 앞선 호출 한도와 이번 권한 오류를 구분한다. [연결 상태](figma-sync.md)와 manifest의 최신 확인을 따른다. SCR-004~005/CMP-007은 코드 ID만 있으며 기존 원격 node를 변경하지 않았다.
+SCR-004~005와 CMP-007은 새 파일에 실제 node를 만들었다. 설정 전·후보 선택·결과 예시는 디자인 상태이며 실제 계정 응답을 뜻하지 않는다. 앱의 모든 실패·해제·로딩 상태가 Figma에 추가되었다고 가정하지 말고 이번 변경 범위의 상태를 원본·리뷰 보드와 함께 관리한다. [작업 상태](figma-sync.md)와 manifest의 검증 범위를 따른다.
 
 ## 리뷰에서 검증까지
 
-1. **리뷰 준비 `ready` · 디자이너:** 정상·빈 화면·오류·로딩 프레임, 카피, 상호작용, 접근성 설명을 `05 Handoff`에 묶고 이슈와 연결한다.
+1. **리뷰 준비 `ready` · 디자이너:** 정상·빈 화면·오류·로딩 프레임, 카피, 상호작용, 접근성 설명을 현재 Handoff 보드에 묶고 이슈와 연결한다.
 2. **승인 `approved` · 제품 담당 + 디자이너 + 개발자:** 기능 범위와 구현 가능성을 확인하고 프레임 버전·node URL·승인자를 기록한다. 팀에 Dev Mode가 있으면 확정 프레임을 Ready for dev로 표시한다.
 3. **구현 `inprogress` · 개발자:** 하나의 사용자 흐름을 PR로 만들고 SCR/CMP ID, 확정 디자인 링크, 실제 화면을 첨부한다. 확정 이후 변경은 이슈와 변경 기록에 남긴다.
 4. **검증 `verified` · 디자이너 + 개발자:** 디자인 비교, 저장·재실행·실패 흐름, 접근성을 확인한다. 불일치는 캡처와 ID로 남기고 해결 후 병합한다.

@@ -1,6 +1,36 @@
 # 모아 검증 기록
 
-2026-10-01, Windows / Node.js 24.15.0. 앱 버전 0.1.0. 실제 iOS·Android 기기 검증 전이며 스토어 설치 파일을 만들거나 배포하지 않았다.
+## 새 Figma 파일 · 2026-10-03
+
+연결 계정에서 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)을 새로 만들고 편집 가능한 네이티브 화면·공통 컴포넌트·변수·Handoff를 구성했다. 앱 소스 `59205e5`의 흐름을 바탕으로 한 디자인 초안이다. 기존 파일을 변경하거나 자동 픽셀 동기화를 구현한 작업은 아니다. 이번 작업에서는 앱/API 동작을 수정하지 않았다.
+
+| 보드 | 원격 보드 크기 | 새 캡처 · 시각 확인 |
+| --- | --- | --- |
+| [핵심 5화면 · 4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) | 2250×1032 | [screens](../design/figma-current-screens.png) · 확인 완료 |
+| [4가지 상태 · 4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) | 2250×1032 | [states](../design/figma-current-states.png) · 확인 완료 |
+| [컴포넌트 상태 · 2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) | 2250×814 | [components](../design/figma-current-components.png) · 확인 완료 |
+| [서비스 전체 구성 · 4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) | 440×1547 | [fullScroll](../design/figma-current-fullScroll.png) · 확인 완료 |
+| [Handoff · 4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) | 1530×503 | [handoff](../design/figma-current-handoff.png) · 확인 완료 |
+
+캡처에서 발견한 아이콘·종이 스탬프·카드·하단 동작·상태 행 레이아웃을 수정한 뒤 새 캡처로 다시 확인했다. SVG의 512px 원본을 24px 아이콘으로 줄일 때 strokeWeight를 함께 조정했고, 스탬프 종이 높이는 72/104px 고정으로 유지했다. 카드 텍스트는 FILL로 배치하고 출처 배지·분류 속성을 맞췄다. 가져오기 선택 저장 CTA를 하단에 고정하고 컴포넌트 상태 행의 폭 잘림을 수정했다.
+
+구조 읽기에서 SCR/STATE 원본 9개가 390×844이며 텍스트 폰트는 Noto Sans KR, IMAGE fill은 0개임을 확인했다. 공통 CMP 7종과 입력 보조 컴포넌트, primitive 31개·semantic alias 31개, 텍스트 스타일 8개, Ionicons SVG 아이콘 컴포넌트 14개를 확인했다. 원본은 페이지 최상위 프레임이며 리뷰 보드 복제본과 함께 관리한다. 실제 node와 범위는 [현재 manifest](../design/figma-manifest.json)를 따른다.
+
+기본 화면 이동 22개를 등록했다. 복제본·서비스 동작을 포함해 reaction이 있는 node 45개를 읽기 확인했고 시작점 3개(`4:262`, `4:583`, `4:646`)와 세로 스크롤을 설정했다. **프로토타입 재생은 아직 검증하지 않았다.** 연결·검색·저장 예시는 디자인 상태이며 실제 제공자 요청을 수행하지 않는다.
+
+| 이번 작업의 로컬 검사 | 결과 |
+| --- | --- |
+| `npm run typecheck` | 통과 |
+| `npm run tokens:check` | 토큰 원본과 생성 코드 일치 |
+| `npm run lint` | 통과 |
+
+팀 초대·공유 권한 변경·팀 라이브러리/Code Connect 게시는 수행하지 않았다. 픽셀 단위 앱 비교·320px/큰 글자·키보드·safe area·실기기 접근성은 별도 검증이다. Google/NAVER 키가 없어 실제 OAuth·재생목록·NAVER 검색 검증은 남아 있다. 공개 YouTube/Instagram의 이전 성공과 새 디자인 검증을 구분한다.
+
+## 이전 검사 기록 · 2026-10-01
+
+이하 내용은 2026-10-01 당시의 검사와 남은 작업 기록이다. 이후 새 Figma 파일의 상태·캡처·검사는 위 기록을 따른다. 아래 기존 Figma 권한/호출 한도와 이전 캡처는 새 파일의 현재 상태가 아니다.
+
+2026-10-01, Windows / Node.js 24.15.0. 앱 버전 0.1.0. 당시 실제 iOS·Android 기기 검증 전이며 스토어 설치 파일을 만들거나 배포하지 않았다.
 
 ## 자동 검사
 
@@ -25,7 +55,7 @@
 - 자격 증명이 없는 status에서 Google 계정·공개 재생목록·네이버 검색 버튼이 준비 전 상태로 표시됐다. API 설정 있음과 실제 계정 연결 완료는 별도의 상태다.
 - Google 실제 OAuth·계정/공개 재생목록 paging/import/revoke, NAVER 실제 검색·quota·영업 장소 검증은 발급 키가 없어 미실행이다. iOS/Android의 파일 선택·클립보드 권한·지도 앱/미설치 fallback·OAuth callback·AppState와 장시간 기한 정리·화면 읽기는 미실행이다.
 - 계정 해제 시 이 기기의 모든 계정 재생목록 항목을 먼저 저장소에서 삭제하고 remote revoke를 요청한다. 로컬 쓰기 실패는 revoke를 요청하지 않으며, 원격 실패는 실제 연결 상태를 유지하고 재시도한다. 모의 서버·저장소 테스트 범위와 실제 계정 미검증을 구분한다.
-- 새 Figma 계정 연결을 확인했지만 기존 파일 edit 권한 거부로 원격 갱신은 하지 않았다. 이번 권한 오류를 이전 Starter 호출 한도와 구분하며 `docs/figma-sync.md`와 manifest를 따른다.
+- 당시 새 Figma 계정 연결을 확인했지만 기존 파일 edit 권한 거부로 원격 갱신은 하지 않았다. 이번 권한 오류를 이전 Starter 호출 한도와 구분했으며 당시 매핑은 [이전 manifest](../design/history/figma-manifest-2026-10-01.json)에 보존했다. 이후 새 파일 생성은 위 기록을 따른다.
 
 이하 기록은 이전 링크 저장·UI 리디자인 단계의 동작 검사다. 아래 과거 Figma 캡처나 CI를 현재 API 화면의 증거로 사용하지 않는다.
 
@@ -45,7 +75,7 @@ Expo 웹 개발 서버에서 같은 앱 코드를 실행하고 아래 흐름을 
 
 ## 디자인 검증 범위
 
-편집 가능한 Figma 기본 화면 3개를 캡처해 글자·아이콘 수정 후 확인했다. [검토 이미지](../design/figma-preview.png)와 [manifest](../design/figma-manifest.json)에 확인 시점과 node ID를 기록했다. Starter 도구 한도에 도달해 이후 컴포넌트 상태 보드와 ContentCard 수정의 최종 시각 검증, Foundations 시각 검증, Brief·Flows·Handoff 작성, 클릭 프로토타입은 남아 있다. 로컬 [인수인계](design-handoff.md)와 [로드맵](roadmap.md)으로 팀이 작업을 이어갈 수 있다.
+편집 가능한 Figma 기본 화면 3개를 캡처해 글자·아이콘 수정 후 확인했다. [검토 이미지](../design/figma-preview.png)와 [이전 manifest](../design/history/figma-manifest-2026-10-01.json)에 확인 시점과 node ID를 기록했다. Starter 도구 한도에 도달해 이후 컴포넌트 상태 보드와 ContentCard 수정의 최종 시각 검증, Foundations 시각 검증, Brief·Flows·Handoff 작성, 클릭 프로토타입은 당시 남아 있었다. 로컬 [인수인계](design-handoff.md)와 [로드맵](roadmap.md)으로 이어갈 작업을 전달했다.
 
 ## 다음 검증
 
@@ -84,4 +114,4 @@ Expo 웹 개발 서버에서 같은 앱 코드를 실행하고 아래 흐름을 
 
 Noto Sans KR을 적용한 로컬 브라우저에서 SVG 초안을 1282×948로 렌더해 3개 화면의 잘림·겹침이 없는 것을 확인했다. [SVG 검토 이미지](../design/ui-refresh-preview.png)를 남겼다. 이 결과는 Figma 가져오기 결과나 라이브 컴포넌트·프로토타입 검증이 아니다.
 
-실제 Figma는 Starter 도구 호출 한도로 이전 디자인을 유지하고 있다. [리디자인 SVG](../design/moa-ui-refresh.svg)와 [전달 안내](ui-refresh.md)는 로컬 초안이며 라이브 파일 반영·프로토타입·Code Connect 완료가 아니다. `design/figma-preview.png`는 이전 UI의 검증 이미지다. 기존 node ID를 유지하는 원격 갱신과 새 시각 검증은 남아 있다.
+당시 실제 Figma는 Starter 도구 호출 한도로 이전 디자인을 유지했다. [리디자인 SVG](../design/moa-ui-refresh.svg)는 로컬 초안이며 라이브 파일 반영·프로토타입·Code Connect 완료가 아니었다. `design/figma-preview.png`는 그 이전 UI의 검증 이미지다. 기존 node ID를 유지하는 원격 갱신과 새 시각 검증은 당시 남아 있었다. 이후 연결 계정의 새 파일 작업과 현재 전달 상태는 위 2026-10-03 기록과 [전달 안내](ui-refresh.md)를 따른다.

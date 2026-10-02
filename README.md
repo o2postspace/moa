@@ -2,7 +2,7 @@
 
 여러 서비스에서 저장한 콘텐츠를 한곳에 정리하고, 이후 장소와 시기에 맞춰 다시 발견하도록 확장하는 모바일 앱입니다. 이름은 임시 작업명입니다.
 
-현재 개발 브랜치는 **codex/content-integrations**입니다. [UI PR #1](https://github.com/o2postspace/moa/pull/1)의 codex/mmm-ui-refresh head **835dd81**에서 시작한 기능 브랜치이며 main에는 아직 병합되지 않았습니다. API 작업은 UI PR을 기반으로 별도 PR에서 검토합니다.
+현재 개발 브랜치는 **codex/content-integrations**입니다. [UI PR #1](https://github.com/o2postspace/moa/pull/1)의 codex/mmm-ui-refresh head **835dd81**에서 시작한 기능 브랜치이며 main에는 아직 병합되지 않았습니다. API·Figma 협업 작업은 UI 브랜치를 base로 한 [draft PR #2](https://github.com/o2postspace/moa/pull/2)에서 검토합니다.
 
 ## 현재 사용할 수 있는 기능
 
@@ -61,7 +61,7 @@ npm run web    # Expo 웹, http://localhost:8081
 - UI/UX 전달: [디자인 기준](docs/design-handoff.md), [UI 리디자인](docs/ui-refresh.md), [Figma 연결 상태](docs/figma-sync.md), [컴포넌트 매핑](design/component-map.json)
 - [GitHub 협업 절차](docs/github-setup.md)와 .github/의 이슈·PR 템플릿·CI
 
-앱은 모아 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 새 Figma 계정 연결은 확인했지만 **기존 모아 파일 편집 권한이 없어 원격 디자인을 갱신하지 못했습니다.** 이번 제약은 이전 호출 한도와 구분합니다. [SVG 초안](design/moa-ui-refresh.svg)은 이전 3화면 전달용이며 서비스 연결·장소 검색 화면까지 반영한 최종 Figma가 아닙니다. 실제 node ID와 SCR/CMP 매핑은 [manifest](design/figma-manifest.json)를 따르며 자동 동기화·Code Connect 게시를 뜻하지 않습니다.
+앱은 모아 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 연결된 계정에 새 [Figma 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256)을 만들어 핵심 5화면, 4가지 상태, 공통 컴포넌트 7종과 변수 62개를 네이티브 요소로 구성했습니다. UI/UX 팀이 직접 수정할 수 있으며 원본 화면과 리뷰 보드 복제본을 함께 관리합니다. 소스 59205e5 기준의 디자인 초안이고 실제 API 성공이나 픽셀 단위 자동 동기화를 뜻하지 않습니다. 화면 이동 reaction 22개는 등록·읽기 확인했으며 재생 검증은 별도입니다. 현재 node와 확인 범위는 [manifest](design/figma-manifest.json)를 따릅니다. 팀 초대·라이브러리/Code Connect 게시는 수행하지 않았고 [이전 SVG](design/moa-ui-refresh.svg)와 이전 파일 기록은 보존합니다.
 
 ## 검사
 
