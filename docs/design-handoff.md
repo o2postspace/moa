@@ -21,7 +21,7 @@
 | 모아 · 화면 & 디자인 시스템 | 현재 단일 페이지 | [0:1](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=0-1) |
 | 핵심 5화면 리뷰 | 저장함·추가·상세·서비스 연결·장소 검색 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
 | 상태 리뷰 | 빈 저장함·필수 입력 오류·가져오기 후보·장소 결과 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
-| 공통 컴포넌트 상태 | CMP-001~007 variant·보조 입력·아이콘 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
+| 공통 컴포넌트 상태 | CMP-001–007 variant·보조 입력·아이콘 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
 | 서비스 연결 전체 스크롤 | 첫 뷰포트 아래 내용 확인 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
 | Handoff | 토큰·코드·검증 범위·협업 안내 | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
 
@@ -72,7 +72,7 @@ SCR-002에는 사용자가 누를 때만 클립보드를 읽는 붙여넣기와 
 
 SCR-005는 장소 검색·빈 결과·실패, 최대 5개 후보의 주소 확인, 분류 선택, 좌표가 확인된 장소 저장을 제공한다. 좌표가 없으면 저장할 수 없는 이유와 직접 링크 저장 경로를 안내한다. 근처 거리나 행사 기간을 추정해서 표시하지 않는다.
 
-SCR-004~005와 CMP-007은 새 파일에 실제 node를 만들었다. 설정 전·후보 선택·결과 예시는 디자인 상태이며 실제 계정 응답을 뜻하지 않는다. 앱의 모든 실패·해제·로딩 상태가 Figma에 추가되었다고 가정하지 말고 이번 변경 범위의 상태를 원본·리뷰 보드와 함께 관리한다. [작업 상태](figma-sync.md)와 manifest의 검증 범위를 따른다.
+SCR-004–005와 CMP-007은 새 파일에 실제 node를 만들었다. 설정 전·후보 선택·결과 예시는 디자인 상태이며 실제 계정 응답을 뜻하지 않는다. 앱의 모든 실패·해제·로딩 상태가 Figma에 추가되었다고 가정하지 말고 이번 변경 범위의 상태를 원본·리뷰 보드와 함께 관리한다. [작업 상태](figma-sync.md)와 manifest의 검증 범위를 따른다.
 
 ## 리뷰에서 검증까지
 

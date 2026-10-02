@@ -10,7 +10,7 @@
 | --- | --- |
 | [5화면 리뷰 보드](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) | 저장함·링크 추가·상세·서비스 연결·장소 검색 |
 | [상태 보드](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) | 빈 저장함·필수 입력 오류·가져오기 후보·장소 결과 예시 |
-| [컴포넌트 상태 보드](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) | CMP-001~007의 variant와 공통 상태 |
+| [컴포넌트 상태 보드](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) | CMP-001–007의 variant와 공통 상태 |
 | [서비스 연결 전체 구성](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) | 모바일 첫 뷰포트 아래의 서비스·설명·파일 가져오기 |
 | [Handoff 보드](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) | 토큰·코드 연결·미구현 범위와 협업 기준 |
 | `design/tokens.json` / `src/theme/tokens.ts` | 토큰 원본 / 앱 생성 코드 |

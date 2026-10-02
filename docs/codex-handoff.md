@@ -63,7 +63,7 @@ Google Cloud에서 YouTube Data API v3를 활성화한다. 공개 재생목록�
 | SCR-003 · src/app/content/[id].tsx | 표시 제목·원본·확인된 장소, 지도 열기·Instagram 원문, 수정·방문 |
 | SCR-004 · src/app/integrations.tsx | 설정/연결 상태, OAuth·재생목록/파일 후보·선택, 페이지·중복·해제 |
 | SCR-005 · src/app/places.tsx | 네이버 검색·주소 확인·분류·좌표 있는 결과 저장 |
-| CMP-001~006 · src/components/ | 카드·칩·버튼·출처·빈 상태·CategoryStamp. 토큰·접근성 유지 |
+| CMP-001–006 · src/components/ | 카드·칩·버튼·출처·빈 상태·CategoryStamp. 토큰·접근성 유지 |
 | CMP-007 · src/components/InstagramEmbed.tsx | 요청·오류·접기. InstagramFrame.web.tsx로 격리한 원문 표시; 현재 웹에서 활성화 |
 | src/features/integrations/api.ts | 로컬 주소·cookie·timeout·오류·타입 계약 |
 | readImportFile.ts, maps.ts · 같은 폴더 | 파일 선택/읽기, 지도 URL Scheme·웹 대체 |
@@ -108,7 +108,7 @@ API 제목 수동 변경 시 외부 데이터와 사용자 작성 데이터가 �
 
 현재 작업 파일은 새로 만든 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이다. 연결된 23010843의 팀 계정에서 생성했고 페이지 0:1에 편집 가능한 텍스트·Auto Layout·컴포넌트·변수를 구성했다. 소스 59205e5 기준 디자인 초안이며 픽셀 단위 동기화 결과가 아니다. 이전 sNrklbLn8Fd9HXMU3GLQUt 파일은 현재 계정에 편집 권한이 없어 변경하지 않았고 기록을 보존한다.
 
-SCR-001~005/CMP-001~007은 실제 node를 기록했다. 핵심 5화면·4상태·서비스 전체 구성·컴포넌트 상태·Handoff가 있고 primitive 31개+alias 31개, Noto Sans KR 스타일 8개, Ionicons SVG 컴포넌트 14개를 사용한다. 화면 이동 reaction 22개 등록·읽기 확인과 재생 검증을 구분한다. 원본 화면은 페이지 최상위이며 리뷰 보드 복제본과 함께 관리한다.
+SCR-001–005/CMP-001–007은 실제 node를 기록했다. 핵심 5화면·4상태·서비스 전체 구성·컴포넌트 상태·Handoff가 있고 primitive 31개+alias 31개, Noto Sans KR 스타일 8개, Ionicons SVG 컴포넌트 14개를 사용한다. 화면 이동 reaction 22개 등록·읽기 확인과 재생 검증을 구분한다. 원본 화면은 페이지 최상위이며 리뷰 보드 복제본과 함께 관리한다.
 
 현재 draft 파일이며 팀원 초대·공유 권한 변경·라이브러리/Code Connect 게시는 수행하지 않았다. 로컬 매핑과 API/검색 결과 예시를 실제 게시·실제 제공자 응답으로 설명하지 않는다. [디자인 node/코드 표](design-handoff.md#디자인-id--코드), [Figma 작업 기록](figma-sync.md), [manifest](../design/figma-manifest.json)의 최신 구조·시각 확인 범위를 따른다.
 
