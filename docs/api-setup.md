@@ -11,7 +11,7 @@ npm run api
 npm run web -- --port 8081
 ```
 
-서버 설정을 바꾸면 `npm run api`를 종료하고 다시 시작한다. 앱 공개 주소를 바꿨다면 Expo도 다시 시작한다. `localhost`와 `127.0.0.1`을 섞으면 계정 cookie가 일치하지 않는다. 서버는 loopback으로만 열리므로 휴대폰에서 이 주소로 연결되는 운영 서비스가 아니다.
+서버 설정을 바꾸면 `npm run api`를 종료하고 다시 시작한 뒤 앱의 **연결 상태 다시 확인**을 누른다. 앱 공개 주소를 바꿨다면 Expo도 다시 시작한다. `localhost`와 `127.0.0.1`을 섞으면 계정 cookie가 일치하지 않는다. 서버는 loopback으로만 열리므로 휴대폰에서 이 주소로 연결되는 운영 서비스가 아니다.
 
 자격 증명 없이도 링크 추가 → YouTube 제목 불러오기와 Instagram 공개 원문 표시를 시험할 수 있다. 두 경로는 실제 공개 API 응답을 확인했다. 개인 저장함 로그인 없이 모든 저장 콘텐츠를 조회하는 기능은 아니다.
 
@@ -25,6 +25,10 @@ npm run web -- --port 8081
 6. 50개 이상 목록에서 ‘더 불러오기’, 중복 제외, 비공개/삭제 영상, 연결 해제와 재연결을 실제 계정으로 확인한다. 연결 해제는 이 기기의 **모든 계정 재생목록 가져오기 항목과 메모**를 먼저 삭제한 뒤 Google 토큰을 revoke한다. 로컬 쓰기 실패는 해제를 중단하고, 원격 revoke 실패는 연결을 유지해 재시도한다.
 
 나중에 볼 동영상은 공식 API에서 조회할 수 없다. 좋아요 영상은 별도 API가 있지만 현재 화면에 포함하지 않았다. Testing의 refresh token/동의는 7일 제한이며 실제 공개 출시는 Google OAuth 검증·홈페이지·개인정보처리방침과 운영 인증 서버를 별도 준비해야 한다. 토큰은 현재 서버 메모리에만 있고 서버를 다시 시작하면 재연결이 필요하다.
+
+공개 재생목록은 `YOUTUBE_API_KEY`만으로 사용할 수 있다. 서버 재시작 → 연결 상태 다시 확인 → 공개 재생목록 URL 입력 → 불러오기 → 후보 확인 → 가져올 영상 선택 → 저장 순서다. Google 계정 로그인은 필요하지 않다. 서버에서 요청하므로 브라우저 HTTP referrer 제한을 적용한 키는 사용할 수 없다. [Google API 키 설정](https://docs.cloud.google.com/docs/authentication/api-keys)을 참고해 YouTube Data API v3로 사용 범위를 제한한다.
+
+2026-10-03에는 실제 키로 Google 공식 공개 재생목록 17개를 조회하고 웹 후보 목록·전체 선택 해제·개별 선택을 확인했다. 이 검토에서는 영상을 저장하지 않았다. 실제 Google 계정 OAuth와 50개 이상 목록의 페이지 이동은 별도 검증이다. 자세한 범위는 [검증 기록](verification.md)을 따른다.
 
 공식 기준: [Google Web Server OAuth](https://developers.google.com/identity/protocols/oauth2/web-server), [OAuth 테스트 사용자](https://support.google.com/cloud/answer/15549945), [YouTube 재생목록](https://developers.google.com/youtube/v3/docs/playlists/list), [YouTube 보존 정책](https://developers.google.com/youtube/terms/developer-policies).
 

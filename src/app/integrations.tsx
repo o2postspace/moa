@@ -81,8 +81,8 @@ export default function IntegrationsScreen() {
     {error || libraryError ? <UiText accessibilityRole="alert" style={styles.error}>{error || libraryError}</UiText> : null}
     {message || (youtube === 'connected' && status?.youtube.connected) ? <UiText accessibilityLiveRegion="polite" style={styles.message}>{message || '유튜브를 연결했어요. 가져올 재생목록을 선택해 주세요.'}</UiText> : null}
     {youtube && youtube !== 'connected' && <UiText accessibilityRole="alert" style={styles.error}>유튜브 연결을 완료하지 못했어요. 다시 시도해 주세요.</UiText>}
-    {!status && <PrimaryButton label="연결 상태 다시 확인" secondary loading={busy} onPress={() => run(refresh)} />}
-    <ServiceCard name="YouTube" icon="logo-youtube" state={status?.youtube.connected ? '계정 연결됨' : status?.youtube.oauthConfigured ? '계정 연결 가능' : '영상 링크로 시작'}>
+    <PrimaryButton label="연결 상태 다시 확인" secondary loading={busy} disabled={busy} onPress={() => run(refresh)} />
+    <ServiceCard name="YouTube" icon="logo-youtube" state={status?.youtube.connected ? '계정 연결됨' : status?.youtube.oauthConfigured ? '계정 연결 가능' : status?.youtube.playlistConfigured ? '공개 재생목록으로 시작' : '영상 링크로 시작'}>
       <UiText muted>내 재생목록을 골라서 가져오세요. ‘나중에 볼 동영상’은 유튜브에서 공개 API를 제공하지 않아요.</UiText>
       <PrimaryButton label="영상 링크 추가·제목 불러오기" secondary icon="link-outline" onPress={() => router.push('/add')} />
       {Platform.OS === 'web' ? <PrimaryButton label={status?.youtube.connected ? '내 재생목록 보기' : 'YouTube 계정 연결'} disabled={!status?.youtube.oauthConfigured || busy} secondary onPress={() => run(async () => {

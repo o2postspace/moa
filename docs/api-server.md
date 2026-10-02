@@ -71,6 +71,8 @@ npm run lint
 
 2026-10-01 실제 로컬 서버 검증에서는 자격 증명 없이 공개 YouTube `dQw4w9WgXcQ`의 oEmbed 제목·작성자 응답 성공을 확인했다. 공식 Instagram 문서의 공개 예시 `https://www.instagram.com/p/fA9uwTtkSN/`도 tokenless oEmbed 응답 성공, 표시용 HTML6,362자, 제목 필드 없음으로 확인했다. HTML은 검증 중 메모리에서만 확인하고 파일에 저장하지 않았다. 이 동작은 API key 또는 계정 OAuth가 필요한 재생목록·네이버 검색 검증을 뜻하지 않는다.
 
+2026-10-03에는 실제 `YOUTUBE_API_KEY`로 `/api/youtube/playlist`를 호출해 공개 재생목록 17개·HTTP 200 응답과 웹 후보 선택을 확인했다. 실제 Google 계정 OAuth와 NAVER 검색은 아직 검증하지 않았다. 서버 설정 후 앱의 ‘연결 상태 다시 확인’을 눌러 상태를 갱신한다. [실제 검증 범위](verification.md)
+
 - [Google Web Server OAuth](https://developers.google.com/identity/protocols/oauth2/web-server): callback, state, 토큰 교환·갱신·해제
 - [YouTube playlists.list](https://developers.google.com/youtube/v3/docs/playlists/list), [playlistItems.list](https://developers.google.com/youtube/v3/docs/playlistItems/list): 소유 재생목록·페이지·접근 제한
 - [YouTube videos.list](https://developers.google.com/youtube/v3/docs/videos/list): 좋아요 영상은 별도 API

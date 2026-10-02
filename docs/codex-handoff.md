@@ -1,6 +1,6 @@
 # 모아 개발 인수인계 · Codex 시작 문서
 
-2026-10-03, API 소스 59205e5와 새 Figma 작업 기준. 공개 저장소 [o2postspace/moa](https://github.com/o2postspace/moa)에 사용자 원본 저장 파일·로그인 정보·OAuth 토큰·환경 파일을 넣지 않는다. 다른 개발자의 변경과 기존 사용자 데이터를 보존하며 기능별로 이어간다.
+2026-10-03, API 서버 소스 59205e5, 새 Figma 작업과 실제 공개 재생목록 검증 기준. 공개 저장소 [o2postspace/moa](https://github.com/o2postspace/moa)에 사용자 원본 저장 파일·로그인 정보·OAuth 토큰·환경 파일을 넣지 않는다. 다른 개발자의 변경과 기존 사용자 데이터를 보존하며 기능별로 이어간다.
 
 ## 먼저 읽을 순서
 
@@ -30,7 +30,7 @@
 | 기본 저장함 | 수동 링크·제목·분류·장소 문자열·메모, 중복·검색·출처 필터, 전체/방문 완료, 상세·수정·원본 열기 |
 | YouTube 영상 | 웹 붙여넣기·제목 불러오기. 키 없는 공식 oEmbed 실제 응답 성공 확인 |
 | Instagram 공개 원문 | 사용자 요청 시 웹 상세에서 tokenless oEmbed 표시. 공식 공개 예시로 API 응답 성공 확인; 저장함·제목·장소 추출 아님 |
-| YouTube 가져오기 | Web OAuth 본인 일반 재생목록, API 키 공개 재생목록, 페이지·후보 선택·중복·배치 저장 구현. 자격 증명·실제 계정 검증 전 |
+| YouTube 가져오기 | 실제 API 키로 공개 재생목록 17개 조회·웹 후보 선택 확인. Web OAuth·페이지·중복·배치 저장 구현; 실제 계정 연결·50개 이상 페이지 이동·계정 가져오기 미검증 |
 | NAVER 장소 | 지역 검색 후보·주소 선택·WGS84 좌표 저장·지도 웹/앱 열기 구현. 키 없는 상태로 실제 검색·실기기 앱 실행 미검증 |
 | 파일 가져오기 | JSON/TXT 기기 선택·제한된 parser·후보 검토 후 저장. 실제 export·네이티브 파일 선택 미검증 |
 | 데이터 보존 | v1 배열→v2 envelope, provenance·시각·캐시·30일 정리, 단일 계정 연결 해제 삭제 구현 |
@@ -134,4 +134,4 @@ npm run build:web
 
 다른 개발자의 Codex에 전달할 시작 프롬프트:
 
-> AGENTS.md, README.md, docs/codex-handoff.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest도 읽고 새 Figma 파일의 SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. API는 localhost 웹 미리보기이며 공개 YouTube 제목·Instagram oEmbed만 실제 성공을 확인했습니다. 기존 데이터와 다른 개발자의 변경을 보존하고 Google/NAVER 설정 여부를 값 출력 없이 확인한 뒤 실제 계정 재생목록·NAVER 검색·해제/저장 실패를 검증해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.
+> AGENTS.md, README.md, docs/codex-handoff.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest도 읽고 새 Figma 파일의 SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. API는 localhost 웹 미리보기이며 공개 YouTube 제목·Instagram oEmbed와 실제 키를 사용한 공개 재생목록 17개 조회·웹 후보 선택을 확인했습니다. 이번 재확인 버튼·공개 재생목록 상태 문구는 Figma 초안에 아직 반영하지 않았습니다. 기존 데이터와 다른 개발자의 변경을 보존하고 Google/NAVER 설정 여부를 값 출력 없이 확인한 뒤 실제 계정 재생목록·NAVER 검색·해제/저장 실패를 검증해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.

@@ -1,5 +1,17 @@
 # 모아 검증 기록
 
+## 실제 공개 재생목록 연결 · 2026-10-03
+
+서버용 `YOUTUBE_API_KEY` 설정 후 로컬 API 서버를 다시 시작했다. `/api/status`에서 공개 재생목록 설정을 확인하고, [Google 공식 Chrome 문서](https://developer.chrome.com/blog/ai-io25)가 연결하는 [Google I/O 2025 공개 재생목록](https://www.youtube.com/playlist?list=PLNYkxOF6rcIDf2yTHfwShSCwVxaUuGk-v)을 `/api/youtube/playlist`로 조회했다. 실제 HTTP 200, 영상 17개, 다음 페이지 없음으로 응답했다. 비밀값은 출력·캡처·커밋하지 않았다.
+
+웹 서비스 연결 화면에서 ‘연결 상태 다시 확인’을 누른 뒤 페이지 전체 새로고침 없이 공개 재생목록 버튼이 활성화됐다. 실제 영상 17개가 후보로 표시됐고, 전체 선택 해제 시 0개 저장 버튼이 비활성화됐다. 영상 1개를 선택하면 1개 저장 버튼이 활성화됐다. [선택 화면 캡처](../design/integration-youtube-playlist-preview.png)를 남겼다. 이 검토에서는 영상을 저장하지 않았다.
+
+연결 상태 재확인 버튼을 항상 표시하고 요청 중 비활성화했다. OAuth 없이 공개 재생목록 키만 설정한 경우 서비스 상태는 ‘공개 재생목록으로 시작’으로 표시한다. 설정 여부를 실제 계정 연결 완료로 표시하지 않는다. Figma는 아래 소스 `59205e5` 기준 초안이며 이번 재확인 버튼·문구 변경은 아직 반영하지 않았다.
+
+공개 YouTube 제목과 Instagram 원문 API도 다시 실제 HTTP 200 응답을 확인했다. Instagram HTML은 응답 확인에만 사용하고 저장하거나 내용을 분석하지 않았다. Google OAuth 클라이언트 두 값과 NAVER 검색 키 두 값은 이 확인 시점에 미설정이다. 실제 계정 로그인·선택 저장·재실행·50개 이상 페이지 이동·해제와 NAVER 실제 검색은 남아 있다. 네이티브 기기 검증 범위도 기존 기록과 같다.
+
+이번 버튼·문구 변경 후 `npm run typecheck`, `npm run lint`, `npm run build:web`, `git diff --check`가 통과했다. 기존 서버 경계 테스트 11개도 통과했다. 실제 제공자 응답과 모의 서버 테스트의 검증 범위는 별도로 기록한다.
+
 ## 새 Figma 파일 · 2026-10-03
 
 연결 계정에서 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)을 새로 만들고 편집 가능한 네이티브 화면·공통 컴포넌트·변수·Handoff를 구성했다. 앱 소스 `59205e5`의 흐름을 바탕으로 한 디자인 초안이다. 기존 파일을 변경하거나 자동 픽셀 동기화를 구현한 작업은 아니다. 이번 작업에서는 앱/API 동작을 수정하지 않았다.
@@ -24,7 +36,7 @@
 | `npm run tokens:check` | 토큰 원본과 생성 코드 일치 |
 | `npm run lint` | 통과 |
 
-팀 초대·공유 권한 변경·팀 라이브러리/Code Connect 게시는 수행하지 않았다. 픽셀 단위 앱 비교·320px/큰 글자·키보드·safe area·실기기 접근성은 별도 검증이다. Google/NAVER 키가 없어 실제 OAuth·재생목록·NAVER 검색 검증은 남아 있다. 공개 YouTube/Instagram의 이전 성공과 새 디자인 검증을 구분한다.
+팀 초대·공유 권한 변경·팀 라이브러리/Code Connect 게시는 수행하지 않았다. 픽셀 단위 앱 비교·320px/큰 글자·키보드·safe area·실기기 접근성은 별도 검증이다. Figma 작업 당시에는 Google/NAVER 키가 없어 실제 OAuth·재생목록·NAVER 검색 검증이 남아 있었다. 이후 공개 재생목록 확인은 위 기록을 따른다. 공개 YouTube/Instagram의 이전 성공과 새 디자인 검증을 구분한다.
 
 ## 이전 검사 기록 · 2026-10-01
 
