@@ -1,14 +1,33 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "figmaManifest": "design/figma-manifest.json",
   "screens": {
+    "SCR-001": "src/web/pages/LibraryPage.tsx",
+    "SCR-002": "src/web/pages/AddPage.tsx",
+    "SCR-003": "src/web/pages/DetailPage.tsx",
+    "SCR-004": "src/web/pages/IntegrationsPage.tsx",
+    "SCR-005": "src/web/pages/PlacesPage.tsx"
+  },
+  "components": {
+    "CMP-001": "src/web/components/Ui.tsx",
+    "CMP-002": "src/web/pages/LibraryPage.tsx",
+    "CMP-003": "src/web/components/Ui.tsx",
+    "CMP-004": "src/web/components/Ui.tsx",
+    "CMP-005": "src/web/components/Ui.tsx",
+    "CMP-006": "src/web/components/Ui.tsx",
+    "CMP-007": "src/web/components/InstagramEmbed.tsx"
+  },
+  "note": "기본 웹앱 코드 경로와 보관한 Expo 경로를 구분합니다. Figma 기존 모바일 원본은 브랜드/흐름 기준이며 웹 데스크톱 초안과 부분 갱신 범위는 manifest를 따릅니다. CMP-002는 LibraryPage/AddPage의 DOM 필터 버튼이며 독립 웹 컴포넌트가 아닙니다. Ui.tsx는 CMP-001/003/004/005/006의 각 named export입니다. 게시된 Code Connect나 픽셀 자동 동기화가 아닙니다.",
+  "figmaFileKey": "ejriXVtLOBDSwZ336vDKlZ",
+  "figmaFileUrl": "https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ",
+  "legacyExpoScreens": {
     "SCR-001": "src/app/index.tsx",
     "SCR-002": "src/app/add.tsx",
     "SCR-003": "src/app/content/[id].tsx",
     "SCR-004": "src/app/integrations.tsx",
     "SCR-005": "src/app/places.tsx"
   },
-  "components": {
+  "legacyExpoComponents": {
     "CMP-001": "src/components/ContentCard.tsx",
     "CMP-002": "src/components/FilterChip.tsx",
     "CMP-003": "src/components/PrimaryButton.tsx",
@@ -17,7 +36,18 @@
     "CMP-006": "src/components/CategoryStamp.tsx",
     "CMP-007": "src/components/InstagramEmbed.tsx"
   },
-  "note": "SCR-001~005와 CMP-001~007의 새 Figma 실제 node는 manifest에 기록했습니다. 원본과 리뷰 복제본을 함께 관리합니다. 소스 기준 디자인 초안이며 게시된 Code Connect나 픽셀 단위 자동 동기화를 뜻하지 않습니다.",
-  "figmaFileKey": "ejriXVtLOBDSwZ336vDKlZ",
-  "figmaFileUrl": "https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ"
+  "runtime": "react-dom-vite",
+  "webViews": {
+    "WEB-001": "src/web/pages/LibraryPage.tsx"
+  },
+  "webComponents": {
+    "WEB-CMP-006": "src/web/components/Ui.tsx",
+    "WEB-CMP-001": "src/web/components/Ui.tsx"
+  },
+  "webFigmaNodes": {
+    "WEB-Handoff": "28:877",
+    "WEB-CMP-006": "26:897",
+    "WEB-CMP-001": "26:902",
+    "WEB-001": "25:774"
+  }
 }

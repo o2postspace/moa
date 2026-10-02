@@ -1,6 +1,15 @@
 # 모아 · 개발 에이전트 지침
 
-사용자가 저장한 콘텐츠를 정리하고 장소·시기에 맞춰 다시 발견하게 하는 앱이다. React Native + Expo + TypeScript로 작은 사용자 흐름씩 추가하며 설명·인수인계는 한국어로 쓴다.
+사용자가 저장한 콘텐츠를 정리하고 장소·시기에 맞춰 다시 발견하게 하는 앱이다. 사용자 요청에 따라 기본 제품은 React DOM + Vite + React Router + TypeScript 웹앱이다. 작은 사용자 흐름씩 추가하며 설명·인수인계는 한국어로 쓴다. 기존 Expo/RN 코드는 이후 네이티브 작업을 위한 보관본이다.
+
+## 웹앱 기본 경로
+
+- `npm ci` 후 `npm run dev`로 API와 웹을 함께 실행한다. 웹은 localhost:8081, API는 localhost:8787이다. 독립 실행·빌드·운영 한계는 docs/web-app.md를 따른다.
+- 활성 화면은 src/web/pages/, 공통 DOM UI는 src/web/components/Ui.tsx, 웹 저장 provider는 src/web/library/이다. src/app/과 src/features/의 Expo 화면은 기본 웹 진입점이 아니다.
+- API는 상대 /api 경로를 사용하고 개발/preview proxy가 서버로 전달한다. 비밀값에 VITE_ 또는 EXPO_PUBLIC_를 붙이지 않는다. 정적 dist에 서버 비밀값을 포함하지 않는다.
+- 기존 웹과 동일한 localhost:8081 origin과 localStorage 키 moa.library.v1을 유지한다. 잘못된 저장값·스토리지 접근 차단·할당량 오류를 빈 목록으로 덮어쓰지 않는다. 같은 origin의 웹 탭은 Web Locks 안에서 최신 저장값을 읽고 변경을 저장한다. 기기/브라우저 간 동기화는 아직 없다.
+- 데스크톱·700px 이하·320px에서 DOM 레이아웃, 키보드 초점, 라벨·오류·버튼 상태와 새로고침 경로를 확인한다. 브라우저 localStorage·File·Clipboard와 네이티브 API를 섞지 않는다.
+- 현재 typecheck/lint/build:web는 웹+공유 도메인+서버를 검증한다. 이 성공을 보관한 Expo 코드의 별도 네이티브 검사 성공으로 설명하지 않는다.
 
 ## 작업 시작
 
@@ -59,7 +68,11 @@
 - 공개 API 성공은 OAuth 계정 연결이나 다른 제공자의 키 검증 성공을 뜻하지 않는다. 실제 export·Google 계정·네이티브·API 제목 수동 변경 정책의 남은 검증을 명시한다. NAVER 발급·실제 검색과 기존 API 데이터 처리 검토는 보류된 별도 범위다.
 - README·Codex 인수인계·로드맵·검증 기록·SCR/CMP와 관련 계약을 함께 갱신한다. PR에 문제·결과·검사·남은 한계·브랜치/base를 적는다.
 
-This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
+## Legacy Expo/RN work only
+
+The following rules apply only when explicitly working on the preserved Expo/React Native implementation. The default web application uses React Router in src/web and npm package tooling for Vite dependencies.
+
+This legacy implementation is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
 
 ## Expo has changed — do not trust your training data
 

@@ -1,18 +1,20 @@
 # 모아 개발 API 서버
 
-2026-10-03 기준. 이 서버는 로컬 웹에서 공식 API 연결을 확인하는 개발용이다. 사용자 인증·HTTPS 배포·영구 토큰 저장·네이티브 OAuth callback을 구현한 운영 서버가 아니다. 비밀값과 Google 토큰을 앱 코드, URL, AsyncStorage, 저장소에 넣지 않는다.
+2026-10-03 기준. 기본 클라이언트는 React DOM·Vite 웹앱이며 이 서버는 로컬 웹에서 공식 API 연결을 확인하는 개발용이다. 사용자 인증·HTTPS 배포·영구 토큰 저장·네이티브 OAuth callback을 구현한 운영 서버가 아니다. 비밀값과 Google 토큰을 앱 코드, URL, localStorage·AsyncStorage, 저장소에 넣지 않는다.
 
 현재 MVP는 YouTube 공개 제목·공개 재생목록, Instagram 공개 원문, 앱의 JSON/TXT 후보 선택 저장이다. Google OAuth는 후속이고 NAVER API는 사용자 요청으로 보류했다. `/places`는 API 없는 안내이며 기존 검색 화면은 `src/features/integrations/NaverPlacesScreen.tsx`에 보관한다. 아래 OAuth·NAVER endpoint/환경 변수 계약은 후속 개발용으로 유지하며 현재 사용자의 키 발급·결제 등록을 요구하지 않는다. 서버 어댑터를 제거하거나 기존 저장 데이터·직접 공유한 지도 링크를 삭제하지 않았다.
 
 ## 실행과 설정
 
-Node.js 24 이상에서 추가 서버 의존성 없이 실행한다. 서버용 환경 파일 `.env.local`을 저장소 루트에 만들고 다음 명령을 사용한다. 환경 파일은 Git에 포함하지 않는다. `EXPO_PUBLIC_` 접두사가 있는 변수는 앱에 공개되므로 서버의 비밀값에 이 접두사를 붙이지 않는다.
+Node.js 24 이상에서 추가 서버 의존성 없이 실행한다. 서버용 환경 파일 `.env.local`을 저장소 루트에 만들고 다음 명령을 사용한다. 기존 `.env.local`과 API 키는 보존한다. 환경 파일은 Git에 포함하지 않는다. `VITE_`는 웹 번들에, `EXPO_PUBLIC_`는 보관한 Expo 앱에 공개되므로 서버의 비밀값에 두 접두사를 붙이지 않는다.
 
 ```sh
-node --env-file-if-exists=.env.local server/index.ts
+npm run dev
 ```
 
-설정 없이 YouTube 제목 조회와 공개 Instagram embed를 먼저 시험하려면 `node server/index.ts`를 실행한다. 앱과 API 주소의 호스트를 모두 `localhost`로 통일한다. `localhost`와 `127.0.0.1`을 섞으면 Google 연결 cookie가 공유되지 않는다.
+한 명령이 API8787과 Vite8081을 시작하고 함께 종료한다. 서버만 필요하면 `npm run api` 또는 `node --env-file-if-exists=.env.local server/index.ts`를 사용한다. 키 없이 YouTube 제목 조회와 공개 Instagram embed를 시험할 수 있다. 앱 접속 호스트는 `localhost`로 통일한다. `localhost`와 `127.0.0.1`을 섞으면 Google 연결 cookie와 브라우저 저장소 origin이 달라진다.
+
+웹의 `src/web/lib/api.ts`는 API endpoint에 상대 경로 `/api/...`로 요청한다. `vite.config.ts`의 dev와 preview proxy가 `http://127.0.0.1:8787`로 전달하며 `changeOrigin: false`로 browser Origin과 Host를 유지한다. proxy의 내부 목적지 IP는 브라우저 접속 주소를 바꾸지 않는다. 클라이언트가 공급자 endpoint·비밀값을 직접 사용하는 경로는 없다. `EXPO_PUBLIC_API_BASE_URL`은 보관한 Expo 구현용이며 기본 DOM 웹은 사용하지 않는다. 이 proxy·SPA fallback은 로컬 검토 설정이고 운영 배포의 reverse proxy·HTTPS·사용자별 인증을 대신하지 않는다.
 
 | 서버 환경 변수 | 기본값 / 목적 |
 | --- | --- |

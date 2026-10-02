@@ -1,12 +1,16 @@
 # 디자인 · 개발 협업
 
-2026-10-03 기준. 앱 작업명은 **모아**. React Native + Expo + TypeScript로 작은 기능 단위씩 만든다. 현재 UI/UX 작업 파일과 실제 코드 연결을 아래에 기록한다.
+2026-10-03 기준. 앱 작업명은 **모아**. React DOM + Vite + React Router + TypeScript 웹앱을 작은 기능 단위씩 만든다. 기존 Expo 코드는 보관한다. 현재 UI/UX 작업 파일과 실제 코드 연결을 아래에 기록한다.
 
 - 현재 Figma: [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ) — 연결 계정의 새 draft 파일
 - GitHub: [o2postspace/moa](https://github.com/o2postspace/moa), [API·디자인 draft PR #2](https://github.com/o2postspace/moa/pull/2)
 - 개발 시작점: [Codex 인수인계](codex-handoff.md), 제품 / 디자인 / 개발 담당자는 팀 지정 후 기록
 
 ## 현재 디자인 전달 상태
+
+기본 제품은 `src/web`의 DOM 웹앱이다. PC에서 사이드 메뉴와 3열(중간 폭 2열), 700px 이하에서는 상단 메뉴와 1열을 사용한다. 기존 Figma 모바일 원본은 브랜드/흐름 기준으로 보존하며 새 웹 데스크톱 초안과 갱신 범위는 manifest를 따른다. 아래 코드 표는 활성 웹 경로이고 보관한 Expo 매핑은 component-map의 legacyExpo 필드에 남긴다. 공개 Code Connect 게시가 아니다.
+
+웹 협업의 새 진입점은 [PC 저장함 25:774](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=25-774)와 [웹 Handoff 28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877)이다. PC 저장함은 1440×1100, 편집 가능한170개 하위 노드와 가상3카드로 구성했다. Noto Sans KR·기존 토큰/CMP를 재사용하며 전체 UI 이미지가 없다. 새 WEB-CMP-001 카드26:902와 WEB-CMP-006 스탬프26:897은 `src/web/components/Ui.tsx`의 ContentCard/CategoryStamp에 대응한다. 실행과 웹 검토 증거는 [웹앱 시작점](web-app.md), [검증 기록](verification.md)을 따른다.
 
 흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하고 모아의 브랜드색 `#C94C2B`를 유지한다. 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`이다. 전체/방문 탭, 출처·분류, CategoryStamp, 선택 정보와 하단 주요 액션을 공통 기준으로 관리한다.
 
@@ -37,18 +41,18 @@
 
 | ID | 이름 | Figma node | 코드 위치 |
 | --- | --- | --- | --- |
-| SCR-001 | Library | [4:262](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-262) | `src/app/index.tsx` |
-| SCR-002 | AddLink | [4:343](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-343) | `src/app/add.tsx` |
-| SCR-003 | ContentDetail | [4:416](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-416) | `src/app/content/[id].tsx` |
-| SCR-004 | 콘텐츠 가져오기 | [4:480](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-480) | `src/app/integrations.tsx` |
-| SCR-005 | NAVER 보류 안내 | [4:533](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-533) | `src/app/places.tsx` |
-| CMP-001 | ContentCard | [2:864](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-864) | `src/components/ContentCard.tsx` |
-| CMP-002 | FilterChip | [2:664](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-664) | `src/components/FilterChip.tsx` |
-| CMP-003 | PrimaryButton | [2:659](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-659) | `src/components/PrimaryButton.tsx` |
-| CMP-004 | SourceBadge | [2:691](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-691) | `src/components/SourceBadge.tsx` |
-| CMP-005 | EmptyState | [2:888](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-888) | `src/components/EmptyState.tsx` |
-| CMP-006 | CategoryStamp | [2:820](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-820) | `src/components/CategoryStamp.tsx` |
-| CMP-007 | InstagramEmbed | [2:928](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-928) | `src/components/InstagramEmbed.tsx` |
+| SCR-001 | Library | [4:262](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-262) | `src/web/pages/LibraryPage.tsx` |
+| SCR-002 | AddLink | [4:343](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-343) | `src/web/pages/AddPage.tsx` |
+| SCR-003 | ContentDetail | [4:416](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-416) | `src/web/pages/DetailPage.tsx` |
+| SCR-004 | 콘텐츠 가져오기 | [4:480](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-480) | `src/web/pages/IntegrationsPage.tsx` |
+| SCR-005 | NAVER 보류 안내 | [4:533](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-533) | `src/web/pages/PlacesPage.tsx` |
+| CMP-001 | ContentCard | [2:864](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-864) | `src/web/components/Ui.tsx · ContentCard` |
+| CMP-002 | FilterChip | [2:664](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-664) | `src/web/pages/LibraryPage.tsx · DOM filter buttons` |
+| CMP-003 | PrimaryButton | [2:659](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-659) | `src/web/components/Ui.tsx · Button` |
+| CMP-004 | SourceBadge | [2:691](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-691) | `src/web/components/Ui.tsx · SourceBadge` |
+| CMP-005 | EmptyState | [2:888](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-888) | `src/web/components/Ui.tsx · EmptyState` |
+| CMP-006 | CategoryStamp | [2:820](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-820) | `src/web/components/Ui.tsx · CategoryStamp` |
+| CMP-007 | InstagramEmbed | [2:928](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-928) | `src/web/components/InstagramEmbed.tsx` |
 
 원격 node ID는 새 파일에서 확인한 값이다. 같은 SCR/CMP 제품 ID를 유지하되 이전 파일의 node와 혼용하지 않는다. 코드 이동·원본 교체 시 이 표와 manifest·component-map을 함께 갱신한다. 로컬 매핑은 게시된 Code Connect가 아니다.
 

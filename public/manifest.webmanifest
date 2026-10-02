@@ -1,0 +1,14 @@
+{
+  "name": "모아 · 저장한 취향을 한곳에",
+  "short_name": "모아",
+  "lang": "ko",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C94C2B",
+  "icons": [
+    { "src": "/icons/icon.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/brand.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

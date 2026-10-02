@@ -2,22 +2,38 @@
 
 2026-10-03, 연결된 `23010843의 팀` 계정에서 **새 편집 가능한 Design 파일**을 만들었다. 현재 작업 파일은 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이며 file key는 `ejriXVtLOBDSwZ336vDKlZ`다. `모아 · 화면 & 디자인 시스템` 페이지(`0:1`)에 네이티브 텍스트, Auto Layout, 컴포넌트 인스턴스, 변수와 스타일을 구성했다.
 
-앱 소스 `59205e5`를 전체 구성의 기준으로 만든 **디자인 초안**이다. 이후 두 차례 부분 갱신했고 현재는 **NAVER 제외 MVP**다. 저장함·추가·상세·콘텐츠 가져오기 4화면을 사용하며 SCR-005는 NAVER 보류 안내다. 공개 YouTube 재생목록 준비됨·OAuth 미설정 상태를 표시하고 NAVER 카드와 미설정 계정 버튼은 숨겼다. 기준 소스 해시는 전체 최신 동기화를 뜻하지 않는다. 실제 앱과 픽셀 단위로 일치하는 자동 동기화 결과가 아니며 디자인 예시는 실제 계정 응답을 뜻하지 않는다.
+현재 기본 앱은 **React DOM · Vite · React Router 웹앱**이며 활성 코드는 `src/web/`에 있다. 같은 Figma 파일에 1440px 웹 저장함 초안과 웹 Handoff를 추가했다. 앱 소스 `59205e5`를 기준으로 만든 기존 390px 모바일 디자인은 참조 이력으로 보존했다. NAVER 제외 MVP는 유지하며 공개 YouTube·Instagram 링크·파일 정리부터 사용한다. SCR-005는 API 없는 보류 안내다. 기준 해시는 모바일 baseline이며 현재 웹 파일은 이 부분 갱신 시점에 미커밋 작업 트리였다. 픽셀 단위로 일치하는 자동 동기화 결과가 아니며 디자인 예시는 실제 계정 응답을 뜻하지 않는다.
 
 ## 현재 파일의 실제 구성
 
 | 대상 | 실제 node / 상태 |
 | --- | --- |
-| 현재 4화면 + NAVER 보류 안내 리뷰 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
+| 웹 저장함 · 1440×1100 편집 초안 | [25:774](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=25-774) · 사이드바 / 검색·필터 / 3열 가상 카드 |
+| 웹 개발 Handoff · 1440×332 | [28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877) · 현재 웹 파일·협업 범위 |
+| 기존 390px 모바일 4화면 + NAVER 보류 참조 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) · 원본/리뷰 보존 |
 | 빈 저장함·입력 오류·후보 선택·보류된 향후 장소 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
 | 공통 컴포넌트 상태 보드 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
 | 서비스 연결 전체 스크롤 구성 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
-| 디자인·개발 Handoff | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
-| SCR-001–005 / CMP-001–007 | 실제 원격 node 생성. [매핑](design-handoff.md#디자인-id--코드)과 [manifest](../design/figma-manifest.json) 참고 |
+| 기존 디자인·개발 Handoff | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) · 현재 웹 매핑으로 텍스트 갱신 |
+| 웹 카드·스탬프 / 기존 CMP-001–007 | 별도 웹 main `26:902`/`26:897` 추가, 기존 7종 보존·버튼/필터/출처 재사용. [매핑](design-handoff.md#디자인-id--코드)과 [manifest](../design/figma-manifest.json) 참고 |
 | 변수·글자·아이콘 | primitive 31개 + semantic alias 31개, Noto Sans KR 텍스트 스타일 8개, Ionicons SVG 컴포넌트 14개 |
 | 프로토타입 | 현재 기본 이동 18개, 복제본 포함 reaction node 36개 읽기 확인. 재생 검증은 별도 |
 
 원본 화면은 페이지의 최상위 프레임으로 두었고 리뷰 보드 안에는 편집 가능한 복제본을 배치했다. 컴포넌트 인스턴스는 공통 메인 컴포넌트를 참조한다. **화면 내부를 수정할 때는 원본과 리뷰 복제본을 함께 관리**한다. 리뷰 보드만 수정하면 프로토타입 원본과 차이가 생긴다.
+
+## 웹 저장함과 Handoff 부분 반영 · 2026-10-03
+
+`WEB-001 Desktop Library · UI 예시`(`25:774`)를 기존 캔버스 오른쪽에 별도로 추가했다. 1440×1100, 사이드바 244px·본문 1196px, 3열 세로 카드 구성이다. 제목·검색·출처·분류·전체/방문 탭·가져오기 배너·카드를 편집 가능한 텍스트·Auto Layout·컴포넌트·벡터로 만들었다. 제목·메모 3개는 모두 가상 예시이며 사용자 저장 5개나 실제 제공자 데이터를 복사하지 않았다.
+
+기존 모바일 ContentCard는 가로형이므로 별도 웹 main `WEB-CMP-001 ContentCard`(`26:902`)와 텍스트 스탬프 `WEB-CMP-006 CategoryStamp · Other`(`26:897`)를 추가했다. 카드의 Title/Note 텍스트와 SourceBadge instance swap을 노출했다. 기존 Primary/Secondary 버튼·필터·SourceBadge와 62개 변수·8개 텍스트 스타일을 재사용했다. 원래 CMP 7종·Ionicons 14개는 변경하지 않았고 현재 코드의 lucide-react 1.50.0 SVG에서 웹 grid/filter 아이콘 2개(`29:880`/`29:885`)만 추가했다. 새 메인 컴포넌트는 저장함 프레임 밖에 배치했다.
+
+첫 웹 캡처는 `use_figma` 탐색과 `generate_figma_design` 준비를 병렬로 진행했다. 사용자 `localhost` 저장소와 분리한 `127.0.0.1:8082` 빈 저장함을 임시 참조 `27:877`로 캡처했다. 전체 캡처 이미지를 결과에 넣지 않고 레이아웃 기준으로만 비교했으며, 비교 후 정확한 capture root를 삭제했다. 별도 검토 서버·캡처 스크립트·브라우저 탭도 제거했다.
+
+Brief `4:252–255`, 기존 Handoff `4:904–906`과 별도 웹 Handoff `28:877`에 현재 구현을 기록했다. 활성 화면은 `src/web/pages/`의 `LibraryPage`, `AddPage`, `DetailPage`, `IntegrationsPage`, `PlacesPage`다. CMP-001/003/004/005/006은 `src/web/components/Ui.tsx`, CMP-002는 LibraryPage/AddPage 내부 DOM 버튼으로 독립 컴포넌트가 없으며, CMP-007은 `src/web/components/InstagramEmbed.tsx`다. 로컬 코드 대응은 [component-map](../design/component-map.json), 실제 원격 node는 [manifest](../design/figma-manifest.json)를 따른다.
+
+웹 저장함은 자손 186개(TEXT 57 · INSTANCE 30 · FRAME 56 · VECTOR 36 · RECTANGLE 7), Noto Sans KR만 사용, IMAGE fill 0·프레임 폭 초과 0을 읽기 확인했다. 원래 원본/리뷰 10개 프레임이 390×844로 유지되는 것도 확인했다. 실제 웹 참조와 비교해 사이드바 간격·활성 탭·버튼·필터를 보정하고 최종 저장함·두 Handoff를 캡처하여 시각 검토했다. [웹 저장함 캡처](../design/figma-web-desktop.png), [웹 Handoff](../design/figma-web-handoff.png), [기존 Handoff 갱신](../design/figma-web-existing-handoff.png)이 증거다.
+
+이 변경은 저장함 웹 초안 하나와 협업 매핑만 포함한다. 추가·상세·연동·보류 웹 화면 전체, 반응형 모바일·키보드·접근성·프로토타입 재생·실제 저장/API 동작은 이 Figma 검증 밖이다. SourceBadge·스탬프·여백 일부는 기존 디자인 자산을 재사용한 초안이므로 브라우저 CSS와 완전히 동일하지 않다. `sourceAppCommit: 59205e5`는 유지하며 `manualPatches.web-desktop-handoff-2026-10-03`에 웹 작업 트리 범위를 별도로 남겼다. [변경 전 manifest](../design/history/figma-manifest-2026-10-03-before-web.json)와 이전 모바일 baseline을 보존한다.
 
 ## 현재 NAVER 제외 MVP 부분 반영 · 2026-10-03
 
@@ -42,7 +58,7 @@ SCR-005 원본 `4:533`/리뷰 `4:1071`은 API 없는 보류 안내와 콘텐츠 
 5. 구조 읽기와 새 캡처로 수정 범위를 확인한다. 현재 검증 범위·미확인 항목·증거 파일은 manifest에 기록한다.
 6. 변경 이유·SCR/CMP ID·node 링크·캡처를 기능별 PR에 남긴다. 파일 생성이나 reaction 등록만으로 앱 구현·접근성·프로토타입 재생 검증을 완료 처리하지 않는다.
 
-이 파일은 연결 계정의 draft 작업 파일이다. 팀원 초대·공유 권한 변경·팀 라이브러리 게시·Code Connect 게시는 수행하지 않았다. `design/component-map.json`은 로컬 코드 매핑이며 게시된 Code Connect가 아니다. Figma WEB code syntax는 토큰 대응을 돕는 표기이고 실제 CSS 변수 구현을 보장하지 않는다.
+이 파일은 연결 계정의 draft 작업 파일이다. 팀원 초대·공유 권한 변경·팀 라이브러리 게시·Code Connect 게시는 수행하지 않았다. `design/component-map.json`은 로컬 코드 매핑이며 게시된 Code Connect가 아니다. 현재 웹 `main.tsx`는 생성된 `src/theme/tokens.ts`를 읽어 `--color-accent` 같은 CSS 변수를 설정한다. 기존 Figma WEB `var(--moa-...)` syntax는 역사적 대응 표기이며 현재 CSS 변수명을 그대로 보장하지 않는다.
 
 ## 이전 파일 기록
 

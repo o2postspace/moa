@@ -1,17 +1,17 @@
 # 실제 계정으로 API 연결하기
 
-현재 검증 환경은 Windows의 웹 미리보기 `http://localhost:8081`과 로컬 서버 `http://localhost:8787`이다. 현재 MVP는 공개 YouTube 재생목록·Instagram 링크·파일 후보 정리부터 사용한다. 사용자 요청으로 NAVER API 검색·키 발급은 보류했으며 결제수단 등록을 요구하지 않는다. 새 비밀값을 채팅이나 GitHub에 붙여 넣지 않는다. 필요한 설정만 `.env.local`에 입력한 다음 서버를 다시 실행한다. 설정값 존재와 실제 제공자 응답 성공은 서로 다른 상태다.
+현재 개발 환경은 Windows의 React DOM·Vite 웹앱 `http://localhost:8081`과 로컬 서버 `http://localhost:8787`이다. 기존 Expo 웹의 실제 API 검증 기록은 보존하고 새 DOM 화면의 실제 공개 재생목록17개·Instagram 원문 표시·기존5건 보존과 재실행 검사는 별도로 완료했고 범위는 docs/verification.md에 기록했다. 현재 MVP는 공개 YouTube 재생목록·Instagram 링크·파일 후보 정리부터 사용한다. 사용자 요청으로 NAVER API 검색·키 발급은 보류했으며 결제수단 등록을 요구하지 않는다. 새 비밀값을 채팅이나 GitHub에 붙여 넣지 않는다. 기존 `.env.local`과 등록한 API 키를 유지하며 필요한 설정만 바꾸고 개발 서버를 다시 실행한다. 설정값 존재와 실제 제공자 응답 성공은 서로 다른 상태다.
 
 ## 먼저 실행
 
 ```powershell
-Copy-Item .env.example .env.local  # 기존 .env.local이 없을 때만
-npm run api
-# 별도 터미널
-npm run web -- --port 8081
+if (-not (Test-Path -LiteralPath .env.local)) { Copy-Item -LiteralPath .env.example -Destination .env.local }
+npm run dev  # 한 명령으로 API8787 + 웹8081
 ```
 
-서버 설정을 바꾸면 `npm run api`를 종료하고 다시 시작한 뒤 앱의 **연결 상태 다시 확인**을 누른다. 앱 공개 주소를 바꿨다면 Expo도 다시 시작한다. `localhost`와 `127.0.0.1`을 섞으면 계정 cookie가 일치하지 않는다. 서버는 loopback으로만 열리므로 휴대폰에서 이 주소로 연결되는 운영 서비스가 아니다.
+서버 설정을 바꾸면 `npm run dev`를 Ctrl+C로 종료하고 다시 시작한 뒤 앱의 **연결 상태 다시 확인**을 누른다. API와 Vite를 별도로 실행할 경우 `npm run api`, `npm run web`을 사용한다. Vite8081은 strictPort이므로 이전 서버를 종료해야 한다. 같은 `localhost:8081` origin과 `moa.library.v1` 키를 사용해 기존 브라우저 저장값을 읽으며, 기존5건이 유지되는 것을 실제 DOM 웹 전환 QA에서 확인했다. `localhost`와 `127.0.0.1`을 섞으면 계정 cookie와 브라우저 저장 origin이 일치하지 않는다. 서버는 loopback으로만 열리므로 휴대폰에서 이 주소로 연결되는 운영 서비스가 아니다.
+
+기본 웹의 API 주소는 same-origin `/api`다. dev·preview proxy가 로컬 API로 전달하며 `EXPO_PUBLIC_API_BASE_URL`은 보관한 Expo 소스용으로만 남긴다. 서버 비밀값에 `VITE_` 또는 `EXPO_PUBLIC_`를 붙이면 클라이언트에 노출될 수 있으므로 사용하지 않는다. [Vite 환경 변수](https://vite.dev/guide/env-and-mode), [API 실행 계약](api-server.md)
 
 자격 증명 없이도 링크 추가 → YouTube 제목 불러오기와 Instagram 공개 원문 표시를 시험할 수 있다. 두 경로는 실제 공개 API 응답을 확인했다. 개인 저장함 로그인 없이 모든 저장 콘텐츠를 조회하는 기능은 아니다.
 
@@ -62,4 +62,4 @@ npm run web -- --port 8081
 
 ## 출시 전에 이어갈 일
 
-현재 서버는 로컬 웹 검증용이다. 운영 사용자 인증·기기별 계정 연결, HTTPS 서버, 암호화 토큰 저장·권한 철회 처리, native OAuth callback, 제공자 정책에 맞는 데이터 갱신·삭제·개인정보 화면이 필요하다. OS가 앱을 종료한 동안 로컬 데이터를 30일 정각에 삭제할 수는 없다. 실제 계정 검증과 정책 검토 전에는 전체 연동·정책 준수·모바일 출시 완료로 설명하지 않는다.
+현재 서버와 Vite dev·preview proxy는 로컬 웹 검증용이며 운영 배포 설정이 아니다. 웹 운영에는 사용자별 인증·격리, HTTPS·동일 origin `/api` reverse proxy, SPA 경로의 `index.html` fallback, 암호화 토큰 저장·권한 철회 처리, 제공자 정책에 맞는 데이터 갱신·삭제·개인정보 화면이 필요하다. 보관한 native OAuth callback은 별도 범위다. 브라우저·탭이 닫힌 동안 로컬 데이터를 30일 정각에 삭제할 수는 없다. manifest·아이콘만으로 service worker·오프라인 연동을 제공한 것은 아니다. 실제 계정 검증과 정책 검토 전에는 전체 연동·정책 준수·출시 완료로 설명하지 않는다.

@@ -4,10 +4,10 @@
   "fileUrl": "https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ",
   "fileName": "모아 · 저장 콘텐츠 & 서비스 연동",
   "planKey": "team::1687325519407076016",
-  "status": "editable-web-desktop-design-draft; native-mobile-baseline-preserved",
+  "status": "native-editable-design-draft; core-and-state-boards-visually-reviewed",
   "date": "2026-10-03",
   "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp; web-desktop-handoff",
+  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp",
   "codeSyncStatus": "source-informed-design-draft; not-pixel-identical-or-automatically-synced",
   "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
   "pages": {
@@ -22,11 +22,9 @@
     "states": "4:577",
     "components": "2:929",
     "fullScroll": "4:797",
-    "handoff": "4:902",
-    "webLibrary": "25:774",
-    "webHandoff": "28:877"
+    "handoff": "4:902"
   },
-  "reviewNodeId": "25:774",
+  "reviewNodeId": "4:256",
   "componentReviewNodeId": "2:929",
   "screenNodes": {
     "SCR-001 Library": "4:262",
@@ -69,58 +67,44 @@
     {
       "componentId": "CMP-003",
       "figmaNodeId": "2:659",
-      "component": "Button",
-      "source": "src/web/components/Ui.tsx",
-      "webFigmaNodeId": null,
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "component": "PrimaryButton",
+      "source": "src/components/PrimaryButton.tsx"
     },
     {
       "componentId": "CMP-002",
       "figmaNodeId": "2:664",
-      "component": "inline category/source filter button",
-      "source": "src/web/pages/LibraryPage.tsx",
-      "webFigmaNodeId": null,
-      "scope": "DOM buttons also in AddPage; no standalone web FilterChip"
+      "component": "FilterChip",
+      "source": "src/components/FilterChip.tsx"
     },
     {
       "componentId": "CMP-004",
       "figmaNodeId": "2:691",
       "component": "SourceBadge",
-      "source": "src/web/components/Ui.tsx",
-      "webFigmaNodeId": null,
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "source": "src/components/SourceBadge.tsx"
     },
     {
       "componentId": "CMP-006",
       "figmaNodeId": "2:820",
       "component": "CategoryStamp",
-      "source": "src/web/components/Ui.tsx",
-      "webFigmaNodeId": "26:897",
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "source": "src/components/CategoryStamp.tsx"
     },
     {
       "componentId": "CMP-001",
       "figmaNodeId": "2:864",
       "component": "ContentCard",
-      "source": "src/web/components/Ui.tsx",
-      "webFigmaNodeId": "26:902",
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "source": "src/components/ContentCard.tsx"
     },
     {
       "componentId": "CMP-005",
       "figmaNodeId": "2:888",
       "component": "EmptyState",
-      "source": "src/web/components/Ui.tsx",
-      "webFigmaNodeId": null,
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "source": "src/components/EmptyState.tsx"
     },
     {
       "componentId": "CMP-007",
       "figmaNodeId": "2:928",
       "component": "InstagramEmbed",
-      "source": "src/web/components/InstagramEmbed.tsx",
-      "webFigmaNodeId": null,
-      "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
+      "source": "src/components/InstagramEmbed.tsx"
     }
   ],
   "screenMappings": [
@@ -128,46 +112,36 @@
       "screenId": "SCR-001",
       "figmaNodeId": "4:262",
       "reviewNodeId": "4:982",
-      "source": "src/web/pages/LibraryPage.tsx",
-      "state": "populated-ui-example; first-launch-state-is-4:583",
-      "figmaScope": "preserved 390px mobile reference; not a recreated web screen",
-      "webFigmaNodeId": "25:774"
+      "source": "src/app/index.tsx",
+      "state": "populated-ui-example; first-launch-state-is-4:583"
     },
     {
       "screenId": "SCR-002",
       "figmaNodeId": "4:343",
       "reviewNodeId": "4:1008",
-      "source": "src/web/pages/AddPage.tsx",
-      "state": "youtube-link-and-title-example",
-      "figmaScope": "preserved 390px mobile reference; not a recreated web screen",
-      "webFigmaNodeId": null
+      "source": "src/app/add.tsx",
+      "state": "youtube-link-and-title-example"
     },
     {
       "screenId": "SCR-003",
       "figmaNodeId": "4:416",
       "reviewNodeId": "4:1034",
-      "source": "src/web/pages/DetailPage.tsx",
-      "state": "manual-content-ui-example",
-      "figmaScope": "preserved 390px mobile reference; not a recreated web screen",
-      "webFigmaNodeId": null
+      "source": "src/app/content/[id].tsx",
+      "state": "manual-content-ui-example"
     },
     {
       "screenId": "SCR-004",
       "figmaNodeId": "4:480",
       "reviewNodeId": "4:1056",
-      "source": "src/web/pages/IntegrationsPage.tsx",
-      "state": "public-playlist-configured; OAuth not configured; NAVER card hidden",
-      "figmaScope": "preserved 390px mobile reference; not a recreated web screen",
-      "webFigmaNodeId": null
+      "source": "src/app/integrations.tsx",
+      "state": "public-playlist-configured; OAuth not configured; NAVER card hidden"
     },
     {
       "screenId": "SCR-005",
       "figmaNodeId": "4:533",
       "reviewNodeId": "4:1071",
-      "source": "src/web/pages/PlacesPage.tsx",
-      "state": "naver-deferred; no API call; return-to-import",
-      "figmaScope": "preserved 390px mobile reference; not a recreated web screen",
-      "webFigmaNodeId": null
+      "source": "src/app/places.tsx",
+      "state": "naver-deferred; no API call; return-to-import"
     }
   ],
   "collections": {
@@ -596,8 +570,8 @@
   "generatedTokenSource": "src/theme/tokens.ts",
   "tokenNotes": [
     "31 semantic tokens alias 31 primitives; code syntax and scopes configured.",
-    "Change source tokens and generated app tokens together, then reconcile Figma values.",
-    "Current web main.tsx reads generated src/theme/tokens.ts and sets CSS --group-name variables. Existing Figma WEB var(--moa-...) syntax remains a historical mapping hint, not a literal current CSS contract."
+    "WEB var(--moa-...) syntax is a mapping hint; the application does not implement that CSS variable sheet.",
+    "Change source tokens and generated app tokens together, then reconcile Figma values."
   ],
   "textStyleCount": 8,
   "textStyles": [
@@ -1151,46 +1125,9 @@
         "brand palette"
       ],
       "localPath": "design/figma-current-handoff.png",
-      "result": "historical-before-web-handoff-patch",
+      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
       "date": "2026-10-03",
-      "revision": "naver-deferred-mvp-2026-10-03",
-      "currentReplacement": "design/figma-web-existing-handoff.png"
-    },
-    {
-      "nodeId": "25:774",
-      "width": 1440,
-      "height": 1100,
-      "covers": [
-        "editable 3-column desktop storage with fictional examples"
-      ],
-      "localPath": "design/figma-web-desktop.png",
-      "result": "visually-reviewed-after-web-desktop-patch",
-      "date": "2026-10-03",
-      "revision": "web-desktop-handoff-2026-10-03"
-    },
-    {
-      "nodeId": "28:877",
-      "width": 1440,
-      "height": 332,
-      "covers": [
-        "web implementation and collaboration scope"
-      ],
-      "localPath": "design/figma-web-handoff.png",
-      "result": "visually-reviewed-after-web-desktop-patch",
-      "date": "2026-10-03",
-      "revision": "web-desktop-handoff-2026-10-03"
-    },
-    {
-      "nodeId": "4:902",
-      "width": 1530,
-      "height": 526,
-      "covers": [
-        "existing Handoff updated for web mappings"
-      ],
-      "localPath": "design/figma-web-existing-handoff.png",
-      "result": "visually-reviewed-after-web-desktop-patch",
-      "date": "2026-10-03",
-      "revision": "web-desktop-handoff-2026-10-03"
+      "revision": "naver-deferred-mvp-2026-10-03"
     }
   ],
   "verifiedScreenStructure": {
@@ -1362,16 +1299,13 @@
     "Presentation playback, 320px layout, large text, keyboard, safe area, screen readers and iOS/Android remain unverified.",
     "Nearby notifications, event-date matching, AI personalization, cloud sync and app-store delivery remain outside the implementation.",
     "Current draft shows a public-playlist-configured / OAuth-not-configured specimen. NAVER API/results are deferred; preserved result designs are future examples only.",
-    "Hidden future native nodes are preserved. Current route /places has no search request; manual content map links still open an external map.",
-    "Current app implementation is React DOM/Vite/React Router under src/web/. Only WEB-001 desktop library is added as a web-specific Figma screen; prior 390px frames are preserved mobile design references."
+    "Hidden future native nodes are preserved. Current route /places has no search request; manual content map links still open an external map."
   ],
   "pendingValidations": [
     "prototype-presentation-playback",
     "additional-app-states",
     "native-accessibility-and-device-layout",
-    "real-google-oauth",
-    "remaining-web-screen-designs",
-    "web-responsive-and-accessibility-figma-review"
+    "real-google-oauth"
   ],
   "previousFile": {
     "fileKey": "sNrklbLn8Fd9HXMU3GLQUt",
@@ -1822,111 +1756,6 @@
         "design/figma-current-fullScroll.png",
         "design/figma-current-handoff.png"
       ]
-    },
-    {
-      "id": "web-desktop-handoff-2026-10-03",
-      "date": "2026-10-03",
-      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-      "sourceWorkingTree": true,
-      "sourceFiles": [
-        "src/web/App.tsx",
-        "src/web/styles.css",
-        "src/web/components/Ui.tsx",
-        "src/web/components/InstagramEmbed.tsx",
-        "src/web/pages/LibraryPage.tsx",
-        "src/web/pages/AddPage.tsx",
-        "src/web/pages/DetailPage.tsx",
-        "src/web/pages/IntegrationsPage.tsx",
-        "src/web/pages/PlacesPage.tsx"
-      ],
-      "scope": "One editable 1440px desktop library specimen + web Handoff/mapping update; original mobile screens, reviews, CMP sets, variables/styles and icons preserved.",
-      "affectedRoots": [
-        "25:774",
-        "28:877",
-        "4:250",
-        "4:902"
-      ],
-      "createdRootNodeIds": [
-        "25:774",
-        "26:902",
-        "26:897",
-        "28:877",
-        "29:880",
-        "29:885"
-      ],
-      "mutatedExistingNodeIds": [
-        "4:252",
-        "4:253",
-        "4:254",
-        "4:255",
-        "4:904",
-        "4:905",
-        "4:906"
-      ],
-      "webCardProperties": {
-        "title": "Title#26:0",
-        "note": "Note#26:1",
-        "source": "SourceBadge#26:2"
-      },
-      "changes": [
-        "Added sidebar, topbar, collection heading, import banner, tabs/search/filters and three column cards as editable native Figma layers.",
-        "Created separate vertical web card and text stamp main components; reused existing primary/secondary buttons, filters and source badges with local token/style bindings.",
-        "Imported the two missing grid/filter SVGs from current lucide-react source as web-only components, preserving original 14 Ionicons.",
-        "Used three explicitly fictional content titles and notes; copied no user storage or actual provider result data.",
-        "Updated Brief and existing/new Handoff with React DOM/Vite/React Router and active src/web code mappings."
-      ],
-      "verification": {
-        "desktop": {
-          "id": "25:774",
-          "name": "WEB-001 Desktop Library · UI 예시",
-          "width": 1440,
-          "height": 1100,
-          "descendantCount": 186,
-          "types": {
-            "FRAME": 56,
-            "INSTANCE": 30,
-            "VECTOR": 36,
-            "TEXT": 57,
-            "RECTANGLE": 7
-          },
-          "fonts": [
-            "Noto Sans KR"
-          ],
-          "imageFilledNodes": [],
-          "horizontalOverflowNodeIds": []
-        },
-        "fontAssertion": "Noto Sans KR only in desktop and both Handoff roots; source app product font matched",
-        "screenImages": "No image-filled nodes and no whole UI raster",
-        "referenceCapture": {
-          "id": "fe8693ee-2b7e-494b-ba81-c5a3afa910a4",
-          "nodeId": "27:877",
-          "source": "separate empty 127.0.0.1:8082 origin, not user localhost storage",
-          "naturalWidth": 1264,
-          "naturalHeight": 1193,
-          "status": "completed; reference compared then exact capture root removed"
-        },
-        "visualReview": "desktop composition compared with capture and provided source screenshot; spacing/active tab/button/filter fixes followed by full desktop screenshot. Both Handoff boards visually reviewed.",
-        "preserved": {
-          "variables": 62,
-          "textStyles": 8,
-          "nativeIcons": 14,
-          "cmpSets": 7,
-          "mobileCanonicalAndReviewRoots": 10
-        },
-        "prototypePlayback": "not-verified",
-        "liveApis": "Figma performs no API, OAuth, storage, file-selection or live URL actions."
-      },
-      "evidence": [
-        "design/figma-web-desktop.png",
-        "design/figma-web-handoff.png",
-        "design/figma-web-existing-handoff.png"
-      ],
-      "limitations": [
-        "One desktop library specimen only; Add/Detail/Integrations/Places web screens are not recreated in this patch.",
-        "Existing source 59205e5 is the native baseline; current web files were an uncommitted working tree at update time.",
-        "Draft is source informed, not pixel identical. Existing source badges/tokens/text stamp styling differ in small ways from browser CSS.",
-        "Mobile responsive layout, keyboard/accessibility, actual app behaviors and presentation playback are outside this Figma visual check."
-      ]
     }
   ],
   "mvp": {
@@ -1940,8 +1769,7 @@
     "deferredState": "STATE-PlaceResults",
     "publicYouTubePlaylist": "configured; OAuth not configured",
     "naver": "deferred; no current route API calls",
-    "preserved": "manual NAVER share links and existing saved records",
-    "implementation": "React DOM / Vite web; NAVER deferred; original mobile frames are preserved references"
+    "preserved": "manual NAVER share links and existing saved records"
   },
   "deferredValidations": [
     "naver-provisioning-and-live-search"
@@ -1954,164 +1782,5 @@
       "design/history/figma-before-naver-defer-fullScroll-2026-10-03.png",
       "design/history/figma-before-naver-defer-handoff-2026-10-03.png"
     ]
-  },
-  "nativeReviewNodeId": "4:256",
-  "webScreenNodes": {
-    "WEB-001 Desktop Library": "25:774"
-  },
-  "webComponentNodes": {
-    "WEB-CMP-001 ContentCard": "26:902",
-    "WEB-CMP-006 CategoryStamp · Other": "26:897"
-  },
-  "webIconComponents": [
-    {
-      "id": "29:880",
-      "name": "WEB-Icon/grid-2x2",
-      "source": "lucide-react 1.50.0 grid-2x2 SVG"
-    },
-    {
-      "id": "29:885",
-      "name": "WEB-Icon/sliders-horizontal",
-      "source": "lucide-react 1.50.0 sliders-horizontal SVG"
-    }
-  ],
-  "legacyNativeCodeMappings": [
-    {
-      "componentId": "CMP-003",
-      "figmaNodeId": "2:659",
-      "component": "PrimaryButton",
-      "source": "src/components/PrimaryButton.tsx"
-    },
-    {
-      "componentId": "CMP-002",
-      "figmaNodeId": "2:664",
-      "component": "FilterChip",
-      "source": "src/components/FilterChip.tsx"
-    },
-    {
-      "componentId": "CMP-004",
-      "figmaNodeId": "2:691",
-      "component": "SourceBadge",
-      "source": "src/components/SourceBadge.tsx"
-    },
-    {
-      "componentId": "CMP-006",
-      "figmaNodeId": "2:820",
-      "component": "CategoryStamp",
-      "source": "src/components/CategoryStamp.tsx"
-    },
-    {
-      "componentId": "CMP-001",
-      "figmaNodeId": "2:864",
-      "component": "ContentCard",
-      "source": "src/components/ContentCard.tsx"
-    },
-    {
-      "componentId": "CMP-005",
-      "figmaNodeId": "2:888",
-      "component": "EmptyState",
-      "source": "src/components/EmptyState.tsx"
-    },
-    {
-      "componentId": "CMP-007",
-      "figmaNodeId": "2:928",
-      "component": "InstagramEmbed",
-      "source": "src/components/InstagramEmbed.tsx"
-    }
-  ],
-  "legacyNativeScreenMappings": [
-    {
-      "screenId": "SCR-001",
-      "figmaNodeId": "4:262",
-      "reviewNodeId": "4:982",
-      "source": "src/app/index.tsx",
-      "state": "populated-ui-example; first-launch-state-is-4:583"
-    },
-    {
-      "screenId": "SCR-002",
-      "figmaNodeId": "4:343",
-      "reviewNodeId": "4:1008",
-      "source": "src/app/add.tsx",
-      "state": "youtube-link-and-title-example"
-    },
-    {
-      "screenId": "SCR-003",
-      "figmaNodeId": "4:416",
-      "reviewNodeId": "4:1034",
-      "source": "src/app/content/[id].tsx",
-      "state": "manual-content-ui-example"
-    },
-    {
-      "screenId": "SCR-004",
-      "figmaNodeId": "4:480",
-      "reviewNodeId": "4:1056",
-      "source": "src/app/integrations.tsx",
-      "state": "public-playlist-configured; OAuth not configured; NAVER card hidden"
-    },
-    {
-      "screenId": "SCR-005",
-      "figmaNodeId": "4:533",
-      "reviewNodeId": "4:1071",
-      "source": "src/app/places.tsx",
-      "state": "naver-deferred; no API call; return-to-import"
-    }
-  ],
-  "appImplementation": {
-    "platform": "web",
-    "stack": [
-      "React DOM",
-      "Vite",
-      "React Router"
-    ],
-    "sourceRoot": "src/web/",
-    "entry": "src/web/main.tsx",
-    "legacyNativeRoot": "src/app/",
-    "webSourceStatus": "uncommitted working tree at this scoped Figma update; sourceAppCommit remains the native baseline",
-    "currentRoutes": {
-      "/": "src/web/pages/LibraryPage.tsx",
-      "/add": "src/web/pages/AddPage.tsx",
-      "/content/:id": "src/web/pages/DetailPage.tsx",
-      "/integrations": "src/web/pages/IntegrationsPage.tsx",
-      "/places": "src/web/pages/PlacesPage.tsx"
-    }
-  },
-  "verifiedWebStructure": {
-    "source": "Scoped type-indexed readback plus post-fix desktop and Handoff screenshots; all content examples are fictional.",
-    "desktop": {
-      "id": "25:774",
-      "name": "WEB-001 Desktop Library · UI 예시",
-      "width": 1440,
-      "height": 1100,
-      "descendantCount": 186,
-      "types": {
-        "FRAME": 56,
-        "INSTANCE": 30,
-        "VECTOR": 36,
-        "TEXT": 57,
-        "RECTANGLE": 7
-      },
-      "fonts": [
-        "Noto Sans KR"
-      ],
-      "imageFilledNodes": [],
-      "horizontalOverflowNodeIds": []
-    },
-    "handoff": {
-      "id": "28:877",
-      "width": 1440,
-      "height": 332,
-      "textNodes": 5
-    },
-    "preservedNativeRoots": "5 canonical + 5 review screens remain 390x844",
-    "preservedVariables": 62,
-    "preservedTextStyles": 8,
-    "preservedNativeIcons": 14,
-    "preservedCmpSets": 7,
-    "wholeUiRasterNodes": 0,
-    "captureReferenceRemoved": true
-  },
-  "beforeWebRecord": {
-    "manifest": "design/history/figma-manifest-2026-10-03-before-web.json",
-    "note": "NAVER-deferred mobile design and source mappings before the web working-tree update. Existing native screenshot assets and baseline records remain preserved."
   }
 }

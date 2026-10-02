@@ -19,7 +19,6 @@ jobs:
     timeout-minutes: 20
     env:
       CI: "true"
-      EXPO_NO_TELEMETRY: "1"
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,5 +37,5 @@ jobs:
         run: npm test
       - name: Check design tokens
         run: npm run tokens:check
-      - name: Build web preview
+      - name: Build React web application
         run: npm run build:web

@@ -12,6 +12,12 @@
 
 문서와 코드가 다르면 현재 코드·현재 head의 검사 결과를 확인하고 함께 수정한다. 이전 CI·캡처·모의 응답을 새 기능의 실제 검증으로 대신하지 않는다.
 
+## 웹앱 전환 · 현재 기본 구현
+
+사용자의 “웹앱으로 구현해” 요청에 따라 기본 실행은 React DOM + Vite + React Router로 전환했다. `src/web`를 수정하며 `src/app`의 Expo 구현은 별도로 보관한다. [웹앱 시작점](web-app.md)에 실행·파일 책임·브라우저 저장소·proxy·운영 한계를 정리했다. 기존 origin localhost:8081과 저장 키를 유지하므로 같은 브라우저의 저장 데이터가 이어진다. 현재 검증 기록은 전환 전 Expo 웹 검사와 새 DOM 웹 검사를 구분한다.
+
+기본 DOM UI는 데스크톱 사이드 메뉴/다열 카드와 모바일 상단 메뉴/한 열 카드로 반응한다. 공통 `Ui.tsx`의 named exports와 DOM 필터 버튼이 기존 CMP의 역할을 이어받는다. Figma 모바일 원본은 흐름·브랜드 기준이며 새 데스크톱 초안의 실제 node/검증 범위는 최신 manifest를 따른다. 모든 웹 화면이 기존 모바일 디자인과 자동 동기화됐다고 설명하지 않는다.
+
 ## 제품 의도와 브랜치
 
 **모아는 이미 저장한 콘텐츠를 정리하고 실제로 쓸 수 있는 장소와 시기에 다시 발견하게 하는 앱이다.** 새 링크를 쉽게 받는 기능과 많이 쌓인 기존 저장함을 정리하는 기능이 모두 중요하다. Instagram·YouTube·NAVER 지도 자료를 함께 보되 제공하지 않는 개인 저장함 API가 있는 것처럼 설명하지 않는다.
@@ -42,7 +48,7 @@ Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 실제 완료�
 
 ## 실행과 키 설정
 
-Node.js 24, npm, Expo SDK 57을 사용한다.
+Node.js 24, npm, React DOM·Vite·React Router를 사용한다. 기본 웹 코드와 보관한 Expo 코드를 구분한다.
 
 ~~~sh
 git clone https://github.com/o2postspace/moa.git
@@ -50,7 +56,7 @@ cd moa
 npm ci
 ~~~
 
-현재 구현을 이어갈 때 작업 브랜치·PR base를 먼저 확인한다. [.env.example](../.env.example)을 .env.local로 복사해 필요한 값을 설정한다. 두 터미널에서 npm run api와 npm run web을 실행한다. 기본 API는 http://localhost:8787, 앱은 http://localhost:8081이다. Node의 기본 --env-file-if-exists가 서버 설정을 읽는다. 비밀값에 EXPO_PUBLIC_를 붙이지 않고 값을 출력하여 확인하지 않는다.
+현재 구현을 이어갈 때 작업 브랜치·PR base를 먼저 확인한다. [.env.example](../.env.example)을 .env.local로 복사해 필요한 값을 설정한다. npm run dev 한 명령으로 API와 웹을 함께 실행한다. 독립 실행과 빌드는 docs/web-app.md를 따른다. 기본 API는 http://localhost:8787, 앱은 http://localhost:8081이다. Node의 기본 --env-file-if-exists가 서버 설정을 읽는다. 비밀값에 VITE_ 또는 EXPO_PUBLIC_를 붙이지 않고 값을 출력하여 확인하지 않는다.
 
 공개 YouTube 재생목록은 API key, 본인 재생목록은 Web OAuth client와 정확한 http://localhost:8787/api/youtube/callback 등록·consent screen 테스트 사용자·youtube.readonly 동의가 필요하다. 사용자가 실제 계정 화면에서 직접 로그인한다. [Google 공식 Web OAuth 안내](https://developers.google.com/identity/protocols/oauth2/web-server)
 
@@ -62,20 +68,20 @@ npm ci
 
 | ID / 파일 | 책임 |
 | --- | --- |
-| SCR-001 · src/app/index.tsx | 전체/방문 완료·검색·분류·출처, 서비스 연결 진입 |
-| SCR-002 · src/app/add.tsx | 추가/수정·붙여넣기·YouTube 제목, 수동 제목·선택 장소/메모, 고정 저장 바·오류 초점 |
-| SCR-003 · src/app/content/[id].tsx | 표시 제목·원본·확인된 장소, 지도 열기·Instagram 원문, 수정·방문 |
-| SCR-004 · src/app/integrations.tsx | 설정/연결 상태, OAuth·재생목록/파일 후보·선택, 페이지·중복·해제 |
-| SCR-005 · src/app/places.tsx | NAVER 보류 안내·기본 링크 저장으로 돌아가기. 검색 UI·API 요청 없음 |
+| SCR-001 · src/web/pages/LibraryPage.tsx | 전체/방문 완료·검색·분류·출처, 서비스 연결 진입 |
+| SCR-002 · src/web/pages/AddPage.tsx | 추가/수정·붙여넣기·YouTube 제목, 수동 제목·선택 장소/메모, 데스크톱 저장 패널·모바일 저장 액션·오류 초점 |
+| SCR-003 · src/web/pages/DetailPage.tsx | 표시 제목·원본·확인된 장소, 지도 열기·Instagram 원문, 수정·방문 |
+| SCR-004 · src/web/pages/IntegrationsPage.tsx | 설정/연결 상태, OAuth·재생목록/파일 후보·선택, 페이지·중복·해제 |
+| SCR-005 · src/web/pages/PlacesPage.tsx | NAVER 보류 안내·기본 링크 저장으로 돌아가기. 검색 UI·API 요청 없음 |
 | src/features/integrations/NaverPlacesScreen.tsx | 보류한 검색 UI 코드. 현재 route에서 사용하지 않음. 새 검색/화면 이탈·최대 24시간 메모리 만료·API 저장 금지 계약 보존 |
-| CMP-001–006 · src/components/ | 카드·칩·버튼·출처·빈 상태·CategoryStamp. 토큰·접근성 유지 |
-| CMP-007 · src/components/InstagramEmbed.tsx | 요청·오류·접기. InstagramFrame.web.tsx로 격리한 원문 표시; 현재 웹에서 활성화 |
-| src/features/integrations/api.ts | 로컬 주소·cookie·timeout·오류·타입 계약 |
-| readImportFile.ts, maps.ts · 같은 폴더 | 파일 선택/읽기, 지도 URL Scheme·웹 대체 |
+| CMP-001–006 · src/web/components/Ui.tsx 및 페이지 DOM 필터 | 카드·버튼·출처·빈 상태·CategoryStamp와 Library/Add의 필터 버튼. 토큰·접근성 유지 |
+| CMP-007 · src/web/components/InstagramEmbed.tsx | 요청·오류·접기. sandbox iframe으로 격리한 원문 표시 |
+| src/web/lib/api.ts | 같은 origin /api·cookie·timeout·오류·타입 계약 |
+| readImportFile.ts, maps.ts · 같은 폴더 | HTML File 읽기·엄격한 UTF-8, 안전한 HTTPS 지도 링크 |
 | server/ | 공식 고정 endpoint·OAuth state/PKCE/cookie·토큰·요청 제한. 메모리 세션, 운영 사용자 인증 없음 |
 | src/domain/content.ts | URL·입력·중복·v2 저장 검증, 출처/기한·배치·연결 항목 삭제 |
 | src/domain/imports.ts | JSON/TXT 후보. 네트워크·저장·재귀 개인정보 탐색 없음 |
-| src/features/library/LibraryProvider.tsx | ready·이동·쓰기 후 공개·변경 잠금·기한 정리·배치 |
+| src/web/library/LibraryProvider.tsx | ready·이동·쓰기 후 공개·변경 잠금·기한 정리·배치 |
 | tests/ | 링크·parser·v2/실패·provenance·서버/OAuth 경계 검사 |
 | design/tokens.json | 토큰 원본. tokens:generate 후 생성 코드 함께 검토 |
 | design/component-map.json, figma-manifest.json | 코드 연결과 실제 원격 node/권한 상태. 자동 동기화 아님 |
@@ -143,4 +149,4 @@ npm run build:web
 
 다른 개발자의 Codex에 전달할 시작 프롬프트:
 
-> AGENTS.md, README.md, docs/codex-handoff.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 현재 MVP는 공개 YouTube 재생목록·Instagram 링크·JSON/TXT 후보 검토와 기본 저장함입니다. 사용자 요청으로 NAVER API 검색·발급·결제수단 등록은 보류했고 서비스 카드·검색 진입을 제외했습니다. /places는 API 요청 없는 보류 안내이며 이전 검색 코드는 src/features/integrations/NaverPlacesScreen.tsx에 보관합니다. Google 프로젝트·YouTube API 활성화는 완료했지만 OAuth client·실제 계정 연동은 후속 범위입니다. 공개 재생목록 17개 조회·웹 후보 선택 성공을 OAuth 성공으로 설명하지 마세요. 공개 목록·수동 링크·파일 정리의 선택 저장·중복·실패·재실행부터 검증해 주세요. NAVER 직접 공유 링크와 기존 데이터, createContent의 신규 NAVER provenance/place 거부·mixed batch/중복 검증, 기존 v2 읽기·방문 toggle·30일 정리 호환성을 보존해 주세요. 사용자 데이터를 조기 삭제하거나 기존 호환성을 약관 준수 완료로 설명하지 마세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest를 읽고 SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. 59205e5는 baseline이며 최신 부분 갱신·reaction 수·확인 범위는 manifest가 기준입니다. 비밀값과 사용자 export를 출력·커밋하지 않고 다른 개발자의 변경을 보존해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.
+> AGENTS.md, README.md, docs/codex-handoff.md, docs/web-app.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 현재 기본 제품은 src/web의 React DOM/Vite/React Router 웹앱이며 Expo 코드는 보관본입니다. npm run dev 한 명령으로 API와 웹을 실행합니다. MVP는 공개 YouTube 재생목록·Instagram 링크·JSON/TXT 후보 검토와 기본 저장함입니다. 사용자 요청으로 NAVER API 검색·발급·결제수단 등록은 보류했고 서비스 카드·검색 진입을 제외했습니다. /places는 API 요청 없는 보류 안내이며 이전 검색 코드는 src/features/integrations/NaverPlacesScreen.tsx에 보관합니다. Google 프로젝트·YouTube API 활성화는 완료했지만 OAuth client·실제 계정 연동은 후속 범위입니다. 공개 재생목록 17개 조회·웹 후보 선택 성공을 OAuth 성공으로 설명하지 마세요. 공개 목록·수동 링크·파일 정리의 선택 저장·중복·실패·재실행부터 검증해 주세요. NAVER 직접 공유 링크와 기존 데이터, createContent의 신규 NAVER provenance/place 거부·mixed batch/중복 검증, 기존 v2 읽기·방문 toggle·30일 정리 호환성을 보존해 주세요. 사용자 데이터를 조기 삭제하거나 기존 호환성을 약관 준수 완료로 설명하지 마세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest를 읽고 SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. 59205e5는 baseline이며 최신 부분 갱신·reaction 수·확인 범위는 manifest가 기준입니다. 비밀값과 사용자 export를 출력·커밋하지 않고 다른 개발자의 변경을 보존해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.

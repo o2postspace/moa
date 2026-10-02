@@ -123,7 +123,7 @@ export function normalizeUrl(input: string): string {
     if (/^[a-z][a-z\d+.-]*:/i.test(trimmed) && !/^https:\/\//i.test(trimmed) && !hostWithPort) {
       throw new Error('Unsupported protocol');
     }
-    if (/^[\/\\]/.test(trimmed)) throw new Error('Relative URL');
+    if (/^[/\\]/.test(trimmed)) throw new Error('Relative URL');
     parsed = new URL(/^https:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`);
     if (parsed.protocol !== 'https:' || !parsed.hostname || parsed.username || parsed.password) {
       throw new Error('Unsafe URL');

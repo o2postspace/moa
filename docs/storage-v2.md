@@ -1,6 +1,10 @@
 # 로컬 저장 형식 v2와 API 정보 보존
 
-2026-10-03. 저장 키는 기존 `moa.library.v1`을 유지하며, 값은 `{ "version": 2, "items": [...] }`이다. 키 이름과 값의 schema version은 별개다. 현재 기기의 저장함이며 클라우드 동기화·백업을 제공하지 않는다. AsyncStorage는 암호화되지 않은 저장소이므로 OAuth token·비밀값을 여기에 넣지 않는다. [Expo SDK 57 AsyncStorage 안내](https://docs.expo.dev/versions/v57.0.0/sdk/async-storage/)
+웹의 읽기·이동·기한 정리·변경은 `createBrowserLibraryRepository`를 사용한다. Web Locks의 origin 공통 배타 이름 `moa.library.v1` 안에서 최신 저장값 읽기→기존 도메인 검증/정리/변경→동기 쓰기를 수행한다. 오래된 탭의 메모리 목록 전체로 최신 항목을 덮어쓰지 않는다. storage 이벤트·전경 복귀에서 최신 목록을 다시 확인한다. Web Locks 미지원 환경은 유효 v2 읽기만 허용하고 변경·이동·정리에 필요한 쓰기를 거부하며 원본을 보존한다. [Web Locks 공식 설명](https://developer.mozilla.org/en-US/docs/Web/API/Web_Locks_API)
+
+2026-10-03. 기본 React DOM 웹앱은 브라우저 `localStorage`의 기존 키 `moa.library.v1`을 유지하며, 값은 `{ "version": 2, "items": [...] }`이다. 키 이름과 값의 schema version은 별개다. 보관한 Expo 웹에서 쓰던 같은 `http://localhost:8081` origin과 키를 읽으며 새 키·저장 schema를 만들거나 초기화하지 않는다. 클라우드 동기화·백업을 제공하지 않으며 OAuth token·비밀값을 브라우저 저장소에 넣지 않는다. [브라우저 localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+
+웹 어댑터는 `src/web/library/storage.ts`, 상태는 `src/web/library/LibraryProvider.tsx`다. 기존 Expo·React Native 구현은 `src/features/library/LibraryProvider.tsx`와 AsyncStorage 의존성으로 보관한다. 기본 웹 번들은 이를 사용하지 않는다. 전환 전 브라우저 저장5건·표시 제목·방문·순서가 새 DOM 저장함과 재실행에서 유지되는 것을 확인했다. 자세한 범위는 [검증 기록](verification.md)을 따른다.
 
 신규 NAVER 검색 결과는 이 저장 형식에 추가하지 않는다. 기존 NAVER 필드는 읽기 호환성을 위해 유지하며 신규 생성 허용을 뜻하지 않는다. YouTube의 30일 정리와 NAVER 결과 화면의 최대 24시간 메모리 수명은 서로 다른 계약이다.
 
@@ -8,9 +12,9 @@
 
 `readStoredLibrary`는 기존 JSON 배열과 v2 envelope를 읽고 모든 항목을 검증한다. 기존 배열이면 `needsMigration: true`를 반환한다. ID·사용자 제목·메모·장소 문자열·방문 상태·생성일·목록 순서를 유지한다. `parseStoredContent`는 기존 호출부용 읽기 wrapper이며 저장 형식의 검증만 수행한다.
 
-Provider는 `loadStoredLibrary`로 읽은 뒤 필요한 migration과 기한 정리를 하나의 `setItem` 교체 쓰기로 저장한다. 쓰기가 성공한 뒤에만 목록을 공개하고 변경 작업을 허용한다. 지원하지 않는 version, 잘못된 JSON, 항목 하나의 스키마 오류·위험 URL·중복 ID·출처 불일치는 전체 로드 실패로 처리하며 저장값을 덮어쓰지 않는다. migration 쓰기 실패 때도 준비 상태로 전환하지 않고 재시도를 제공한다. 저장 라이브러리의 내부 복구나 백업 기능을 추가한 것은 아니며 `setItem` 성공/실패를 경계로 동작한다.
+웹 Provider는 repository.load로 읽고 `readStoredLibrary`·`pruneExpiredContent`·`serializeStoredLibrary` 도메인 규칙을 사용한다. 필요한 migration과 기한 정리는 배타 범위에서 하나의 `setItem` 교체 쓰기로 저장한다. 쓰기가 성공한 뒤에만 목록을 공개하고 변경 작업을 허용한다. 지원하지 않는 version, 잘못된 JSON, 항목 하나의 스키마 오류·위험 URL·중복 ID·출처 불일치는 전체 로드 실패로 처리하며 저장값을 덮어쓰지 않는다. migration 쓰기 실패 때도 준비 상태로 전환하지 않고 재시도를 제공한다. 저장 라이브러리의 내부 복구나 백업 기능을 추가한 것은 아니며 `setItem` 성공/실패를 경계로 동작한다. 보관한 Expo Provider는 기존 loadStoredLibrary/saveStoredLibrary를 사용한다.
 
-변경도 `saveStoredLibrary`의 쓰기 성공 후 화면 상태를 갱신한다. 실패하면 이전 메모리 목록과 입력을 유지한다. 다른 변경 처리 중에는 다음 변경을 차단한다. 여러 프로세스·브라우저 탭의 동시 편집을 병합하는 기능은 없다.
+웹 변경은 repository.transact의 쓰기 성공 후 화면 상태를 갱신한다. 실패하면 이전 메모리 목록과 입력을 유지한다. 브라우저의 quota·개인정보 설정 등으로 localStorage 접근이 거부되어도 실패를 빈 저장함으로 바꾸지 않는다. 같은 화면에서 다른 변경 처리 중에는 다음 변경을 차단한다. 같은 origin의 웹 탭은 공통 Web Lock 안에서 최신 값을 읽고 변경하며, 비협조적인 다른 앱·보관한 Expo의 쓰기나 기기 간 충돌 병합까지 보장하지 않는다. URL origin이 달라지면 같은 저장 키도 다른 저장소이므로 `localhost:8081` 접속을 유지한다. 브라우저 데이터 초기화·삭제에 대한 복구 기능은 없다.
 
 ## 사용자 정보와 API 정보
 
@@ -25,7 +29,7 @@ Provider는 `loadStoredLibrary`로 읽은 뒤 필요한 migration과 기한 정�
 
 [HUB 2026-09-20 시행 약관](https://www.ncloud.com/support/notice/all/2243) 제2.3·2.4조는 API 결과의 복사·저장·캐싱을 예외 범위로 제한한다. 기기 개인화 캐시는 **24시간 또는 새 질의까지 중 짧은 기간**이며, 사용자가 결과를 선택했다는 이유로 장기 저장할 수 있는 예외는 확인되지 않았다. [2026-10-07 개정](https://www.ncloud.com/support/notice/all/2271)은 약관 명칭·책임·통지 조항을 변경하며 이 저장 기간을 늘리지 않는다.
 
-- `places.tsx`는 결과를 화면 메모리에만 보관한다. 새 검색을 시작할 때 이전 결과를 지우므로 새 요청이 실패해도 이전 응답을 복구하지 않는다. 화면 이탈 시 결과·타이머를 지우고 진행 중 응답을 무효화한다.
+- 현재 `/places`와 웹 `PlacesPage`는 API 요청 없는 보류 안내다. 아래 임시 결과 계약은 보관한 `src/features/integrations/NaverPlacesScreen.tsx`의 후속 검색 흐름에 적용한다. 검색 구현을 다시 활성화할 때 새 검색 시작 시 이전 결과를 지우고, 화면 이탈 때 결과·타이머·진행 중 응답을 무효화한다.
 - 응답 `fetchedAt`과 수신 시각을 기준으로 최대 24시간 만료를 설정하며 타이머와 전경 복귀 시 만료를 확인한다. 결과를 AsyncStorage·파일·서버의 장기 캐시에 쓰지 않는다.
 - 결과에서는 원문·네이버 지도 확인만 제공하고 저장·분류 CTA는 제공하지 않는다. 사용자가 직접 공유한 지도 링크와 작성한 제목은 API provenance·좌표 없이 수동 저장할 수 있다. API 결과를 사용자 작성값으로 위장해 보존하는 경로는 만들지 않는다.
 - `createContent`는 NAVER `importedFrom` 또는 `place`가 있는 입력을 거부한다. `buildContentImport`는 전체 입력을 먼저 검증하므로 NAVER가 포함된 mixed batch 전체를 거부하며 이미 저장된 URL이라도 중복 처리로 우회하지 못한다.
@@ -35,7 +39,7 @@ Provider는 `loadStoredLibrary`로 읽은 뒤 필요한 migration과 기한 정�
 
 ## YouTube 30일 기한과 기존 정리·연결 해제
 
-YouTube 캐시·가져오기 항목은 `fetchedAt`부터 정확히 30일이 되는 시점에 만료된다. 기존 NAVER 항목도 같은 prune를 호환성을 위해 유지한다. 자동 갱신은 구현하지 않았다. 로드·성공적인 저장 변경, 앱의 전경 복귀, 전경에서 1시간 주기의 확인 때 기한 정리를 저장하며, 표시/검색 helper는 만료된 외부 제목을 즉시 기본 제목으로 대체한다. 만료 항목이 없으면 정리를 위한 쓰기를 하지 않는다. 다른 저장 작업 중에 전경 정리 요청이 오면 해당 작업 뒤에 다시 확인한다. 정리 쓰기 실패 시 원본 저장값과 현재 목록을 유지하고 변경을 차단한 뒤 다시 불러오기를 안내한다. 앱이 닫혀 있는 동안 저장소를 정리하는 백그라운드 서비스는 없으며 전경 타이머도 운영체제의 실행 제약을 받는다. [React Native 0.86 AppState 안내](https://reactnative.dev/docs/0.86/appstate)
+YouTube 캐시·가져오기 항목은 `fetchedAt`부터 정확히 30일이 되는 시점에 만료된다. 기존 NAVER 항목도 같은 prune를 호환성을 위해 유지한다. 자동 갱신은 구현하지 않았다. 로드·성공적인 저장 변경, 웹 창의 focus·문서 visibility 복귀, 표시 중 1시간 주기 확인 때 기한 정리를 저장하며, 표시/검색 helper는 만료된 외부 제목을 즉시 기본 제목으로 대체한다. 만료 항목이 없으면 정리를 위한 쓰기를 하지 않는다. 다른 저장 작업 중에 정리 요청이 오면 해당 작업 뒤에 다시 확인한다. 정리 쓰기 실패 시 원본 저장값과 현재 목록을 유지하고 변경을 차단한 뒤 다시 불러오기를 안내한다. 브라우저·탭이 닫힌 동안 정리하는 백그라운드 서비스는 없으며 숨겨진 탭의 타이머는 브라우저 실행 제약을 받는다. 보관한 네이티브 Provider는 기존 AppState 계약을 유지한다. [문서 visibility 이벤트](https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event)
 
 - 수동으로 추가한 URL의 `external`만 만료되면 캐시를 지우고 기본 제목·URL·사용자 메모·방문 상태를 남긴다.
 - YouTube `importedFrom`이 있는 항목은 30일 뒤 **전체 항목을 삭제**한다. 그 항목에 사용자가 덧붙인 메모·분류·방문 표시도 함께 삭제된다. 가져오기 전에 UI가 이 동작을 설명한다. 기존 NAVER 항목·좌표도 이전 30일 정리 경로를 유지하지만 신규 NAVER 입력에는 이를 저장 허용 근거로 적용하지 않는다.
@@ -50,6 +54,6 @@ URL 중복 기준은 장소 동일성이나 video ID만의 일치가 아니다. 
 
 수정 화면은 제목 편집 시 `titleMode: 'manual'`을 전달한다. 기존 외부 제목을 유지하면 `external`과 `titleMode`를 그대로 전달한다. URL 변경 시 Provider가 기본적으로 외부 캐시를 제거하며 다른 URL의 새 캐시를 전달하려면 새 응답이 필요하다. `DraftInput.external: null`은 캐시 삭제, `place: null`은 좌표 삭제이며 `undefined`는 수정 시 기존 정보 보존이다. 장소 이름을 바꾸면 UI가 `place: null`을 전달해 이전 좌표를 새 이름의 확정된 위치처럼 표시하지 않는다. 기본 `placeName`·메모 문자열은 유지된다.
 
-검증은 `tests/content-integrations.test.ts`, `tests/library-storage.test.ts`의 v1/v2·잘못된 version·실패 보존·배치 중복·기한 경계·origin·좌표 사례를 따른다. 실제 iOS/Android의 저장소 장애와 앱 수명주기 확인은 별도다.
+검증은 `tests/content-integrations.test.ts`, `tests/library-storage.test.ts`의 v1/v2·잘못된 version·실패 보존·배치 중복·기한 경계·origin·좌표 사례를 따른다. 새 DOM 웹의 브라우저 저장 어댑터·기존 데이터·quota 실패·재실행·숨김/복귀 동작과 보관한 iOS/Android의 저장소 장애·수명주기 확인은 각각 별도다.
 
 NAVER 신규 저장·기존 API 항목 수정·mixed batch·중복 URL 거부와 기존 읽기·방문 변경·30일 prune 보존을 함께 확인한다. 화면의 새 검색/이탈·늦은 응답·만료는 저장 도메인 검사와 별도로 검증한다. 모의 응답 검사는 실제 HUB 키·검색 성공이나 기존 데이터 보존 정책의 출시 승인을 대신하지 않는다.
