@@ -30,16 +30,26 @@ npm run web -- --port 8081
 
 2026-10-03에는 실제 키로 Google 공식 공개 재생목록 17개를 조회하고 웹 후보 목록·전체 선택 해제·개별 선택을 확인했다. 이 검토에서는 영상을 저장하지 않았다. 실제 Google 계정 OAuth와 50개 이상 목록의 페이지 이동은 별도 검증이다. 자세한 범위는 [검증 기록](verification.md)을 따른다.
 
+같은 날 모아 전용 `moa-local` 프로젝트를 새로 만들고 YouTube Data API v3 활성화를 확인했다. 앱 이름·담당자 정보와 `youtube.readonly` 범위를 등록하고 `moa-local-web` 웹 클라이언트의 위 callback 양식을 준비했다. 최종 인증정보 생성은 계정 소유자의 실행 시점 확인 대기이며 `GOOGLE_CLIENT_ID`·`GOOGLE_CLIENT_SECRET`은 아직 미등록이다. 기존 공개 재생목록 API 키는 유지했다. 프로젝트 식별값·담당자 연락처·비밀값은 이 문서에 기록하지 않는다.
+
 공식 기준: [Google Web Server OAuth](https://developers.google.com/identity/protocols/oauth2/web-server), [OAuth 테스트 사용자](https://support.google.com/cloud/answer/15549945), [YouTube 재생목록](https://developers.google.com/youtube/v3/docs/playlists/list), [YouTube 보존 정책](https://developers.google.com/youtube/terms/developer-policies).
 
 ## 네이버 장소 검색과 지도
 
-1. [NAVER 개발자센터](https://developers.naver.com/apps/)에서 사용할 애플리케이션을 등록하고 **검색 API**를 선택한다. 지역 검색은 Naver Cloud Platform의 Maps SDK와 별도의 API다.
-2. 발급된 Client ID와 Client Secret을 `.env.local`의 `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`에 입력한다. `EXPO_PUBLIC_` 접두사를 붙이지 않는다.
-3. 서버 재시작 → 서비스 연결 → 장소 검색하고 저장 → 동네와 장소 이름 검색 → 주소 확인 → 분류 선택 → 장소 저장 → 상세에서 네이버 지도 열기를 확인한다.
-4. 동명 장소, 다른 지점, 결과 없음, quota/인증 오류, 좌표 없는 응답을 확인한다. API는 검색당 최대 5개를 제공한다. 저장 URL은 지도 검색 링크이고 좌표는 네이버 검색 응답에서 가져온 값이다. 브라우저에서는 네이버 지도 웹을 열며 native 지도 앱 열기/미설치 fallback은 실기기 검증 전이다.
+2026-07-31부터 개발자센터 검색 API 신규 신청이 중단되어 **새 키는 NAVER API HUB**에서 발급한다. 기존 검색 권한은 이관 유예 기간에 legacy 경로로 사용할 수 있다. HUB와 기존 키는 인증 방식이 달라 서로 바꿔 넣지 않는다. [이관 공지](https://developers.naver.com/notice/article/32530), [HUB 이관 가이드](https://guide.ncloud-docs.com/docs/apihub-migration)
 
-개인 계정의 지도 저장 목록을 읽는 공개 API는 제공되지 않는다. 사용자가 공유한 지도 링크는 수동으로 추가할 수 있으며, 공유 목록의 개별 장소를 일괄 수집했다고 표시하지 않는다. Naver 검색 항목의 30일 정리는 현재 앱의 보수적인 제품 규칙이며 Naver의 정확한 최대 보관 기간을 확인했다는 뜻이 아니다.
+1. [NAVER API HUB](https://www.ncloud.com/product/applicationService/naverApiHub)의 신청하기로 이동한다. NAVER Cloud 계정으로 한국 리전 콘솔의 서비스 신청·Application 등록을 진행한다. 이름은 `moa-local`, API는 **NAVER 검색 / 지역**을 선택한다. Maps SDK 키와는 다르다.
+2. `.env.local`에 `NAVER_API_PROVIDER=hub`와 서버용 `NAVER_HUB_CLIENT_ID`, `NAVER_HUB_CLIENT_SECRET`을 입력한다. `EXPO_PUBLIC_` 접두사를 붙이지 않는다. 기존 검색 키를 사용할 때만 `NAVER_API_PROVIDER=legacy`, `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET`을 사용한다. 선택한 경로가 실패해도 다른 키로 자동 재요청하지 않는다.
+3. 서버 재시작 → 연결 상태 다시 확인 → 장소 검색하고 확인 → 동네와 장소 이름 검색 → 주소·원문 확인 → 네이버 지도 열기를 검증한다. API 결과를 저장함에 복사하는 버튼은 제공하지 않는다.
+4. 동명 장소, 다른 지점, 결과 없음, quota/인증 오류, 좌표 없는 응답을 확인한다. 검색당 최대 5개를 제공한다. 브라우저의 지도 웹과 native 지도 앱/미설치 fallback은 별도 검증이다.
+
+HUB는 현재 한시적 무료이며 유료 전환 시 별도 공지가 예정되어 있다. 결제 수단 등록이나 유료 서비스 신청이 필요한 화면에서는 계정 소유자가 직접 결정한다. 현재 한도·요금은 [HUB 개요](https://guide.ncloud-docs.com/docs/apihub-overview)에서 확인한다.
+
+2026-10-03 신규 발급 작업은 NAVER Cloud 간편 로그인에서 ID·이름·휴대전화번호의 제3자 제공 동의 확인 대기다. HUB Application·키는 아직 생성하지 않았다. 로컬 환경에는 `hub` 제공자와 빈 HUB 변수만 준비했고, 실제 검색 성공으로 표시하지 않는다.
+
+검색 결과의 장기 저장은 지원하지 않는다. [2026-09-20 시행 HUB 약관 공지](https://www.ncloud.com/support/notice/all/2243)의 기기 개인화 캐시 조건에 따라 결과는 메모리에서만 표시하며 새 질의·화면 이탈·최대 24시간 만료에 정리한다. 결과에서 파생된 이름·주소·좌표를 사용자 선택만으로 영구 저장하지 않는다. 서버 응답은 `no-store`이며 원문 링크와 네이버 지도 확인을 제공한다. 기존 개발 버전의 NAVER API 항목은 호환 읽기만 유지하고 새 생성·재저장은 거부한다. 기존 데이터의 조기 삭제는 자동 수행하지 않았다. [저장 계약](storage-v2.md)
+
+개인 계정의 지도 저장 목록을 읽는 공개 API는 제공되지 않는다. 사용자가 직접 공유한 지도 링크는 수동으로 추가할 수 있으며, 공유 목록의 개별 장소를 일괄 수집했다고 표시하지 않는다.
 
 공식 기준: [지역 검색 API](https://developers.naver.com/docs/serviceapi/search/local/local.md), [WGS84 좌표 변경](https://developers.naver.com/notice/article/12567), [지도 URL Scheme](https://guide-gov.ncloud-docs.com/docs/naveropenapiv3-maps-url-scheme-url-scheme).
 

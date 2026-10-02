@@ -1,18 +1,40 @@
 # 모아 검증 기록
 
+## 신규 발급 준비와 NAVER API HUB · 2026-10-03
+
+Google Cloud에서 모아 전용 `moa-local` 프로젝트 생성과 YouTube Data API v3의 ‘사용 설정됨’을 실제 확인했다. OAuth 앱 정보와 `youtube.readonly` 범위를 등록하고 웹 클라이언트 `moa-local-web` 및 `http://localhost:8787/api/youtube/callback` 양식을 준비했다. 최종 인증정보 생성은 계정 소유자 확인 대기이며 Google OAuth 값은 아직 로컬 미등록이다. NAVER Cloud 간편 로그인은 ID·이름·휴대전화번호의 제3자 제공 동의 확인 대기다. HUB Application·키는 생성하지 않았고 실제 NAVER 성공 응답도 확인하지 않았다. 계정 연락처·프로젝트 식별값·비밀값은 기록하지 않는다.
+
+신규 NAVER 발급 경로에 맞춰 `NAVER_API_PROVIDER=legacy|hub`와 별도 HUB 변수, 공식 endpoint·헤더·`format=json`을 추가했다. 선택한 경로의 키만 사용하며 다른 제공자로 자동 재시도하지 않는다. 인증·한도·장애 오류는 제공자의 원본 내용을 전달하지 않는 자체 안내로 바꾼다. [이관 안내](https://guide.ncloud-docs.com/docs/apihub-migration), [HUB 지역 API](https://api.ncloud-docs.com/docs/naver-api-hub-search-local)
+
+[2026-09-20 시행 HUB 조건](https://www.ncloud.com/support/notice/all/2243)에 맞춰 장소 검색의 분류·영구 저장을 제거했다. 결과는 메모리에만 두고 새 질의·화면 이탈·최대 24시간에 정리하며 전경 복귀 때 기한을 다시 확인한다. 늦게 도착한 이전 응답은 재표시하지 않는다. 원문 URL과 네이버 지도 확인을 제공한다. 도메인은 신규 NAVER API 출처·장소 정보의 저장과 혼합 배치를 거부한다. 사용자가 직접 공유한 지도 링크의 수동 저장은 유지한다. 기존 개발 데이터의 읽기·이동·방문 표시·기존 30일 정리는 호환성을 위해 보존했고 조기 삭제하지 않았다. 기존 API 항목의 수정 저장은 차단되며 기존 보존 방식이 현재 약관을 충족한다는 주장은 하지 않는다.
+
+실제 로컬 서버 재시작 후 `/api/status`는 공개 재생목록 설정 있음, OAuth·NAVER 검색 설정 없음으로 HTTP 200을 반환했다. HUB 미설정 검색은 HTTP 503 `setup_required`와 HUB 인증정보 안내를 반환했다. 웹의 빈 검색 버튼 비활성화·검색 후 같은 오류 표시·분류/저장 CTA 제거·24시간 안내를 확인했다. [웹 HUB 준비 안내](../design/integration-naver-hub-setup.png)를 남겼다. 저장함으로 돌아갔을 때 기존 검토 항목 4개가 유지됐으며 이번 검색으로 저장소를 변경하지 않았다. 서비스 화면의 새 NAVER 문구와 키 미설정 검색 버튼 비활성화도 확인했다. 실제 성공 결과·24시간 경과·실기기 AppState와 지도 앱 검증은 남아 있다.
+
+| 이번 변경의 검사 | 결과 |
+| --- | --- |
+| `npm run typecheck` | 통과 |
+| `npm run lint` | 통과 |
+| `npm test` | 62개 통과. HUB 계약·오류/키 격리와 신규 NAVER 저장 거부·기존 읽기 호환 포함 |
+| `npm run tokens:check` | 토큰 원본과 생성 코드 일치 |
+| `npm run build:web` | 웹 내보내기 완료 |
+
+새 Figma의 SCR-004/005·검색 결과 원본/리뷰·서비스 전체 구성을 부분 갱신했다. NAVER 저장/분류 대신 원문·지도와 임시 결과 안내를 표시하고 기존 Secondary 컴포넌트의 연결 상태 재확인을 추가했다. 영향받는 원본/리뷰 세 쌍 텍스트 일치, 390×844 유지, Noto Sans KR·IMAGE fill 0을 읽기 확인했다. 현재 기본 이동 20개·reaction이 있는 node 41개·시작점 3개이며 프로토타입 재생과 실제 API 요청은 미검증이다. 최신 screens/states/fullScroll PNG 세 개를 직접 시각 확인했고 전체 구성은 440×1650이다. 이전 59205e5 기준 manifest·세 PNG는 `design/history/`에 보존했다. [최신 manifest](../design/figma-manifest.json), [부분 갱신 기록](figma-sync.md)
+
 ## 실제 공개 재생목록 연결 · 2026-10-03
 
 서버용 `YOUTUBE_API_KEY` 설정 후 로컬 API 서버를 다시 시작했다. `/api/status`에서 공개 재생목록 설정을 확인하고, [Google 공식 Chrome 문서](https://developer.chrome.com/blog/ai-io25)가 연결하는 [Google I/O 2025 공개 재생목록](https://www.youtube.com/playlist?list=PLNYkxOF6rcIDf2yTHfwShSCwVxaUuGk-v)을 `/api/youtube/playlist`로 조회했다. 실제 HTTP 200, 영상 17개, 다음 페이지 없음으로 응답했다. 비밀값은 출력·캡처·커밋하지 않았다.
 
 웹 서비스 연결 화면에서 ‘연결 상태 다시 확인’을 누른 뒤 페이지 전체 새로고침 없이 공개 재생목록 버튼이 활성화됐다. 실제 영상 17개가 후보로 표시됐고, 전체 선택 해제 시 0개 저장 버튼이 비활성화됐다. 영상 1개를 선택하면 1개 저장 버튼이 활성화됐다. [선택 화면 캡처](../design/integration-youtube-playlist-preview.png)를 남겼다. 이 검토에서는 영상을 저장하지 않았다.
 
-연결 상태 재확인 버튼을 항상 표시하고 요청 중 비활성화했다. OAuth 없이 공개 재생목록 키만 설정한 경우 서비스 상태는 ‘공개 재생목록으로 시작’으로 표시한다. 설정 여부를 실제 계정 연결 완료로 표시하지 않는다. Figma는 아래 소스 `59205e5` 기준 초안이며 이번 재확인 버튼·문구 변경은 아직 반영하지 않았다.
+연결 상태 재확인 버튼을 항상 표시하고 요청 중 비활성화했다. OAuth 없이 공개 재생목록 키만 설정한 경우 서비스 상태는 ‘공개 재생목록으로 시작’으로 표시한다. 설정 여부를 실제 계정 연결 완료로 표시하지 않는다. 이 검사 당시 Figma는 아래 소스 `59205e5` 기준 초안이었다. 이후 부분 반영 범위는 위 최신 기록과 manifest를 따른다.
 
 공개 YouTube 제목과 Instagram 원문 API도 다시 실제 HTTP 200 응답을 확인했다. Instagram HTML은 응답 확인에만 사용하고 저장하거나 내용을 분석하지 않았다. Google OAuth 클라이언트 두 값과 NAVER 검색 키 두 값은 이 확인 시점에 미설정이다. 실제 계정 로그인·선택 저장·재실행·50개 이상 페이지 이동·해제와 NAVER 실제 검색은 남아 있다. 네이티브 기기 검증 범위도 기존 기록과 같다.
 
 이번 버튼·문구 변경 후 `npm run typecheck`, `npm run lint`, `npm run build:web`, `git diff --check`가 통과했다. 기존 서버 경계 테스트 11개도 통과했다. 실제 제공자 응답과 모의 서버 테스트의 검증 범위는 별도로 기록한다.
 
 ## 새 Figma 파일 · 2026-10-03
+
+이 절은 새 파일 최초 구성의 기록이다. 이후 부분 갱신으로 바뀐 이동 수·보드 높이·세 캡처는 위 최신 기록과 `design/history/`의 초기 기준을 구분한다.
 
 연결 계정에서 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)을 새로 만들고 편집 가능한 네이티브 화면·공통 컴포넌트·변수·Handoff를 구성했다. 앱 소스 `59205e5`의 흐름을 바탕으로 한 디자인 초안이다. 기존 파일을 변경하거나 자동 픽셀 동기화를 구현한 작업은 아니다. 이번 작업에서는 앱/API 동작을 수정하지 않았다.
 

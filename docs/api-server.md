@@ -1,6 +1,6 @@
 # 모아 개발 API 서버
 
-2026-10-01 기준. 이 서버는 로컬 웹에서 공식 API 연결을 확인하는 개발용이다. 사용자 인증·HTTPS 배포·영구 토큰 저장·네이티브 OAuth callback을 구현한 운영 서버가 아니다. 비밀값과 Google 토큰을 앱 코드, URL, AsyncStorage, 저장소에 넣지 않는다.
+2026-10-03 기준. 이 서버는 로컬 웹에서 공식 API 연결을 확인하는 개발용이다. 사용자 인증·HTTPS 배포·영구 토큰 저장·네이티브 OAuth callback을 구현한 운영 서버가 아니다. 비밀값과 Google 토큰을 앱 코드, URL, AsyncStorage, 저장소에 넣지 않는다.
 
 ## 실행과 설정
 
@@ -20,7 +20,9 @@ node --env-file-if-exists=.env.local server/index.ts
 | `GOOGLE_REDIRECT_URI` | `http://localhost:8787/api/youtube/callback`. Google Cloud Web OAuth client에 정확히 같은 URI 등록 |
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google OAuth Web client. 계정 재생목록을 읽을 때 필요 |
 | `YOUTUBE_API_KEY` | 공개 재생목록 조회에 필요. Google Cloud에서 YouTube Data API v3 활성화 |
-| `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` | 네이버 개발자센터 애플리케이션에 검색 API 사용 설정 |
+| `NAVER_API_PROVIDER` | `legacy` 기본값. 기존 키는 `legacy`, 새 API HUB 키는 `hub` |
+| `NAVER_CLIENT_ID`, `NAVER_CLIENT_SECRET` | 기존 NAVER 개발자센터 검색 API 키. legacy 경로에서만 사용 |
+| `NAVER_HUB_CLIENT_ID`, `NAVER_HUB_CLIENT_SECRET` | NAVER API HUB의 지역 검색 Application 키. hub 경로에서만 사용 |
 
 Instagram oEmbed는 현재 tokenless이다. Instagram 소비자 계정 로그인이나 저장함 읽기 설정을 요구하지 않는다. Google OAuth consent screen의 테스트 사용자를 설정하고 YouTube 읽기 권한에 동의해야 계정 목록을 확인할 수 있다. 자격 증명이 설정되었다는 상태는 로그인 완료나 제공자에서 설정을 검증했다는 뜻이 아니다. Google 계정 연결은 공식 토큰 교환 성공 뒤 별도의 상태로 표시한다.
 
@@ -56,6 +58,10 @@ Google은 `youtube.readonly` 최소 읽기 scope, authorization code, PKCE S256,
 YouTube의 `WL`(나중에 볼 동영상), `LL`(좋아요) 특수 목록은 이 재생목록 흐름에서 허용하지 않는다. 나중에 볼 목록은 공식 API가 제한하고, 좋아요 영상은 별도의 `videos.list?myRating=like` 경로가 있으나 이번 구현 범위 밖이다. 직접 만든 이름 있는 재생목록을 선택한다. 반환되지 않는 비공개·삭제 영상은 가져오지 않는다. 가져온 YouTube API 데이터의30일 내 갱신/삭제와 연결 해제 후 삭제 정책은 앱 저장 계층에서 적용해야 한다.
 
 네이버는 공식 지역 검색으로 장소 후보만 제공한다. 실제 장소는 사용자가 주소를 확인해 선택해야 한다. 공식2023년 WGS84 전환 공지의 서울시청 sample에서 `mapx=1269873882`, `mapy=375666103`이므로 `longitude=mapx/10^7`, `latitude=mapy/10^7`로 해석한다. 안전한 정수·한국 범위를 확인한 값만 좌표로 반환하며 구형 KATECH sample이나 이상값은 좌표를 만들지 않는다. 표시용 문자열에서 HTML 태그를 제거하며 API 문자열을 HTML로 렌더링하지 않는다.
+
+HUB는 고정 `https://naverapihub.apigw.ntruss.com/search/v1/local`과 `X-NCP-APIGW-API-KEY-ID`, `X-NCP-APIGW-API-KEY` 헤더, `format=json`을 사용한다. legacy는 기존 `https://openapi.naver.com/v1/search/local.json`과 `X-Naver-Client-Id`, `X-Naver-Client-Secret`을 유지한다. `searchConfigured`는 선택한 경로의 키 두 값만 확인하며 실패 시 다른 경로로 자동 대체하지 않는다. 인증/권한 거절은 `access_denied`, 한도는 `limited`, 기타 제공자 장애는 안전한 자체 오류로 반환한다.
+
+앱의 NAVER 결과는 원문·지도 확인을 위한 임시 메모리 데이터다. 새 질의·화면 이탈 또는 최대 24시간 후 결과를 제거하며 영구 저장 경로는 차단한다. 서버는 검색 이력·캐시를 만들지 않는다. 기존 저장값의 호환 읽기는 현재 보존하며 이 변경으로 원본 데이터를 조기 삭제하지 않는다. 이는 기존 30일 정책이 NAVER 약관을 만족한다는 의미가 아니다. [HUB 지역 API](https://api.ncloud-docs.com/docs/naver-api-hub-search-local), [HUB 보관 조건 공지](https://www.ncloud.com/support/notice/all/2243)
 
 Instagram의 oEmbed HTML은 사용자에게 해당 공개 콘텐츠를 보여주는 공식 embed 용도다. 웹 표시 컴포넌트는 scripts/popups만 허용하는 opaque iframe에서 공식 embed.js를 실행하며 same-origin 권한을 주지 않는다. opaque origin에서 제공자의 자동 높이 handshake가 되지 않아 내부 프레임에 고정 스크롤 영역을 적용한다. HTML에서 제목·장소·작성자·썸네일을 추출하거나 기기 저장 콘텐츠로 저장하지 않는다. 일반 소비자 Instagram 저장함과 네이버 지도 개인 즐겨찾기를 읽는 공식 연결은 지원하지 않는다.
 

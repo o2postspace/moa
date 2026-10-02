@@ -207,10 +207,12 @@ export function createContent(
   const url = normalizeUrl(draft.url);
   const source = detectSource(url);
   const metadata = validateMetadata(draft, source, now);
+  if (metadata.importedFrom?.provider === 'naver' || metadata.place) {
+    throw new DomainError('네이버 검색 결과는 저장할 수 없어요. 직접 확인한 공유 링크와 제목을 추가해 주세요.', 'validation');
+  }
   if (
     (metadata.importedFrom && expired(metadata.importedFrom.fetchedAt, now)) ||
-    (metadata.external && expired(metadata.external.fetchedAt, now)) ||
-    (metadata.place && expired(metadata.place.fetchedAt, now))
+    (metadata.external && expired(metadata.external.fetchedAt, now))
   ) throw new DomainError('확인한 지 30일이 지난 정보예요. 다시 가져와 주세요.', 'validation');
   const duplicate = existing.find((item) => normalizeUrl(item.url) === url);
   if (duplicate) {

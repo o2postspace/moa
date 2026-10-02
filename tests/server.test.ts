@@ -176,6 +176,106 @@ test('Naver results use official WGS84 example coordinates and expose only plain
   assert.equal(JSON.stringify(data).includes('private-naver-secret'), false);
 });
 
+test('Naver provider selection defaults to legacy and never accepts an arbitrary endpoint', () => {
+  assert.equal(configFromEnv({}).naverApiProvider, 'legacy');
+  const hub = configFromEnv({ NAVER_API_PROVIDER: ' hub ', NAVER_HUB_CLIENT_ID: ' hub-id ', NAVER_HUB_CLIENT_SECRET: ' hub-secret ', NAVER_CLIENT_ID: 'legacy-id', NAVER_CLIENT_SECRET: 'legacy-secret' });
+  assert.equal(hub.naverApiProvider, 'hub');
+  assert.equal(hub.naverHubClientId, 'hub-id');
+  assert.equal(hub.naverHubClientSecret, 'hub-secret');
+  assert.equal(hub.naverClientId, 'legacy-id');
+  assert.equal(hub.naverClientSecret, 'legacy-secret');
+  for (const provider of ['auto', 'https://evil.test', 'HUB']) assert.throws(() => configFromEnv({ NAVER_API_PROVIDER: provider }), /NAVER_API_PROVIDER/);
+});
+
+test('Naver status and missing setup use only credentials for the explicitly selected provider', async (t) => {
+  const cases: { name: string; settings: Partial<ApiConfig>; configured: boolean }[] = [
+    { name: 'legacy ignores hub-only keys', settings: { naverHubClientId: 'hub-id', naverHubClientSecret: 'private-hub-secret' }, configured: false },
+    { name: 'hub ignores legacy-only keys', settings: { naverApiProvider: 'hub', naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }, configured: false },
+    { name: 'hub requires both own keys even with complete legacy keys', settings: { naverApiProvider: 'hub', naverHubClientId: 'hub-id', naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }, configured: false },
+    { name: 'legacy complete keys', settings: { naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }, configured: true },
+    { name: 'hub complete keys', settings: { naverApiProvider: 'hub', naverHubClientId: 'hub-id', naverHubClientSecret: 'private-hub-secret' }, configured: true },
+  ];
+  for (const entry of cases) await t.test(entry.name, async (subtest) => {
+    const calls: FetchCall[] = [];
+    const api = await fixture(subtest, { config: config(entry.settings), fetchImpl: mockFetch(() => json({ items: [] }), calls) });
+    const status = await (await api.get('/api/status')).json();
+    assert.deepEqual(status.naver, { searchConfigured: entry.configured, savedImport: false });
+    assert.equal(JSON.stringify(status).includes('private-'), false);
+    if (!entry.configured) {
+      const response = await api.get('/api/naver/search?q=서울시청');
+      assert.equal(response.status, 503);
+      assert.equal((await response.json()).error.code, 'setup_required');
+      assert.equal(calls.length, 0);
+    }
+  });
+});
+
+test('Naver HUB uses its official search contract and preserves plain text WGS84 results', async (t) => {
+  const calls: FetchCall[] = [];
+  const fetchedAt = '2026-10-03T00:00:00.000Z';
+  const api = await fixture(t, { now: () => Date.parse(fetchedAt), config: config({ naverApiProvider: 'hub', naverHubClientId: 'hub-id', naverHubClientSecret: 'private-hub-secret', naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }), fetchImpl: mockFetch(() => json({ items: [
+    { title: '<b>서울</b>시청 &amp; 주변', category: '공공&gt;기관', address: '서울', roadAddress: '세종대로', link: 'https://www.seoul.go.kr/', mapx: '1269873882', mapy: '375666103' },
+    { title: '좌표 없음', mapx: '311277', mapy: '552097', link: 'javascript:alert(1)' },
+  ] }), calls) });
+  const response = await api.get('/api/naver/search?q=' + encodeURIComponent('서울 시청'));
+  assert.equal(response.status, 200);
+  const data = await response.json();
+  assert.equal(data.provider, 'naver');
+  assert.equal(data.fetchedAt, fetchedAt);
+  assert.equal(data.items[0].title, '서울시청 & 주변');
+  assert.equal(data.items[0].category, '공공>기관');
+  assert.equal(data.items[0].address, '서울');
+  assert.equal(data.items[0].roadAddress, '세종대로');
+  assert.equal(data.items[0].longitude, 126.9873882);
+  assert.equal(data.items[0].latitude, 37.5666103);
+  assert.equal(data.items[1].latitude, undefined);
+  assert.equal(data.items[1].url, '');
+  assert.equal(JSON.stringify(data).includes('private-'), false);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].url.origin + calls[0].url.pathname, 'https://naverapihub.apigw.ntruss.com/search/v1/local');
+  assert.deepEqual(Object.fromEntries(calls[0].url.searchParams), { query: '서울 시청', display: '5', start: '1', sort: 'random', format: 'json' });
+  assert.equal(calls[0].init.method, 'GET');
+  assert.deepEqual(calls[0].init.headers, { 'X-NCP-APIGW-API-KEY-ID': 'hub-id', 'X-NCP-APIGW-API-KEY': 'private-hub-secret' });
+  assert.equal(calls[0].init.redirect, 'error');
+  assert.ok(calls[0].init.signal);
+  assert.equal(calls[0].url.href.includes('private-'), false);
+});
+
+test('Naver HUB sanitizes provider failures without trying legacy keys or endpoints', async (t) => {
+  const cases = [
+    { upstream: 401, status: 403, code: 'access_denied' },
+    { upstream: 403, status: 403, code: 'access_denied' },
+    { upstream: 429, status: 429, code: 'limited' },
+    { upstream: 400, status: 502, code: 'upstream_invalid' },
+    { upstream: 404, status: 502, code: 'upstream_invalid' },
+    { upstream: 500, status: 502, code: 'upstream_unavailable' },
+  ];
+  for (const entry of cases) await t.test(`upstream ${entry.upstream}`, async (subtest) => {
+    const calls: FetchCall[] = [];
+    const api = await fixture(subtest, { config: config({ naverApiProvider: 'hub', naverHubClientId: 'hub-id', naverHubClientSecret: 'private-hub-secret', naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }), fetchImpl: mockFetch(() => json({ error: { errorCode: String(entry.upstream), message: 'private-hub-secret', details: 'private-legacy-secret' } }, entry.upstream), calls) });
+    const response = await api.get('/api/naver/search?q=서울시청');
+    assert.equal(response.status, entry.status);
+    const error = await response.json();
+    assert.equal(error.error.code, entry.code);
+    assert.equal(JSON.stringify(error).includes('private-'), false);
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0].url.hostname, 'naverapihub.apigw.ntruss.com');
+  });
+});
+
+test('Naver HUB rejects malformed success responses and does not retry another provider', async (t) => {
+  for (const malformed of ['not-json', JSON.stringify({ errorCode: 'SE99', errorMessage: 'private-provider-error' })]) await t.test(malformed === 'not-json' ? 'invalid JSON' : 'missing items', async (subtest) => {
+    const calls: FetchCall[] = [];
+    const api = await fixture(subtest, { config: config({ naverApiProvider: 'hub', naverHubClientId: 'hub-id', naverHubClientSecret: 'private-hub-secret', naverClientId: 'legacy-id', naverClientSecret: 'private-legacy-secret' }), fetchImpl: mockFetch(() => new Response(malformed, { headers: { 'Content-Type': 'application/json' } }), calls) });
+    const response = await api.get('/api/naver/search?q=서울시청');
+    assert.equal(response.status, 502);
+    const failure = await response.json();
+    assert.equal(failure.error.code, 'upstream_invalid');
+    assert.equal(JSON.stringify(failure).includes('private-'), false);
+    assert.equal(calls.length, 1);
+  });
+});
+
 test('OAuth state is tied to a HttpOnly cookie, uses PKCE and is single use', async (t) => {
   const calls: FetchCall[] = [];
   const api = await fixture(t, { config: config({ googleClientId: 'oauth-client', googleClientSecret: 'private-oauth-secret' }), fetchImpl: mockFetch(({ url }) => url.pathname === '/token' ? json({ access_token: 'private-access-token', refresh_token: 'private-refresh-token', expires_in: 3600, token_type: 'Bearer', scope }) : json({ items: [{ id: listId, snippet: { title: '나의 맛집' }, contentDetails: { itemCount: 3 } }] }), calls) });

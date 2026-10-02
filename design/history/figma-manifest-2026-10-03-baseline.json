@@ -7,7 +7,7 @@
   "status": "native-editable-design-draft; core-and-state-boards-visually-reviewed",
   "date": "2026-10-03",
   "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset",
+  "figmaDesignRevision": "new-account-native-design-2026-10-03",
   "codeSyncStatus": "source-informed-design-draft; not-pixel-identical-or-automatically-synced",
   "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
   "pages": {
@@ -931,6 +931,10 @@
         "destination": "4:262"
       },
       {
+        "source": "4:569",
+        "destination": "4:343"
+      },
+      {
         "source": "4:598",
         "destination": "4:343"
       },
@@ -948,6 +952,10 @@
       },
       {
         "source": "4:743",
+        "destination": "4:262"
+      },
+      {
+        "source": "4:789",
         "destination": "4:262"
       },
       {
@@ -971,8 +979,8 @@
         "destination": "4:646"
       }
     ],
-    "authoredLinkCount": 20,
-    "reactionSourceNodeCountIncludingCopies": 41,
+    "authoredLinkCount": 22,
+    "reactionSourceNodeCountIncludingCopies": 45,
     "reactionSourceNodes": [
       "4:986",
       "4:989",
@@ -987,11 +995,13 @@
       "10:868",
       "10:871",
       "4:1073",
+      "4:1089",
       "4:1097",
       "4:1100",
       "4:1120",
       "4:1131",
       "4:1134",
+      "4:1149",
       "4:802",
       "4:821",
       "4:849",
@@ -1010,11 +1020,13 @@
       "10:858",
       "10:861",
       "4:535",
+      "4:569",
       "4:598",
       "4:610",
       "4:648",
       "4:731",
-      "4:743"
+      "4:743",
+      "4:789"
     ],
     "flowStartingPoints": [
       {
@@ -1031,21 +1043,8 @@
       }
     ],
     "scrolling": "VERTICAL; fixed footer on add/detail/import frames",
-    "verification": "20 remaining authored navigation links and 41 reaction source nodes including copies read back after NAVER subset patch; presentation playback not verified.",
-    "behavior": "design navigation only; does not execute login, storage, import or APIs",
-    "removedNavigationLinks": [
-      {
-        "source": "4:569",
-        "destination": "4:343",
-        "removedBy": "naver-memory-only-2026-10-03"
-      },
-      {
-        "source": "4:789",
-        "destination": "4:262",
-        "removedBy": "naver-memory-only-2026-10-03"
-      }
-    ],
-    "apiActionBehavior": "New status refresh and NAVER original/map buttons are design-only specimens; they do not execute an API call or open a fabricated result URL."
+    "verification": "reactions, scrolling and starting points registered and read back; presentation playback not verified",
+    "behavior": "design navigation only; does not execute login, storage, import or APIs"
   },
   "verifiedSnapshots": [
     {
@@ -1061,9 +1060,8 @@
         "SCR-005"
       ],
       "localPath": "design/figma-current-screens.png",
-      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
-      "date": "2026-10-03",
-      "revision": "naver-memory-only-2026-10-03"
+      "result": "visually-reviewed-after-repairs",
+      "date": "2026-10-03"
     },
     {
       "key": "states",
@@ -1077,9 +1075,8 @@
         "STATE-PlaceResults"
       ],
       "localPath": "design/figma-current-states.png",
-      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
-      "date": "2026-10-03",
-      "revision": "naver-memory-only-2026-10-03"
+      "result": "visually-reviewed-after-repairs",
+      "date": "2026-10-03"
     },
     {
       "key": "components",
@@ -1103,14 +1100,13 @@
       "key": "fullScroll",
       "nodeId": "4:797",
       "width": 440,
-      "height": 1650,
+      "height": 1547,
       "covers": [
         "SCR-004 full content: YouTube, Instagram, NAVER, file import"
       ],
       "localPath": "design/figma-current-fullScroll.png",
-      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
-      "date": "2026-10-03",
-      "revision": "naver-memory-only-2026-10-03"
+      "result": "visually-reviewed-after-repairs",
+      "date": "2026-10-03"
     },
     {
       "key": "handoff",
@@ -1128,7 +1124,7 @@
     }
   ],
   "verifiedScreenStructure": {
-    "source": "Baseline structural readback plus scoped NAVER/integration readback after manual patch.",
+    "source": "final use_figma readback after visual repairs",
     "allRenderedFonts": [
       "Noto Sans KR"
     ],
@@ -1188,9 +1184,9 @@
         "fixedChildren": 0,
         "types": {
           "FRAME": 15,
-          "INSTANCE": 18,
+          "INSTANCE": 17,
           "VECTOR": 11,
-          "TEXT": 26
+          "TEXT": 25
         }
       },
       {
@@ -1201,10 +1197,10 @@
         "scroll": "VERTICAL",
         "fixedChildren": 0,
         "types": {
-          "FRAME": 4,
-          "INSTANCE": 3,
+          "FRAME": 5,
+          "INSTANCE": 8,
           "VECTOR": 2,
-          "TEXT": 8
+          "TEXT": 14
         }
       },
       {
@@ -1259,10 +1255,10 @@
         "scroll": "VERTICAL",
         "fixedChildren": 0,
         "types": {
-          "FRAME": 7,
-          "INSTANCE": 7,
+          "FRAME": 8,
+          "INSTANCE": 11,
           "VECTOR": 5,
-          "TEXT": 10
+          "TEXT": 14
         }
       }
     ]
@@ -1288,9 +1284,8 @@
     "Fixed 390x844 viewports intentionally show partial scrolling content; full integrations specimen is supplied separately.",
     "Not all application loading, disconnect, migration/storage failure, filter or API states are represented.",
     "Presentation playback, 320px layout, large text, keyboard, safe area, screen readers and iOS/Android remain unverified.",
-    "Figma specimens retain setup-before and fictional-result labels. Actual Google/NAVER provisioning and live-call verification are tracked separately in API documentation; this Figma patch performs no live calls.",
-    "Nearby notifications, event-date matching, AI personalization, cloud sync and app-store delivery remain outside the implementation.",
-    "NAVER original/map confirmation and status refresh are visual specifications only; no persistent NAVER result save or API refresh is simulated by prototype navigation."
+    "Google/NAVER credentials are absent; OAuth, playlist and NAVER live calls remain unverified. UI examples are not live API results.",
+    "Nearby notifications, event-date matching, AI personalization, cloud sync and app-store delivery remain outside the implementation."
   ],
   "pendingValidations": [
     "prototype-presentation-playback",
@@ -1328,219 +1323,6 @@
       "CMP-007": "2:928"
     },
     "guide": "docs/api-setup.md",
-    "verification": "Manual NAVER UX subset mirrors temporary results, original/map actions and status refresh; Figma executes no API requests. Actual provider evidence is tracked in API verification."
-  },
-  "baselineRecord": {
-    "manifest": "design/history/figma-manifest-2026-10-03-baseline.json",
-    "snapshots": [
-      "design/history/figma-baseline-screens-2026-10-03.png",
-      "design/history/figma-baseline-states-2026-10-03.png",
-      "design/history/figma-baseline-fullScroll-2026-10-03.png"
-    ],
-    "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-    "note": "Full initial design baseline is preserved; sourceAppCommit remains the baseline, not a claim of whole-app synchronization after this manual patch."
-  },
-  "manualPatches": [
-    {
-      "id": "naver-memory-only-2026-10-03",
-      "date": "2026-10-03",
-      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-      "sourceFiles": [
-        "src/app/places.tsx",
-        "src/app/integrations.tsx"
-      ],
-      "scope": "Manual NAVER read-only memory-results and integration-status-refresh subset; no broad redesign or component-library replacement.",
-      "affectedRoots": [
-        "4:533",
-        "4:1071",
-        "4:741",
-        "4:1132",
-        "4:480",
-        "4:1056",
-        "4:800"
-      ],
-      "affectedBoards": [
-        "4:256",
-        "4:577",
-        "4:797"
-      ],
-      "createdNodeIds": [
-        "13:888",
-        "I13:888;2:644",
-        "13:895",
-        "I13:895;2:644",
-        "13:902",
-        "I13:902;2:644"
-      ],
-      "mutatedNodeIds": [
-        "4:576",
-        "4:1090",
-        "4:796",
-        "4:1150",
-        "4:558",
-        "4:1082",
-        "4:533",
-        "4:1071",
-        "4:741",
-        "4:1132",
-        "4:782",
-        "I4:782;2:644",
-        "4:1148",
-        "I4:1148;2:644",
-        "4:789",
-        "I4:789;2:644",
-        "4:1149",
-        "I4:1149;2:644",
-        "10:856",
-        "I10:856;4:243",
-        "I10:856;4:244",
-        "I10:856;4:244;2:597",
-        "I10:856;4:244;2:598",
-        "I10:856;4:244;2:599",
-        "I10:856;4:244;2:600",
-        "I10:856;4:247",
-        "I10:856;4:248",
-        "I10:856;4:249",
-        "10:866",
-        "I10:866;4:243",
-        "I10:866;4:244",
-        "I10:866;4:244;2:597",
-        "I10:866;4:244;2:598",
-        "I10:866;4:244;2:599",
-        "I10:866;4:244;2:600",
-        "I10:866;4:247",
-        "I10:866;4:248",
-        "I10:866;4:249",
-        "4:857",
-        "I4:857;4:243",
-        "I4:857;4:244",
-        "I4:857;4:244;2:597",
-        "I4:857;4:244;2:598",
-        "I4:857;4:244;2:599",
-        "I4:857;4:244;2:600",
-        "I4:857;4:247",
-        "I4:857;4:248",
-        "I4:857;4:249",
-        "10:857",
-        "I10:857;2:658",
-        "10:867",
-        "I10:867;2:658",
-        "4:869",
-        "I4:869;2:658",
-        "10:858",
-        "I10:858;2:644",
-        "10:868",
-        "I10:868;2:644",
-        "4:876",
-        "I4:876;2:644",
-        "13:888",
-        "I13:888;2:644",
-        "4:480",
-        "13:895",
-        "I13:895;2:644",
-        "4:1056",
-        "13:902",
-        "I13:902;2:644",
-        "4:800"
-      ],
-      "removedNodeIds": [
-        "4:559",
-        "4:560",
-        "4:561",
-        "I4:561;2:661",
-        "4:563",
-        "I4:563;2:663",
-        "4:565",
-        "I4:565;2:663",
-        "4:567",
-        "I4:567;2:663",
-        "4:569",
-        "I4:569;2:644",
-        "4:1083",
-        "4:1084",
-        "4:1085",
-        "I4:1085;2:661",
-        "4:1086",
-        "I4:1086;2:663",
-        "4:1087",
-        "I4:1087;2:663",
-        "4:1088",
-        "I4:1088;2:663",
-        "4:1089",
-        "I4:1089;2:644",
-        "4:760",
-        "4:761",
-        "I4:761;2:663",
-        "4:763",
-        "I4:763;2:661",
-        "4:765",
-        "I4:765;2:663",
-        "4:767",
-        "I4:767;2:663",
-        "4:1141",
-        "4:1142",
-        "I4:1142;2:663",
-        "4:1143",
-        "I4:1143;2:661",
-        "4:1144",
-        "I4:1144;2:663",
-        "4:1145",
-        "I4:1145;2:663"
-      ],
-      "refreshButtonNodeIds": [
-        "13:888",
-        "13:895",
-        "13:902"
-      ],
-      "changes": [
-        "Removed NAVER result classification and persistent-save actions, including the old save-to-library prototype navigation.",
-        "Displayed original-source and NAVER-map confirmation actions; design examples do not open a fabricated URL or execute a provider request.",
-        "Explained memory-only results cleared on screen exit/new query and after at most 24 hours.",
-        "Changed integration search CTA to 장소 검색하고 확인 and described that results are not kept in the library.",
-        "Added 연결 상태 다시 확인 with existing Secondary/Default native button instances to canonical, review and full-scroll integration frames."
-      ],
-      "verification": {
-        "sourceReviewPairs": [
-          {
-            "source": "4:480",
-            "copy": "4:1056",
-            "textParity": true,
-            "sourceChildren": 8,
-            "copyChildren": 8
-          },
-          {
-            "source": "4:533",
-            "copy": "4:1071",
-            "textParity": true,
-            "sourceChildren": 7,
-            "copyChildren": 7
-          },
-          {
-            "source": "4:741",
-            "copy": "4:1132",
-            "textParity": true,
-            "sourceChildren": 5,
-            "copyChildren": 5
-          }
-        ],
-        "rootDimensions": "All canonical and review mobile roots remain 390x844.",
-        "fonts": "Noto Sans KR only in patched roots.",
-        "imageFilledNodes": [],
-        "reactionSourceNodeCount": 41,
-        "screenshots": "screens, states and fullScroll recaptured and visually reviewed after this patch; components and handoff unchanged.",
-        "fullScrollBounds": {
-          "id": "4:797",
-          "width": 440,
-          "height": 1650
-        },
-        "prototypePlayback": "not-verified",
-        "liveApiCalls": "not-performed-by-this-Figma-task; setup-before and fictional-result labels preserved"
-      },
-      "evidence": [
-        "design/figma-current-screens.png",
-        "design/figma-current-states.png",
-        "design/figma-current-fullScroll.png"
-      ]
-    }
-  ]
+    "verification": "API code unchanged by this Figma task; live public response evidence remains in previous API verification record."
+  }
 }

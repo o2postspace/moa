@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   API_RETENTION_MS, buildContentImport, createContent, displayContentTitle, DomainError,
-  parseStoredContent, pruneExpiredContent, readStoredLibrary, removeAccountImportedContent,
+  loadStoredLibrary, parseStoredContent, pruneExpiredContent, readStoredLibrary, removeAccountImportedContent,
   searchContent, serializeStoredLibrary,
 } from '../src/domain/content.ts';
 import type { DraftInput, SavedContent } from '../src/domain/content.ts';
@@ -108,20 +108,84 @@ test('metadata and private provenance require matching official source, method a
   assert.throws(() => pruneExpiredContent([{ ...invalidCache, external: { ...invalidCache.external, fetchedAt: at(5 * 60 * 1000 + 1) } }], now), DomainError);
 });
 
-test('Naver coordinates include zero and valid boundaries, and require a Naver API origin', () => {
+const legacyNaver = (): SavedContent => ({
+  id: 'legacy-naver', title: '이전에 저장한 장소', url: 'https://map.naver.com/p/search/place', source: 'naver', category: 'food',
+  placeName: '선택한 장소', note: '보존할 메모', visited: true, createdAt: now,
+  importedFrom: { provider: 'naver', method: 'place-search', fetchedAt: now },
+  place: { provider: 'naver', name: '선택한 장소', address: '주소', latitude: 0, longitude: 0, fetchedAt: now },
+});
+
+test('new Naver API result provenance or place data cannot become saved content', () => {
   const base: DraftInput = {
-    title: '선택한 장소', url: 'https://map.naver.com/p/search/place', category: 'food', placeName: '선택한 장소',
+    title: '선택한 장소', url: 'https://map.naver.com/p/search/new-place', category: 'food', placeName: '선택한 장소',
     importedFrom: { provider: 'naver', method: 'place-search', fetchedAt: now },
     place: { provider: 'naver', name: '선택한 장소', address: '주소', latitude: 0, longitude: 0, fetchedAt: now },
   };
-  const saved = createContent(base, [], now);
-  assert.equal(saved.place?.latitude, 0);
-  assert.equal(saved.place?.longitude, 0);
-  assert.deepEqual(readStoredLibrary(serializeStoredLibrary([saved], now), now).items, [saved]);
-  assert.ok(createContent({ ...base, place: { ...base.place!, latitude: -90, longitude: 180 } }, [], now));
-  for (const place of [{ ...base.place!, latitude: 90.1 }, { ...base.place!, longitude: -180.1 }, { ...base.place!, latitude: Number.NaN }, { ...base.place!, longitude: Number.POSITIVE_INFINITY }, { ...base.place!, provider: 'youtube' }]) {
-    assert.throws(() => createContent({ ...base, place } as DraftInput, [], now), DomainError);
-  }
+  for (const draft of [base, { ...base, place: undefined }]) assert.throws(() => createContent(draft, [], now), (error: unknown) => error instanceof DomainError && error.code === 'validation' && error.message.includes('네이버 검색 결과는 저장할 수 없어요'));
   assert.throws(() => createContent({ ...base, importedFrom: undefined }, [], now), DomainError);
-  assert.throws(() => createContent({ ...base, url: 'https://example.com/place' }, [], now), DomainError);
+});
+
+test('a mixed import with a Naver API result rejects the entire batch without changing existing records', () => {
+  const existing = [legacyNaver(), manual()];
+  const snapshot = JSON.stringify(existing);
+  const apiDraft: DraftInput = {
+    title: '검색 결과', url: 'https://map.naver.com/p/search/new-place', category: 'food',
+    importedFrom: { provider: 'naver', method: 'place-search', fetchedAt: now },
+  };
+  assert.throws(() => buildContentImport([importedDraft('valid-first'), apiDraft], existing, now), DomainError);
+  assert.equal(JSON.stringify(existing), snapshot);
+  assert.throws(() => buildContentImport([{ ...apiDraft, url: existing[0].url }], existing, now), DomainError);
+  assert.equal(JSON.stringify(existing), snapshot);
+});
+
+test('manually confirmed Naver share links remain saveable and normalized duplicates stay blocked', () => {
+  const draft: DraftInput = { title: '직접 확인한 맛집', url: 'https://naver.me/confirmed-place?utm_source=share', category: 'food', placeName: '내가 적은 장소', note: '사용자가 적은 메모', place: null };
+  const saved = createContent(draft, [], now);
+  assert.equal(saved.source, 'naver');
+  assert.equal(saved.title, draft.title);
+  assert.equal(saved.placeName, draft.placeName);
+  assert.equal(saved.note, draft.note);
+  assert.equal(saved.importedFrom, undefined);
+  assert.equal(saved.place, undefined);
+  assert.equal(pruneExpiredContent([saved], at(API_RETENTION_MS)).removed, 0);
+  assert.throws(() => createContent({ ...draft, url: 'https://naver.me/confirmed-place?utm_source=another' }, [saved], now), (error: unknown) => error instanceof DomainError && error.code === 'duplicate' && error.duplicateId === saved.id);
+  const batch = buildContentImport([draft, { ...draft, url: 'https://naver.me/confirmed-place' }], [], now);
+  assert.equal(batch.added, 1);
+  assert.equal(batch.duplicates, 1);
+});
+
+test('previous Naver API records retain read, serialization and original expiration behavior', () => {
+  const saved = legacyNaver();
+  const items = [saved, manual()];
+  const snapshot = JSON.stringify(items);
+  assert.deepEqual(readStoredLibrary(JSON.stringify(items), now), { items, needsMigration: true });
+  assert.deepEqual(readStoredLibrary(JSON.stringify({ version: 2, items }), now), { items, needsMigration: false });
+  assert.deepEqual(parseStoredContent(serializeStoredLibrary(items, now), now), items);
+  assert.deepEqual(pruneExpiredContent(items, at(24 * 60 * 60 * 1000)), { items, changed: false, removed: 0 });
+  assert.deepEqual(pruneExpiredContent(items, at(API_RETENTION_MS - 1)), { items, changed: false, removed: 0 });
+  assert.deepEqual(pruneExpiredContent(items, at(API_RETENTION_MS)), { items: [items[1]], changed: true, removed: 1 });
+  assert.equal(JSON.stringify(items), snapshot);
+  const boundary = { ...saved, place: { ...saved.place!, latitude: -90, longitude: 180 } };
+  assert.deepEqual(readStoredLibrary(serializeStoredLibrary([boundary], now), now).items, [boundary]);
+  for (const place of [{ ...saved.place!, latitude: 90.1 }, { ...saved.place!, longitude: -180.1 }, { ...saved.place!, latitude: Number.NaN }, { ...saved.place!, longitude: Number.POSITIVE_INFINITY }, { ...saved.place!, provider: 'youtube' }]) {
+    assert.throws(() => serializeStoredLibrary([{ ...saved, place } as SavedContent], now), DomainError);
+  }
+  assert.throws(() => serializeStoredLibrary([{ ...saved, importedFrom: undefined }], now), DomainError);
+  assert.throws(() => serializeStoredLibrary([{ ...saved, url: 'https://example.com/place' }], now), DomainError);
+});
+
+test('previous Naver API records migrate without earlier removal or changing user fields', async () => {
+  const saved = legacyNaver();
+  let raw = JSON.stringify([saved]);
+  const writes: string[] = [];
+  const storage = {
+    getItem: async () => raw,
+    setItem: async (_key: string, value: string) => { writes.push(value); raw = value; },
+  };
+  const oneDayLater = at(24 * 60 * 60 * 1000);
+  assert.deepEqual(await loadStoredLibrary(storage, oneDayLater), [saved]);
+  assert.equal(writes.length, 1);
+  assert.deepEqual(JSON.parse(raw), { version: 2, items: [saved] });
+  assert.deepEqual(await loadStoredLibrary(storage, oneDayLater), [saved]);
+  assert.equal(writes.length, 1);
 });

@@ -103,8 +103,8 @@ export default function IntegrationsScreen() {
       <PrimaryButton label="Instagram 링크 추가" secondary icon="link-outline" onPress={() => router.push('/add')} />
     </ServiceCard>
     <ServiceCard name="네이버 지도" icon="map-outline" state={status?.naver.searchConfigured ? '장소 검색 설정됨' : '지도 링크로 시작'}>
-      <UiText muted>장소를 검색해 주소와 좌표를 함께 저장하고, 네이버 지도로 바로 열어보세요.</UiText>
-      <PrimaryButton label="장소 검색하고 저장" secondary disabled={!status?.naver.searchConfigured || busy} onPress={() => router.push('/places')} />
+      <UiText muted>장소를 검색해 원문과 주소를 확인하고, 네이버 지도로 열어보세요. 검색 결과는 저장함에 보관하지 않아요.</UiText>
+      <PrimaryButton label="장소 검색하고 확인" secondary disabled={!status?.naver.searchConfigured || busy} onPress={() => router.push('/places')} />
       <PrimaryButton label="저장한 지도 링크 추가" secondary onPress={() => router.push('/add')} />
       <UiText variant="caption" muted>네이버 지도 개인 저장 목록의 자동 동기화는 지원되지 않아요.</UiText>
     </ServiceCard>

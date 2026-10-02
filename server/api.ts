@@ -30,8 +30,11 @@ export type ApiConfig = {
   googleClientId: string;
   googleClientSecret: string;
   youtubeApiKey: string;
+  naverApiProvider: 'legacy' | 'hub';
   naverClientId: string;
   naverClientSecret: string;
+  naverHubClientId: string;
+  naverHubClientSecret: string;
 };
 
 function loopbackUrl(value: string): URL {
@@ -53,13 +56,18 @@ export function configFromEnv(env: Record<string, string | undefined>): ApiConfi
   if (callback.hostname !== app.hostname || callback.port !== String(port) || callback.pathname !== '/api/youtube/callback' || callback.search || callback.hash) {
     throw new Error('Google callback은 앱과 같은 localhost 호스트, API_PORT, /api/youtube/callback 경로를 사용해야 합니다.');
   }
+  const naverApiProvider = env.NAVER_API_PROVIDER?.trim() || 'legacy';
+  if (naverApiProvider !== 'legacy' && naverApiProvider !== 'hub') throw new Error('NAVER_API_PROVIDER는 legacy 또는 hub만 허용합니다.');
   return {
     host, port, appOrigin: app.origin, callbackUrl: callback.href,
     googleClientId: env.GOOGLE_CLIENT_ID?.trim() || '',
     googleClientSecret: env.GOOGLE_CLIENT_SECRET?.trim() || '',
     youtubeApiKey: env.YOUTUBE_API_KEY?.trim() || '',
+    naverApiProvider,
     naverClientId: env.NAVER_CLIENT_ID?.trim() || '',
     naverClientSecret: env.NAVER_CLIENT_SECRET?.trim() || '',
+    naverHubClientId: env.NAVER_HUB_CLIENT_ID?.trim() || '',
+    naverHubClientSecret: env.NAVER_HUB_CLIENT_SECRET?.trim() || '',
   };
 }
 
@@ -149,6 +157,9 @@ export function createApiServer(options: ApiOptions = {}) {
   const sessions = new Map<string, Session>();
   const rates = new Map<string, { count: number; expiresAt: number }>();
   const oauthConfigured = Boolean(config.googleClientId && config.googleClientSecret);
+  const naverSearchConfigured = config.naverApiProvider === 'hub'
+    ? Boolean(config.naverHubClientId && config.naverHubClientSecret)
+    : Boolean(config.naverClientId && config.naverClientSecret);
 
   function setup(ready: boolean, message: string) {
     if (!ready) throw new ApiError(503, 'setup_required', message);
@@ -189,6 +200,19 @@ export function createApiServer(options: ApiOptions = {}) {
       if (response.status === 429) throw new ApiError(429, 'limited', '서비스 요청 한도에 도달했어요. 잠시 후 다시 시도해 주세요.');
       if (response.status === 404) throw new ApiError(404, 'not_found', '공개되어 있거나 접근할 수 있는 콘텐츠인지 확인해 주세요.');
       throw new ApiError(502, 'upstream_unavailable', '서비스에서 콘텐츠를 불러오지 못했어요. 연결 설정과 공개 여부를 확인해 주세요.');
+    }
+    return jsonResponse(response);
+  }
+
+  async function naverData(target: URL, headers: Record<string, string>): Promise<Record<string, unknown>> {
+    const response = await upstream(target, { method: 'GET', headers });
+    if (!response.ok) {
+      // Never forward provider error bodies or retry another credential/endpoint.
+      await response.body?.cancel().catch(() => undefined);
+      if (response.status === 401 || response.status === 403) throw new ApiError(403, 'access_denied', '네이버 검색 API 인증 정보와 사용 권한을 확인해 주세요.');
+      if (response.status === 429) throw new ApiError(429, 'limited', '네이버 검색 요청 한도에 도달했어요. 잠시 후 다시 시도해 주세요.');
+      if ([300, 400, 404].includes(response.status)) throw new ApiError(502, 'upstream_invalid', '네이버 검색 요청을 처리하지 못했어요. 서버의 API 설정을 확인해 주세요.');
+      throw new ApiError(502, 'upstream_unavailable', '네이버 검색에서 응답하지 않아요. 잠시 후 다시 시도해 주세요.');
     }
     return jsonResponse(response);
   }
@@ -353,7 +377,7 @@ export function createApiServer(options: ApiOptions = {}) {
         send(res, {
           youtube: { metadata: true, oauthConfigured, connected, ...(connected && session?.connectionId ? { connectionId: session.connectionId } : {}), playlistConfigured: Boolean(config.youtubeApiKey) },
           instagram: { embed: true, metadata: false, savedImport: false },
-          naver: { searchConfigured: Boolean(config.naverClientId && config.naverClientSecret), savedImport: false },
+          naver: { searchConfigured: naverSearchConfigured, savedImport: false },
         });
         return;
       }
@@ -488,10 +512,14 @@ export function createApiServer(options: ApiOptions = {}) {
       if (req.method === 'GET' && url.pathname === '/api/naver/search') {
         const query = url.searchParams.get('q')?.trim() || '';
         if (query.length < 2 || query.length > 100 || /[\u0000-\u001f\u007f]/.test(query)) throw new ApiError(400, 'invalid_query', '검색할 장소 이름을 2자 이상 입력해 주세요.');
-        setup(Boolean(config.naverClientId && config.naverClientSecret), '장소를 검색하려면 서버에 네이버 검색 API 설정이 필요해요.');
-        const target = new URL('https://openapi.naver.com/v1/search/local.json');
-        target.search = new URLSearchParams({ query, display: '5', start: '1', sort: 'random' }).toString();
-        const data = await upstreamData(target, { headers: { 'X-Naver-Client-Id': config.naverClientId, 'X-Naver-Client-Secret': config.naverClientSecret } });
+        const hub = config.naverApiProvider === 'hub';
+        setup(naverSearchConfigured, hub ? '장소를 검색하려면 서버에 NAVER API HUB 인증 정보를 설정해 주세요.' : '장소를 검색하려면 서버에 기존 네이버 검색 API 인증 정보를 설정해 주세요.');
+        const target = new URL(hub ? 'https://naverapihub.apigw.ntruss.com/search/v1/local' : 'https://openapi.naver.com/v1/search/local.json');
+        target.search = new URLSearchParams({ query, display: '5', start: '1', sort: 'random', ...(hub ? { format: 'json' } : {}) }).toString();
+        const headers: Record<string, string> = hub
+          ? { 'X-NCP-APIGW-API-KEY-ID': config.naverHubClientId, 'X-NCP-APIGW-API-KEY': config.naverHubClientSecret }
+          : { 'X-Naver-Client-Id': config.naverClientId, 'X-Naver-Client-Secret': config.naverClientSecret };
+        const data = await naverData(target, headers);
         if (!Array.isArray(data.items)) throw new ApiError(502, 'upstream_invalid', '장소 검색 응답을 읽을 수 없어요.');
         const items = data.items.slice(0, 5).flatMap((item: unknown) => {
           if (!record(item)) return [];
