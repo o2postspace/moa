@@ -2,7 +2,7 @@
 
 ## 신규 발급 준비와 NAVER API HUB · 2026-10-03
 
-Google Cloud에서 모아 전용 `moa-local` 프로젝트 생성과 YouTube Data API v3의 ‘사용 설정됨’을 실제 확인했다. OAuth 앱 정보와 `youtube.readonly` 범위를 등록하고 웹 클라이언트 `moa-local-web` 및 `http://localhost:8787/api/youtube/callback` 양식을 준비했다. 최종 인증정보 생성은 계정 소유자 확인 대기이며 Google OAuth 값은 아직 로컬 미등록이다. NAVER Cloud 간편 로그인은 ID·이름·휴대전화번호의 제3자 제공 동의 확인 대기다. HUB Application·키는 생성하지 않았고 실제 NAVER 성공 응답도 확인하지 않았다. 계정 연락처·프로젝트 식별값·비밀값은 기록하지 않는다.
+Google Cloud에서 모아 전용 `moa-local` 프로젝트 생성과 YouTube Data API v3의 ‘사용 설정됨’을 실제 확인했다. OAuth 앱 정보와 `youtube.readonly` 범위를 등록하고 웹 클라이언트 `moa-local-web` 및 `http://localhost:8787/api/youtube/callback` 양식을 준비했다. 최종 인증정보 생성은 계정 소유자 확인 대기이며 Google OAuth 값은 아직 로컬 미등록이다. NAVER Cloud 간편 로그인 동의는 이후 사용자가 완료했고 로그인 상태를 확인했다. API HUB 콘솔은 서비스 이용이 불가능한 계정 안내를 표시했으며 결제 정보 관리에서 등록된 결제수단이 없는 것을 확인했다. 정기결제 등록 창까지 열었고 휴대폰 본인인증·카드 입력·정기결제 동의는 사용자에게 넘겼다. HUB Application·키는 생성하지 않았고 실제 NAVER 성공 응답도 확인하지 않았다. 계정 연락처·프로젝트 식별값·결제 정보·비밀값은 기록하지 않는다.
 
 신규 NAVER 발급 경로에 맞춰 `NAVER_API_PROVIDER=legacy|hub`와 별도 HUB 변수, 공식 endpoint·헤더·`format=json`을 추가했다. 선택한 경로의 키만 사용하며 다른 제공자로 자동 재시도하지 않는다. 인증·한도·장애 오류는 제공자의 원본 내용을 전달하지 않는 자체 안내로 바꾼다. [이관 안내](https://guide.ncloud-docs.com/docs/apihub-migration), [HUB 지역 API](https://api.ncloud-docs.com/docs/naver-api-hub-search-local)
 
