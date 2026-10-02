@@ -12,7 +12,7 @@
 | YouTube 영상 링크 | 웹에서 붙여넣기 후 공식 oEmbed로 제목 불러오기. API 키 없이 실제 응답 성공 확인 |
 | Instagram 공개 원문 | 웹 상세에서 사용자 요청 시 공식 tokenless oEmbed 표시. 실제 API 응답 성공 확인; 개인 저장함 조회·제목/장소 추출과는 다름 |
 | YouTube 재생목록 | 실제 API 키로 공개 재생목록 17개 조회·웹 후보 선택 확인. 계정 연결·중복 제외·선택 저장 구현; 실제 Google OAuth·50개 이상 페이지 이동·계정 가져오기는 검증이 남음 |
-| NAVER 장소 검색 | HUB/기존 legacy 서버 경로, 검색 → 주소 확인 → 원문·네이버 지도 열기 구현. API 결과 저장·분류는 지원하지 않음. HUB 키 미등록으로 실제 검색 응답과 실기기 지도 앱 실행 미검증 |
+| 직접 공유한 지도 링크 | 링크·사용자가 작성한 제목을 수동 저장. NAVER API 검색·키 발급은 보류했으며 서비스 연결에 검색 진입을 제공하지 않음 |
 | JSON/TXT 가져오기 | 기기에서 파일 선택 → 링크 후보 검토·선택·일괄 저장. UTF-8 2MiB·최대 200건. 실제 계정 export 호환성 미검증 |
 | API 정보 보존 | 기존 배열을 v2 저장값으로 이동, YouTube 30일 정리와 계정 가져오기 삭제 경로 구현. 신규 NAVER API 항목 저장은 도메인에서 거부하며 기존 v2 읽기·정리는 호환성 유지 |
 
@@ -20,7 +20,7 @@
 
 API 기능은 현재 localhost의 **웹 개발 미리보기**를 대상으로 합니다. 운영 로그인·HTTPS 배포·클라우드 저장, 앱 내 지도 SDK, 행사 날짜·근처 알림, AI·개인화는 남아 있습니다. 모바일 파일 선택·지도 앱 연계 코드는 실제 iOS/Android 기기에서 별도로 확인해야 합니다.
 
-Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 완료했습니다. OAuth client 발급·서버 키 등록과 실제 계정 동의는 남아 있습니다. 키 설정만으로 실제 계정 연결이 완료되지는 않습니다. 최신 발급·검증 상태는 [실제 키·계정 설정](docs/api-setup.md)을 확인합니다.
+현재는 **공개 YouTube 재생목록·Instagram 링크·JSON/TXT 후보 가져오기**로 저장함을 정리합니다. 공개 재생목록은 등록된 API 키를 사용하며 Google 로그인 없이 시작할 수 있습니다. Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 완료했지만 OAuth client 발급·서버 등록·실제 계정 동의는 후속 검증입니다. 사용자 요청에 따라 NAVER API 검색·발급은 보류했고 결제수단 등록을 요구하지 않습니다. 최신 범위는 [키·계정 설정 기록](docs/api-setup.md)을 확인합니다.
 
 ## 실행
 
@@ -30,9 +30,9 @@ Node.js 24와 npm을 사용합니다. 의존성은 package-lock.json을 기준�
 npm ci
 ~~~
 
-[.env.example](.env.example)을 복사해 .env.local을 만들고 필요한 값만 채웁니다. Google/NAVER 비밀값은 서버용 변수이며 EXPO_PUBLIC_ 접두사를 붙이지 않습니다. 실제 값을 채운 파일은 Git에 넣지 않습니다. 변수·발급·callback 설정은 [API 서버 문서](docs/api-server.md)를 따릅니다.
+[.env.example](.env.example)을 복사해 .env.local을 만들고 필요한 값만 채웁니다. 공개 재생목록은 서버의 `YOUTUBE_API_KEY`를 사용하며 Google OAuth·NAVER 키는 현재 기본 흐름의 필수값이 아닙니다. 비밀값에는 EXPO_PUBLIC_ 접두사를 붙이지 않고 실제 값을 채운 파일은 Git에 넣지 않습니다. 변수·callback 설정은 [API 서버 문서](docs/api-server.md)를 따릅니다.
 
-NAVER 검색 신규 발급은 [2026-07-31 전환 공지](https://developers.naver.com/notice/article/32530)에 따라 NAVER API HUB에서 진행합니다. `NAVER_API_PROVIDER=hub`, `NAVER_HUB_CLIENT_ID`, `NAVER_HUB_CLIENT_SECRET`을 사용합니다. `legacy` 경로와 기존 `NAVER_CLIENT_ID`/`NAVER_CLIENT_SECRET`은 이전 검색 권한을 가진 앱용이며 HUB 키와 호환되지 않습니다. [설정 절차](docs/api-setup.md)
+NAVER backend 어댑터와 이전 검색 화면 코드는 후속 작업용으로 보존합니다. 앱의 `/places` 주소는 API 요청 없이 보류 안내를 표시합니다. 현재 실행을 위해 NAVER 키를 발급하거나 결제수단을 등록할 필요는 없습니다. [보류 기록](docs/api-setup.md#네이버-연동-보류)
 
 터미널 두 개에서 실행합니다.
 
@@ -54,7 +54,7 @@ npm run web    # Expo 웹, http://localhost:8081
 
 수동 링크의 YouTube 제목 캐시는 30일 뒤 기본 제목으로 돌아갑니다. YouTube API 재생목록으로 가져온 항목은 30일 뒤 앱 사용 시 **항목 전체와 그 메모·분류·방문 상태가 정리**됩니다. 자동 갱신은 아직 없습니다. 단일 YouTube 연결 MVP의 연결 해제는 이 기기의 모든 account-playlist 항목 삭제를 먼저 저장한 뒤 Google 토큰 해제를 요청합니다. 원격 해제가 실패하면 연결 상태를 유지하여 재시도합니다. 공개 재생목록·수동 링크는 계정 해제로 삭제하지 않습니다.
 
-NAVER 검색 결과는 새 검색·화면 이탈 시 삭제하고, 화면에 머물러도 최대 24시간만 메모리에 둡니다. API가 준 장소명·주소·좌표를 저장함에 넣지 않습니다. 사용자가 직접 공유한 지도 링크와 작성한 제목은 수동으로 저장할 수 있습니다. [HUB 9월 20일 시행 약관](https://www.ncloud.com/support/notice/all/2243)은 기기 개인화 캐시를 24시간 또는 새 질의까지 중 짧은 기간으로 제한하며, [10월 7일 개정](https://www.ncloud.com/support/notice/all/2271)에도 장기 저장 예외는 없습니다.
+NAVER 검색은 현재 앱 흐름에서 제외했습니다. 사용자가 직접 공유한 지도 링크와 작성한 제목은 수동으로 저장할 수 있습니다. 보류한 검색 코드를 다시 활성화할 때도 API 결과의 이름·주소·좌표를 저장함에 넣지 않는 계약을 유지해야 합니다. 기존 검색 코드의 메모리 만료·정책 근거는 [API 서버](docs/api-server.md)와 [설정 기록](docs/api-setup.md#네이버-연동-보류)에 남겼습니다.
 
 기존 v2 NAVER API 항목의 읽기·방문 변경·30일 정리는 호환성을 위해 유지합니다. 해당 항목 수정과 신규 API 저장은 거부하며 사용자 데이터를 앞당겨 삭제하지 않습니다. 이 호환성 동작을 약관 준수 완료로 설명하지 않습니다. [기존 데이터 계약과 남은 검토](docs/storage-v2.md)
 
@@ -69,7 +69,7 @@ NAVER 검색 결과는 새 검색·화면 이탈 시 삭제하고, 화면에 머
 - UI/UX 전달: [디자인 기준](docs/design-handoff.md), [UI 리디자인](docs/ui-refresh.md), [Figma 연결 상태](docs/figma-sync.md), [컴포넌트 매핑](design/component-map.json)
 - [GitHub 협업 절차](docs/github-setup.md)와 .github/의 이슈·PR 템플릿·CI
 
-앱은 모아 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 연결된 계정의 새 [Figma 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256)에 편집 가능한 화면·상태·공통 컴포넌트·변수를 구성했습니다. UI/UX 팀이 직접 수정할 수 있으며 원본 화면과 리뷰 보드 복제본을 함께 관리합니다. 소스 59205e5의 초안은 [baseline 기록](design/history/figma-manifest-2026-10-03-baseline.json)으로 보존합니다. API 연결·NAVER 검색 흐름의 최신 부분 갱신, 실제 node·reaction 수·시각 확인 범위는 [현재 manifest](design/figma-manifest.json)를 따릅니다. 디자인 등록은 실제 API 성공·자동 픽셀 동기화·프로토타입 재생 검증을 뜻하지 않습니다. 팀 초대·라이브러리/Code Connect 게시는 수행하지 않았고 [이전 SVG](design/moa-ui-refresh.svg)와 이전 파일 기록은 보존합니다.
+앱은 모아 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 연결된 계정의 새 [Figma 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256)에 편집 가능한 화면·상태·공통 컴포넌트·변수를 구성했습니다. UI/UX 팀이 직접 수정할 수 있으며 원본 화면과 리뷰 보드 복제본을 함께 관리합니다. 소스 59205e5의 초안은 [baseline 기록](design/history/figma-manifest-2026-10-03-baseline.json)으로 보존합니다. NAVER 제외 범위에 맞춘 서비스 연결·보류 화면의 최신 부분 갱신, 실제 node·reaction 수·시각 확인 범위는 [현재 manifest](design/figma-manifest.json)를 따릅니다. 디자인 등록은 실제 API 성공·자동 픽셀 동기화·프로토타입 재생 검증을 뜻하지 않습니다. 팀 초대·라이브러리/Code Connect 게시는 수행하지 않았고 [이전 SVG](design/moa-ui-refresh.svg)와 이전 파일 기록은 보존합니다.
 
 ## 검사
 

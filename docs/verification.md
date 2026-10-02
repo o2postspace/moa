@@ -1,6 +1,20 @@
 # 모아 검증 기록
 
+## 현재 NAVER 제외 MVP · 2026-10-03
+
+사용자가 NAVER를 보류하도록 요청했다. 서비스 화면의 NAVER 카드·장소 검색 진입과 홈의 장소 검색 문구를 제거하고 화면 이름을 ‘콘텐츠 가져오기’로 바꿨다. 미설정 Google 계정 버튼과 반복 준비 안내는 숨겼으며 공개 재생목록 키가 설정된 경우 입력/가져오기를 표시한다. OAuth 설정 시 기존 계정 흐름은 유지하지만 현재 실제 계정 검증은 후속이다. `/places`는 안내와 가져오기 이동만 렌더링하며 API를 요청하지 않는다. 이전 검색 구현은 `src/features/integrations/NaverPlacesScreen.tsx`에 보관한다. NAVER 발급·정기결제 등록은 이번 범위에서 진행하지 않았고 결제 창을 닫았다.
+
+웹의 실제 공개 재생목록 조회에서 영상 17개를 확인했다. 선택을 모두 해제하면 ‘0개 저장하기’가 비활성화되고 첫 영상 하나만 고르면 ‘1개 저장하기’가 활성화됐다. 실제 저장 후 ‘1개를 저장했어요. 중복 0개는 제외했어요.’를 확인했다. 새로고침한 저장함에서 기존 검토 항목 4개와 새 영상 1개, 방문 완료 1개를 확인하고 새 영상의 상세를 열었다. 원본 YouTube 링크, 제공 제목과 2026-11-02까지 보관 안내를 확인했다. 다시 같은 재생목록을 가져오면 저장한 영상은 ‘이미 저장됨’ 비활성 후보이고 나머지 16개만 선택된다. 추가 영상을 저장하거나 기존 항목을 삭제하지 않았다. 공개 검증 영상은 이 로컬 검토 저장함에 남아 있으며 새 설치의 기본 데이터가 아니다.
+
+[가져오기 상단](../design/integration-without-naver-top.png), [하단](../design/integration-without-naver.png), [저장 후 재실행한 영상 상세](../design/integration-youtube-saved-detail.png)를 남겼다. `/places` 직접 접근의 [검색 없는 보류 안내](../design/integration-naver-deferred.png)와 가져오기 이동도 실제 확인했다. 공개 YouTube 제목·Instagram 원문·파일 후보 저장의 기존 실제 검증은 아래 기록을 따른다. 이번 변경은 제공자 어댑터나 저장 계약을 수정하지 않았다. 인스타 개인 저장함·YouTube 나중에 볼 동영상 자동 동기화, 위치·기간 알림은 현재 기능이 아니다.
+
+Figma 원본과 리뷰에도 NAVER 카드·미설정 OAuth 버튼을 숨기고 SCR-005를 보류 안내로 바꿨다. 장소 결과 예시는 향후 검토용으로 표시하고 이전 진입을 제거했다. 원본/리뷰 4쌍 및 서비스 전체 구성의 텍스트 일치, 390×844 모바일 원본/리뷰, Noto Sans KR, IMAGE fill 0을 읽기 확인했다. 현재 기본 이동은 18개, reaction node는 36개, 시작점은 3개다. Screens·States·FullScroll·Handoff 캡처를 시각 확인했으며 전체 보드는 440×1362다. 자동 픽셀 동기화·프로토타입 재생·실제 API 호출 완료를 뜻하지 않는다. 이전 manifest와 캡처 4개는 `design/history/`에 보존했다. [최신 manifest](../design/figma-manifest.json), [Figma 부분 갱신](figma-sync.md)을 따른다.
+
+`npm test` 62개, `npm run typecheck`, `npm run lint`, `npm run tokens:check`, `npm run build:web`가 통과했다. 웹 내보내기의 JS/HTML/JSON 3개에서 현재 설정된 서버 비밀값의 문자열이 없음을 확인했다. 실제 Google OAuth, 비공개 재생목록, 50개 이상 페이지 이동·계정 해제, iOS/Android 실기기와 네이티브 공유는 아직 미검증이다. NAVER 발급·실제 검색과 기존 API 데이터 보존 정책 재검토는 보류된 별도 범위다.
+
 ## 신규 발급 준비와 NAVER API HUB · 2026-10-03
+
+아래는 NAVER 보류 요청 **이전의 이력**이다. 결제 등록·키 발급을 현재 대기 중인 필수 작업으로 해석하지 않는다.
 
 Google Cloud에서 모아 전용 `moa-local` 프로젝트 생성과 YouTube Data API v3의 ‘사용 설정됨’을 실제 확인했다. OAuth 앱 정보와 `youtube.readonly` 범위를 등록하고 웹 클라이언트 `moa-local-web` 및 `http://localhost:8787/api/youtube/callback` 양식을 준비했다. 최종 인증정보 생성은 계정 소유자 확인 대기이며 Google OAuth 값은 아직 로컬 미등록이다. NAVER Cloud 간편 로그인 동의는 이후 사용자가 완료했고 로그인 상태를 확인했다. API HUB 콘솔은 서비스 이용이 불가능한 계정 안내를 표시했으며 결제 정보 관리에서 등록된 결제수단이 없는 것을 확인했다. 정기결제 등록 창까지 열었고 휴대폰 본인인증·카드 입력·정기결제 동의는 사용자에게 넘겼다. HUB Application·키는 생성하지 않았고 실제 NAVER 성공 응답도 확인하지 않았다. 계정 연락처·프로젝트 식별값·결제 정보·비밀값은 기록하지 않는다.
 

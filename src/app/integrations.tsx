@@ -75,38 +75,30 @@ export default function IntegrationsScreen() {
     setMessage(`연결을 해제하고 계정에서 가져온 ${removed}개 항목을 삭제했어요.`);
   };
 
-  return <Screen><ScreenHeader title="서비스 연결" /><ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
-    <View style={styles.intro}><UiText variant="hero">{'흩어진 취향을\n한곳으로.'}</UiText><UiText muted style={styles.description}>필요한 서비스만 연결하고, 가져올 콘텐츠는 직접 골라보세요.</UiText></View>
+  return <Screen><ScreenHeader title="콘텐츠 가져오기" /><ScrollView contentContainerStyle={styles.page} keyboardShouldPersistTaps="handled">
+    <View style={styles.intro}><UiText variant="hero">{'흩어진 취향을\n한곳으로.'}</UiText><UiText muted style={styles.description}>링크나 파일로 가져오고, 저장할 콘텐츠는 직접 골라보세요.</UiText></View>
     {Platform.OS !== 'web' && <UiText variant="caption" muted>서비스 연동은 현재 웹 개발 미리보기에서 확인할 수 있어요. 모바일 계정 연결은 다음 단계에서 제공할 예정이에요.</UiText>}
     {error || libraryError ? <UiText accessibilityRole="alert" style={styles.error}>{error || libraryError}</UiText> : null}
     {message || (youtube === 'connected' && status?.youtube.connected) ? <UiText accessibilityLiveRegion="polite" style={styles.message}>{message || '유튜브를 연결했어요. 가져올 재생목록을 선택해 주세요.'}</UiText> : null}
     {youtube && youtube !== 'connected' && <UiText accessibilityRole="alert" style={styles.error}>유튜브 연결을 완료하지 못했어요. 다시 시도해 주세요.</UiText>}
     <PrimaryButton label="연결 상태 다시 확인" secondary loading={busy} disabled={busy} onPress={() => run(refresh)} />
     <ServiceCard name="YouTube" icon="logo-youtube" state={status?.youtube.connected ? '계정 연결됨' : status?.youtube.oauthConfigured ? '계정 연결 가능' : status?.youtube.playlistConfigured ? '공개 재생목록으로 시작' : '영상 링크로 시작'}>
-      <UiText muted>내 재생목록을 골라서 가져오세요. ‘나중에 볼 동영상’은 유튜브에서 공개 API를 제공하지 않아요.</UiText>
+      <UiText muted>영상 링크를 추가하거나 공개 재생목록에서 필요한 영상을 골라 가져오세요.</UiText>
       <PrimaryButton label="영상 링크 추가·제목 불러오기" secondary icon="link-outline" onPress={() => router.push('/add')} />
-      {Platform.OS === 'web' ? <PrimaryButton label={status?.youtube.connected ? '내 재생목록 보기' : 'YouTube 계정 연결'} disabled={!status?.youtube.oauthConfigured || busy} secondary onPress={() => run(async () => {
+      {Platform.OS === 'web' && status?.youtube.oauthConfigured && <><UiText variant="caption" muted>계정을 연결하면 내 재생목록도 선택할 수 있어요. ‘나중에 볼 동영상’은 지원되지 않아요.</UiText><PrimaryButton label={status?.youtube.connected ? '내 재생목록 보기' : 'YouTube 계정 연결'} disabled={busy} secondary onPress={() => run(async () => {
         if (status?.youtube.connected) { const page = await integrationsApi.playlists(); setPlaylists(page.items); setPlaylistToken(page.nextPageToken); if (!page.items.length) setMessage('가져올 수 있는 재생목록이 없어요.'); }
         else { const result = await integrationsApi.connectYouTube(); const destination = new URL(result.authorizationUrl); if (destination.protocol !== 'https:' || destination.hostname !== 'accounts.google.com') throw new Error('유튜브 로그인 주소를 확인하지 못했어요.'); window.location.assign(destination.href); }
-      })} /> : <UiText variant="caption" muted>계정 연결은 현재 웹 미리보기에서 사용할 수 있어요.</UiText>}
-      {!status?.youtube.oauthConfigured && <UiText variant="caption" muted>계정 연결을 준비 중이에요. 지금은 영상 링크를 추가해 제목을 불러올 수 있어요.</UiText>}
+      })} /></>}
       {playlists.map(playlist => <PrimaryButton key={playlist.id} label={`${playlist.title} · ${playlist.itemCount}개`} secondary disabled={busy} onPress={() => run(() => fetchVideos('account', playlist.id))} />)}
       {playlistToken && <PrimaryButton label="재생목록 더 보기" secondary disabled={busy} onPress={() => run(async () => { const page = await integrationsApi.playlists(playlistToken); setPlaylists(previous => [...new Map([...previous, ...page.items].map(item => [item.id, item])).values()]); setPlaylistToken(page.nextPageToken); })} />}
-      <TextInput accessibilityLabel="공개 YouTube 재생목록 링크" placeholder="공개 재생목록 링크 붙여넣기" value={publicUrl} onChangeText={setPublicUrl} autoCapitalize="none" autoCorrect={false} style={styles.input} placeholderTextColor={tokens.color.secondary} />
-      <PrimaryButton label="공개 재생목록 불러오기" disabled={!publicUrl.trim() || !status?.youtube.playlistConfigured || busy} secondary onPress={() => run(() => fetchVideos('public', publicUrl.trim()))} />
-      {!status?.youtube.playlistConfigured && <UiText variant="caption" muted>공개 재생목록 가져오기를 준비 중이에요. 지금은 개별 영상 링크를 추가해 주세요.</UiText>}
+      {status?.youtube.playlistConfigured && <><TextInput accessibilityLabel="공개 YouTube 재생목록 링크" placeholder="공개 재생목록 링크 붙여넣기" value={publicUrl} onChangeText={setPublicUrl} autoCapitalize="none" autoCorrect={false} style={styles.input} placeholderTextColor={tokens.color.secondary} />
+        <PrimaryButton label="공개 재생목록 불러오기" disabled={!publicUrl.trim() || busy} secondary onPress={() => run(() => fetchVideos('public', publicUrl.trim()))} /></>}
       {status?.youtube.connected && !confirmDisconnect && <PrimaryButton label="YouTube 연결 해제" secondary disabled={busy} onPress={() => setConfirmDisconnect(true)} />}
       {confirmDisconnect && <View style={styles.confirm}><UiText variant="caption">이 기기에서 계정 연결로 가져온 모든 항목과 메모를 삭제해요. 직접 추가한 링크와 공개 재생목록 항목은 유지돼요.</UiText><PrimaryButton label="연결 해제·가져온 항목 삭제" onPress={() => run(disconnect)} loading={busy} disabled={saving || loading || Boolean(libraryError)} /><PrimaryButton label="취소" secondary disabled={busy} onPress={() => setConfirmDisconnect(false)} /></View>}
     </ServiceCard>
     <ServiceCard name="Instagram" icon="logo-instagram" state="공개 게시물 원문 보기">
       <UiText muted>링크를 저장하면 상세 화면에서 공개 게시물을 볼 수 있어요. 개인 저장함을 자동으로 가져오는 API는 제공되지 않아요.</UiText>
       <PrimaryButton label="Instagram 링크 추가" secondary icon="link-outline" onPress={() => router.push('/add')} />
-    </ServiceCard>
-    <ServiceCard name="네이버 지도" icon="map-outline" state={status?.naver.searchConfigured ? '장소 검색 설정됨' : '지도 링크로 시작'}>
-      <UiText muted>장소를 검색해 원문과 주소를 확인하고, 네이버 지도로 열어보세요. 검색 결과는 저장함에 보관하지 않아요.</UiText>
-      <PrimaryButton label="장소 검색하고 확인" secondary disabled={!status?.naver.searchConfigured || busy} onPress={() => router.push('/places')} />
-      <PrimaryButton label="저장한 지도 링크 추가" secondary onPress={() => router.push('/add')} />
-      <UiText variant="caption" muted>네이버 지도 개인 저장 목록의 자동 동기화는 지원되지 않아요.</UiText>
     </ServiceCard>
     <ServiceCard name="파일에서 가져오기" icon="documents-outline" state="확인 후 한 번에 저장">
       <UiText muted>JSON 또는 TXT 파일에서 링크 후보를 찾아드려요. 압축을 푼 저장 콘텐츠 파일을 선택하고, 가져올 항목을 확인해 주세요.</UiText>
@@ -121,7 +113,7 @@ export default function IntegrationsScreen() {
       {mode !== 'file' && <UiText variant="caption" muted>YouTube에서 가져온 항목은 30일 동안 보관돼요. 기간이 지나면 앱을 사용할 때 정리되니 재생목록에서 다시 가져와 주세요. 연결 해제 시 이 기기의 계정 연결로 가져온 모든 항목과 메모도 삭제돼요.</UiText>}
       <PrimaryButton label={`${selectedCandidates.length}개 저장하기`} disabled={!selectedCandidates.length || busy || loading || Boolean(libraryError)} loading={saving} onPress={() => run(async () => { const result = await importMany(selectedCandidates.map(item => item.draft)); setCandidates([]); setSelected(new Set()); setNextToken(undefined); setMessage(`${result.added}개를 저장했어요. 중복 ${result.duplicates}개는 제외했어요.`); })} />
     </View>}
-    <PrimaryButton label="영상·장소 링크 직접 추가" secondary onPress={() => router.push('/add')} />
+    <PrimaryButton label="링크 직접 추가" secondary onPress={() => router.push('/add')} />
   </ScrollView></Screen>;
 }
 function ServiceCard({ name, icon, state, children }: React.PropsWithChildren<{ name: string; icon: keyof typeof Ionicons.glyphMap; state: string }>) {

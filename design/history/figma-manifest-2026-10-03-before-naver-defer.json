@@ -7,7 +7,7 @@
   "status": "native-editable-design-draft; core-and-state-boards-visually-reviewed",
   "date": "2026-10-03",
   "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp",
+  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset",
   "codeSyncStatus": "source-informed-design-draft; not-pixel-identical-or-automatically-synced",
   "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
   "pages": {
@@ -134,14 +134,14 @@
       "figmaNodeId": "4:480",
       "reviewNodeId": "4:1056",
       "source": "src/app/integrations.tsx",
-      "state": "public-playlist-configured; OAuth not configured; NAVER card hidden"
+      "state": "credentials-not-configured"
     },
     {
       "screenId": "SCR-005",
       "figmaNodeId": "4:533",
       "reviewNodeId": "4:1071",
       "source": "src/app/places.tsx",
-      "state": "naver-deferred; no API call; return-to-import"
+      "state": "naver-key-not-configured"
     }
   ],
   "collections": {
@@ -915,6 +915,10 @@
         "destination": "4:262"
       },
       {
+        "source": "4:447",
+        "destination": "4:533"
+      },
+      {
         "source": "4:482",
         "destination": "4:262"
       },
@@ -943,6 +947,10 @@
         "destination": "4:262"
       },
       {
+        "source": "4:743",
+        "destination": "4:262"
+      },
+      {
         "source": "4:802",
         "destination": "4:262"
       },
@@ -955,16 +963,16 @@
         "destination": "4:343"
       },
       {
-        "source": "4:895",
-        "destination": "4:646"
+        "source": "4:876",
+        "destination": "4:343"
       },
       {
-        "source": "4:547",
-        "destination": "4:480"
+        "source": "4:895",
+        "destination": "4:646"
       }
     ],
-    "authoredLinkCount": 18,
-    "reactionSourceNodeCountIncludingCopies": 36,
+    "authoredLinkCount": 20,
+    "reactionSourceNodeCountIncludingCopies": 41,
     "reactionSourceNodes": [
       "4:986",
       "4:989",
@@ -972,19 +980,22 @@
       "4:1010",
       "4:1033",
       "4:1036",
+      "4:1048",
       "4:1058",
       "4:1065",
       "10:864",
+      "10:868",
       "10:871",
       "4:1073",
-      "4:1081",
       "4:1097",
       "4:1100",
       "4:1120",
       "4:1131",
+      "4:1134",
       "4:802",
       "4:821",
       "4:849",
+      "4:876",
       "4:895",
       "4:268",
       "4:272",
@@ -992,16 +1003,18 @@
       "4:345",
       "4:402",
       "4:418",
+      "4:447",
       "4:482",
       "4:501",
       "10:854",
+      "10:858",
       "10:861",
       "4:535",
-      "4:547",
       "4:598",
       "4:610",
       "4:648",
-      "4:731"
+      "4:731",
+      "4:743"
     ],
     "flowStartingPoints": [
       {
@@ -1018,7 +1031,7 @@
       }
     ],
     "scrolling": "VERTICAL; fixed footer on add/detail/import frames",
-    "verification": "18 authored navigation links; 36 reaction source nodes read back after NAVER defer patch; presentation playback not verified.",
+    "verification": "20 remaining authored navigation links and 41 reaction source nodes including copies read back after NAVER subset patch; presentation playback not verified.",
     "behavior": "design navigation only; does not execute login, storage, import or APIs",
     "removedNavigationLinks": [
       {
@@ -1030,24 +1043,9 @@
         "source": "4:789",
         "destination": "4:262",
         "removedBy": "naver-memory-only-2026-10-03"
-      },
-      {
-        "source": "4:447",
-        "destination": "4:533",
-        "removedBy": "naver-deferred-mvp-2026-10-03"
-      },
-      {
-        "source": "4:743",
-        "destination": "4:262",
-        "removedBy": "naver-deferred-mvp-2026-10-03"
-      },
-      {
-        "source": "4:876",
-        "destination": "4:343",
-        "removedBy": "naver-deferred-mvp-2026-10-03"
       }
     ],
-    "apiActionBehavior": "Refresh/public playlist and future NAVER specimens are design-only; no provider requests or fabricated URLs. Deferred places notice navigates only to content import."
+    "apiActionBehavior": "New status refresh and NAVER original/map buttons are design-only specimens; they do not execute an API call or open a fabricated result URL."
   },
   "verifiedSnapshots": [
     {
@@ -1063,9 +1061,9 @@
         "SCR-005"
       ],
       "localPath": "design/figma-current-screens.png",
-      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
       "date": "2026-10-03",
-      "revision": "naver-deferred-mvp-2026-10-03"
+      "revision": "naver-memory-only-2026-10-03"
     },
     {
       "key": "states",
@@ -1079,9 +1077,9 @@
         "STATE-PlaceResults"
       ],
       "localPath": "design/figma-current-states.png",
-      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
       "date": "2026-10-03",
-      "revision": "naver-deferred-mvp-2026-10-03"
+      "revision": "naver-memory-only-2026-10-03"
     },
     {
       "key": "components",
@@ -1105,14 +1103,14 @@
       "key": "fullScroll",
       "nodeId": "4:797",
       "width": 440,
-      "height": 1362,
+      "height": 1650,
       "covers": [
-        "SCR-004 current MVP full content: YouTube, Instagram, file import"
+        "SCR-004 full content: YouTube, Instagram, NAVER, file import"
       ],
       "localPath": "design/figma-current-fullScroll.png",
-      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
+      "result": "visually-reviewed-after-naver-memory-only-subset-patch",
       "date": "2026-10-03",
-      "revision": "naver-deferred-mvp-2026-10-03"
+      "revision": "naver-memory-only-2026-10-03"
     },
     {
       "key": "handoff",
@@ -1125,13 +1123,12 @@
         "brand palette"
       ],
       "localPath": "design/figma-current-handoff.png",
-      "result": "visually-reviewed-after-naver-deferred-mvp-patch",
-      "date": "2026-10-03",
-      "revision": "naver-deferred-mvp-2026-10-03"
+      "result": "visually-reviewed-after-repairs",
+      "date": "2026-10-03"
     }
   ],
   "verifiedScreenStructure": {
-    "source": "Baseline plus scoped NAVER defer readback; native descendant counts from type-indexed traversal, excluding hidden instance children.",
+    "source": "Baseline structural readback plus scoped NAVER/integration readback after manual patch.",
     "allRenderedFonts": [
       "Noto Sans KR"
     ],
@@ -1151,8 +1148,7 @@
           "VECTOR": 11,
           "TEXT": 28,
           "RECTANGLE": 2
-        },
-        "descendantCount": 75
+        }
       },
       {
         "id": "4:343",
@@ -1191,16 +1187,15 @@
         "scroll": "VERTICAL",
         "fixedChildren": 0,
         "types": {
-          "FRAME": 13,
-          "INSTANCE": 17,
-          "VECTOR": 8,
-          "TEXT": 20
-        },
-        "descendantCount": 58
+          "FRAME": 15,
+          "INSTANCE": 18,
+          "VECTOR": 11,
+          "TEXT": 26
+        }
       },
       {
         "id": "4:533",
-        "name": "SCR-005 Places · NAVER 보류 안내",
+        "name": "SCR-005 Places",
         "width": 390,
         "height": 844,
         "scroll": "VERTICAL",
@@ -1209,9 +1204,8 @@
           "FRAME": 4,
           "INSTANCE": 3,
           "VECTOR": 2,
-          "TEXT": 7
-        },
-        "descendantCount": 16
+          "TEXT": 8
+        }
       },
       {
         "id": "4:583",
@@ -1259,7 +1253,7 @@
       },
       {
         "id": "4:741",
-        "name": "STATE-PlaceResults · 보류 · 향후 검토용",
+        "name": "STATE-PlaceResults 설정 후 · 검색 결과 UI 예시",
         "width": 390,
         "height": 844,
         "scroll": "VERTICAL",
@@ -1269,12 +1263,9 @@
           "INSTANCE": 7,
           "VECTOR": 5,
           "TEXT": 10
-        },
-        "descendantCount": 29
+        }
       }
-    ],
-    "activeMvpScreens": 4,
-    "deferredScreens": 1
+    ]
   },
   "visualRepairs": [
     "Explicit HUG/FILL/FIXED sizing for Auto Layout and text.",
@@ -1297,15 +1288,15 @@
     "Fixed 390x844 viewports intentionally show partial scrolling content; full integrations specimen is supplied separately.",
     "Not all application loading, disconnect, migration/storage failure, filter or API states are represented.",
     "Presentation playback, 320px layout, large text, keyboard, safe area, screen readers and iOS/Android remain unverified.",
+    "Figma specimens retain setup-before and fictional-result labels. Actual Google/NAVER provisioning and live-call verification are tracked separately in API documentation; this Figma patch performs no live calls.",
     "Nearby notifications, event-date matching, AI personalization, cloud sync and app-store delivery remain outside the implementation.",
-    "Current draft shows a public-playlist-configured / OAuth-not-configured specimen. NAVER API/results are deferred; preserved result designs are future examples only.",
-    "Hidden future native nodes are preserved. Current route /places has no search request; manual content map links still open an external map."
+    "NAVER original/map confirmation and status refresh are visual specifications only; no persistent NAVER result save or API refresh is simulated by prototype navigation."
   ],
   "pendingValidations": [
     "prototype-presentation-playback",
     "additional-app-states",
     "native-accessibility-and-device-layout",
-    "real-google-oauth"
+    "real-google-oauth-and-naver-credentials"
   ],
   "previousFile": {
     "fileKey": "sNrklbLn8Fd9HXMU3GLQUt",
@@ -1337,7 +1328,7 @@
       "CMP-007": "2:928"
     },
     "guide": "docs/api-setup.md",
-    "verification": "Current import MVP and NAVER defer notice mirrored by this manual patch. Figma executes no live requests. Actual web saved-selection evidence is in docs/verification.md."
+    "verification": "Manual NAVER UX subset mirrors temporary results, original/map actions and status refresh; Figma executes no API requests. Actual provider evidence is tracked in API verification."
   },
   "baselineRecord": {
     "manifest": "design/history/figma-manifest-2026-10-03-baseline.json",
@@ -1550,237 +1541,6 @@
         "design/figma-current-states.png",
         "design/figma-current-fullScroll.png"
       ]
-    },
-    {
-      "id": "naver-deferred-mvp-2026-10-03",
-      "date": "2026-10-03",
-      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-      "sourceFiles": [
-        "src/app/index.tsx",
-        "src/app/integrations.tsx",
-        "src/app/places.tsx",
-        "src/features/integrations/NaverPlacesScreen.tsx"
-      ],
-      "scope": "Manual current MVP subset: YouTube public playlist ready, Instagram links, file import; NAVER API deferred.",
-      "affectedRoots": [
-        "4:262",
-        "4:982",
-        "4:480",
-        "4:1056",
-        "4:800",
-        "4:533",
-        "4:1071",
-        "4:741",
-        "4:1132",
-        "4:902",
-        "4:250"
-      ],
-      "affectedBoards": [
-        "4:256",
-        "4:577",
-        "4:797",
-        "4:902"
-      ],
-      "mutatedNodeIds": [
-        "10:855",
-        "10:865",
-        "4:856",
-        "4:508",
-        "4:519",
-        "4:529",
-        "4:1066",
-        "4:1067",
-        "4:1070",
-        "4:828",
-        "4:835",
-        "4:543",
-        "4:558",
-        "4:576",
-        "4:1078",
-        "4:1082",
-        "4:1090",
-        "4:487",
-        "4:1060",
-        "4:807",
-        "4:489",
-        "4:1062",
-        "4:809",
-        "4:274",
-        "4:991",
-        "4:491",
-        "4:1064",
-        "4:811",
-        "4:522",
-        "4:1069",
-        "4:490",
-        "4:1063",
-        "4:810",
-        "4:540",
-        "4:1075",
-        "4:541",
-        "4:1076",
-        "4:542",
-        "4:1077",
-        "4:547",
-        "4:1081",
-        "4:533",
-        "4:1071",
-        "4:748",
-        "4:1136",
-        "4:741",
-        "4:1132",
-        "4:770",
-        "4:1147",
-        "4:1048",
-        "4:447",
-        "10:858",
-        "10:868",
-        "4:876",
-        "4:743",
-        "4:1134",
-        "4:904",
-        "4:255",
-        "4:253",
-        "4:252",
-        "20:832",
-        "10:853",
-        "10:863",
-        "4:837",
-        "10:860",
-        "10:870",
-        "4:884",
-        "10:861",
-        "10:871",
-        "4:895",
-        "4:479",
-        "4:532",
-        "4:740"
-      ],
-      "createdNodeIds": [
-        "20:830",
-        "20:832"
-      ],
-      "hiddenNodeIds": [
-        "10:855",
-        "10:865",
-        "4:856",
-        "4:508",
-        "4:519",
-        "4:529",
-        "4:1066",
-        "4:1067",
-        "4:1070",
-        "4:828",
-        "4:835",
-        "4:543",
-        "4:558",
-        "4:576",
-        "4:1078",
-        "4:1082",
-        "4:1090"
-      ],
-      "removedNavigationSources": [
-        "4:447",
-        "4:1048",
-        "10:858",
-        "10:868",
-        "4:876",
-        "4:743",
-        "4:1134"
-      ],
-      "changes": [
-        "Hidden NAVER service card and unconfigured OAuth/setup copy in canonical, review and full-scroll screens; existing native nodes preserved.",
-        "Kept public playlist input and empty-input disabled action; added native input/button clones to full-scroll specimen.",
-        "Replaced active places screen with no-API defer notice and return-to-import navigation.",
-        "Marked old place-result state as deferred future specimen and removed its navigation.",
-        "Aligned home import copy and Figma brief/handoff with current MVP; original/manual NAVER links remain usable.",
-        "Corrected outdated review captions and explicit two-line intro copy after visual inspection."
-      ],
-      "verification": {
-        "sourceReviewPairs": [
-          {
-            "source": "4:262",
-            "copy": "4:982",
-            "textParity": true
-          },
-          {
-            "source": "4:480",
-            "copy": "4:1056",
-            "textParity": true
-          },
-          {
-            "source": "4:533",
-            "copy": "4:1071",
-            "textParity": true
-          },
-          {
-            "source": "4:741",
-            "copy": "4:1132",
-            "textParity": true
-          }
-        ],
-        "integrationsFullScrollTextParity": true,
-        "rootDimensions": "Canonical and review mobile roots remain 390x844; full-content frame 390x1294.",
-        "fonts": [
-          "Noto Sans KR"
-        ],
-        "imageFilledNodes": [],
-        "reactionSourceNodeCount": 36,
-        "visibleReactionSourceNodeCount": 36,
-        "flowStartingPoints": [
-          {
-            "nodeId": "4:262",
-            "name": "저장함에서 시작"
-          },
-          {
-            "nodeId": "4:583",
-            "name": "첫 저장"
-          },
-          {
-            "nodeId": "4:646",
-            "name": "가져오기 확인"
-          }
-        ],
-        "fullScrollBounds": {
-          "id": "4:797",
-          "width": 440,
-          "height": 1362
-        },
-        "screenshots": "screens, states, fullScroll and handoff captured and visually reviewed; targeted caption and intro repair followed by affected composition screenshots.",
-        "prototypePlayback": "not-verified",
-        "liveApiCalls": "Figma performs no API, OAuth, file, storage or real URL actions."
-      },
-      "evidence": [
-        "design/figma-current-screens.png",
-        "design/figma-current-states.png",
-        "design/figma-current-fullScroll.png",
-        "design/figma-current-handoff.png"
-      ]
     }
-  ],
-  "mvp": {
-    "activeScreens": [
-      "SCR-001",
-      "SCR-002",
-      "SCR-003",
-      "SCR-004"
-    ],
-    "deferredScreen": "SCR-005",
-    "deferredState": "STATE-PlaceResults",
-    "publicYouTubePlaylist": "configured; OAuth not configured",
-    "naver": "deferred; no current route API calls",
-    "preserved": "manual NAVER share links and existing saved records"
-  },
-  "deferredValidations": [
-    "naver-provisioning-and-live-search"
-  ],
-  "beforeDeferRecord": {
-    "manifest": "design/history/figma-manifest-2026-10-03-before-naver-defer.json",
-    "snapshots": [
-      "design/history/figma-before-naver-defer-screens-2026-10-03.png",
-      "design/history/figma-before-naver-defer-states-2026-10-03.png",
-      "design/history/figma-before-naver-defer-fullScroll-2026-10-03.png",
-      "design/history/figma-before-naver-defer-handoff-2026-10-03.png"
-    ]
-  }
+  ]
 }

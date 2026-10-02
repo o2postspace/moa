@@ -10,7 +10,7 @@
 
 흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하고 모아의 브랜드색 `#C94C2B`를 유지한다. 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`이다. 전체/방문 탭, 출처·분류, CategoryStamp, 선택 정보와 하단 주요 액션을 공통 기준으로 관리한다.
 
-새 파일에는 편집 가능한 텍스트·Auto Layout·컴포넌트 인스턴스로 핵심 5화면과 4가지 상태, 서비스 연결 전체 스크롤 구성, 컴포넌트 상태·Handoff 보드를 만들었다. 앱 소스 `59205e5`를 전체 구성의 기준으로 만든 디자인 초안이며 이후 NAVER 임시 검색 결과·연결 상태 재확인만 수동 반영했다. 기준 해시를 전체 최신 동기화로 해석하지 않는다. 모든 코드 상태나 반응형·키보드·safe area를 구현한 파일 또는 앱과 픽셀 단위로 일치하는 동기화 결과로 보지 않는다.
+새 파일에는 편집 가능한 텍스트·Auto Layout·컴포넌트 인스턴스로 현재 MVP 4화면과 NAVER 보류 안내, 상태·가져오기 전체 구성·컴포넌트·Handoff 보드를 유지한다. 앱 소스 `59205e5`를 전체 구성의 기준으로 만든 디자인 초안에 NAVER 제외 MVP를 부분 반영했다. SCR-004는 공개 재생목록 설정됨/OAuth 미설정 상태이며 NAVER 카드와 미설정 계정 버튼은 숨겼다. 이전 장소 결과 상태는 향후 검토용이다. 기준 해시를 전체 최신 동기화로 해석하지 않는다. 모든 코드 상태나 반응형·키보드·safe area를 구현한 파일 또는 앱과 픽셀 단위로 일치하는 동기화 결과로 보지 않는다.
 
 이전 파일은 현재 연결 계정에서 편집 권한이 없어 사용자 요청에 따라 새 파일을 만들었다. [이전 파일](https://www.figma.com/design/sNrklbLn8Fd9HXMU3GLQUt)과 기존 기록은 보존한다. [Figma 작업 상태](figma-sync.md), [UI 전달](ui-refresh.md), [현재 manifest](../design/figma-manifest.json)를 따른다.
 
@@ -19,8 +19,8 @@
 | 페이지 / 보드 | 역할 | 실제 node |
 | --- | --- | --- |
 | 모아 · 화면 & 디자인 시스템 | 현재 단일 페이지 | [0:1](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=0-1) |
-| 핵심 5화면 리뷰 | 저장함·추가·상세·서비스 연결·장소 검색 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
-| 상태 리뷰 | 빈 저장함·필수 입력 오류·가져오기 후보·장소 결과 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
+| 현재 화면 리뷰 | 저장함·추가·상세·콘텐츠 가져오기 + NAVER 보류 안내 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
+| 상태 리뷰 | 빈 저장함·입력 오류·후보 선택·보류된 향후 장소 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
 | 공통 컴포넌트 상태 | CMP-001–007 variant·보조 입력·아이콘 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
 | 서비스 연결 전체 스크롤 | 첫 뷰포트 아래 내용 확인 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
 | Handoff | 토큰·코드·검증 범위·협업 안내 | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
@@ -29,7 +29,7 @@
 
 ## 현재 확인 범위
 
-원격 생성·구조 읽기로 실제 SCR/CMP node와 primitive 31개·semantic alias 31개, Noto Sans KR 텍스트 스타일 8개, Ionicons SVG 컴포넌트 14개를 확인했다. 초기 화면 이동 22개 중 이전 장소 화면 이동 2개를 제거해 현재 기본 이동은 20개, 복제본을 포함한 reaction node는 41개다. 프로토타입 재생 검증은 별도이며 로그인·검색·저장은 디자인에서 실제로 실행되지 않는다. 최신 시각 검증과 캡처 범위는 manifest에 기록한다.
+원격 생성·구조 읽기로 실제 SCR/CMP node와 primitive 31개·semantic alias 31개, Noto Sans KR 텍스트 스타일 8개, Ionicons SVG 컴포넌트 14개를 확인했다. NAVER 보류 반영 후 기본 이동 18개, 복제본을 포함한 reaction node 36개를 읽기 확인했다. 변경한 원본·리뷰 4쌍과 가져오기 전체 구성의 문구가 일치한다. 프로토타입 재생 검증은 별도이며 로그인·검색·저장은 디자인에서 실제로 실행되지 않는다. 최신 시각 검증과 캡처 범위는 manifest에 기록한다.
 
 현재 연결 계정의 draft 파일이며 팀원 초대·공유 권한 변경·팀 라이브러리 게시·Code Connect 게시는 하지 않았다. 기본 화면은 390×844 기준이다. 320px·큰 글자·safe area·키보드·스크린 리더·실기기 동작은 별도 검증한다. Figma의 설정 전·가상 결과 상태를 실제 Google/NAVER 계정 OAuth·검색 성공으로 주장하지 않는다. 실제 발급·응답 여부는 API 검증 기록에서 별도로 확인한다.
 
@@ -40,8 +40,8 @@
 | SCR-001 | Library | [4:262](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-262) | `src/app/index.tsx` |
 | SCR-002 | AddLink | [4:343](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-343) | `src/app/add.tsx` |
 | SCR-003 | ContentDetail | [4:416](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-416) | `src/app/content/[id].tsx` |
-| SCR-004 | Integrations | [4:480](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-480) | `src/app/integrations.tsx` |
-| SCR-005 | Places | [4:533](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-533) | `src/app/places.tsx` |
+| SCR-004 | 콘텐츠 가져오기 | [4:480](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-480) | `src/app/integrations.tsx` |
+| SCR-005 | NAVER 보류 안내 | [4:533](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-533) | `src/app/places.tsx` |
 | CMP-001 | ContentCard | [2:864](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-864) | `src/components/ContentCard.tsx` |
 | CMP-002 | FilterChip | [2:664](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-664) | `src/components/FilterChip.tsx` |
 | CMP-003 | PrimaryButton | [2:659](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-659) | `src/components/PrimaryButton.tsx` |
@@ -70,11 +70,11 @@ SCR-004는 서비스 설정 전·연결됨·실패·재시도, 공개/계정 재
 
 SCR-002에는 사용자가 누를 때만 클립보드를 읽는 붙여넣기와 YouTube 제목 요청을 추가했다. API 제목과 사용자가 적은 제목을 구분하며 URL/제목 수정 중 오래된 요청 응답으로 덮어쓰지 않는다. SCR-003은 요청 시 공개 Instagram 원문을 화면에서만 표시하고 장소가 있으면 네이버 지도 열기를 제공한다. CMP-007의 HTML은 저장하거나 제목·장소 추출에 사용하지 않는다.
 
-SCR-005는 장소 검색·빈 결과·실패, 최대 5개 결과의 주소·원문·지도 확인을 제공한다. NAVER API 검색 결과를 분류하거나 저장함에 영구 저장하지 않는다. 새 검색·화면 이탈 시 결과를 지우며 화면에 머물러도 최대 24시간만 메모리에 유지한다. 사용자가 직접 가져온 지도 링크를 추가하는 흐름과 API 검색 결과를 구분한다. 근처 거리나 행사 기간을 추정해서 표시하지 않는다.
+현재 SCR-005는 NAVER 보류 안내와 콘텐츠 가져오기 이동만 제공하며 API를 요청하지 않는다. 기존 검색은 `src/features/integrations/NaverPlacesScreen.tsx`에 보관했고 활성 route에서 사용하지 않는다. 향후 검색을 다시 제공하면 분류/영구 저장 없이 주소·원문·지도 확인, 새 검색·화면 이탈·최대 24시간 결과 정리 계약을 재검토한다. 기존 저장 데이터와 직접 공유한 지도 링크는 유지하며 근처 거리나 행사 기간을 추정하지 않는다.
 
 SCR-004–005와 CMP-007은 새 파일에 실제 node를 만들었다. 설정 전·후보 선택·결과 예시는 디자인 상태이며 실제 계정 응답을 뜻하지 않는다. 앱의 모든 실패·해제·로딩 상태가 Figma에 추가되었다고 가정하지 말고 이번 변경 범위의 상태를 원본·리뷰 보드와 함께 관리한다. [작업 상태](figma-sync.md)와 manifest의 검증 범위를 따른다.
 
-2026-10-03 수동 반영에서는 SCR-005 원본/리뷰(`4:533`/`4:1071`)와 결과 예시(`4:741`/`4:1132`)의 분류·저장 CTA를 제거하고 원문/지도 동작·24시간 안내를 맞췄다. SCR-004 원본/리뷰/전체 구성(`4:480`/`4:1056`/`4:800`)의 NAVER CTA·보관 설명과 ‘연결 상태 다시 확인’을 갱신했다. 기존 native 컴포넌트·토큰·Auto Layout을 유지했으며 Screens·States·FullScroll 새 캡처를 시각 확인했다. 이전 기준 자료는 history, 이 부분 변경은 현재 manifest의 `manualPatches`에서 확인한다.
+2026-10-03 첫 부분 반영은 NAVER 임시 검색 결과 계약이었다. 이후 사용자 요청에 따라 NAVER 카드를 숨기고 SCR-005를 보류 안내로 바꿨다. 결과 예시는 보류로 표시하며 활성 프로토타입 진입을 제거했다. 기존 native 컴포넌트·토큰·Auto Layout을 유지하고 Screens·States·FullScroll·Handoff 캡처를 시각 확인했다. 전체 구성은 440×1362다. 이전 기준 자료는 history, 두 변경 이력은 현재 manifest의 `manualPatches`에서 확인한다.
 
 ## 리뷰에서 검증까지
 

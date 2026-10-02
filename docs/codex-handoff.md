@@ -1,6 +1,6 @@
 # 모아 개발 인수인계 · Codex 시작 문서
 
-2026-10-03, NAVER HUB 지원·신규 API 저장 차단과 실제 공개 재생목록 검증 기준. Figma 소스 59205e5 초안은 baseline 기록이며 최신 부분 갱신은 현재 manifest를 따른다. 공개 저장소 [o2postspace/moa](https://github.com/o2postspace/moa)에 사용자 원본 저장 파일·로그인 정보·OAuth 토큰·환경 파일·계정 이메일·비공개 프로젝트 식별자를 넣지 않는다. 다른 개발자의 변경과 기존 사용자 데이터를 보존하며 기능별로 이어간다.
+2026-10-03, 사용자 요청에 따라 NAVER API 연동·발급·검색을 보류하고 공개 YouTube·Instagram 링크·파일 정리부터 사용하는 MVP 기준. Figma 소스 59205e5 초안은 baseline 기록이며 최신 부분 갱신은 현재 manifest를 따른다. 공개 저장소 [o2postspace/moa](https://github.com/o2postspace/moa)에 사용자 원본 저장 파일·로그인 정보·OAuth 토큰·환경 파일·계정 이메일·비공개 프로젝트 식별자를 넣지 않는다. 다른 개발자의 변경과 기존 사용자 데이터를 보존하며 기능별로 이어간다.
 
 ## 먼저 읽을 순서
 
@@ -31,14 +31,14 @@
 | YouTube 영상 | 웹 붙여넣기·제목 불러오기. 키 없는 공식 oEmbed 실제 응답 성공 확인 |
 | Instagram 공개 원문 | 사용자 요청 시 웹 상세에서 tokenless oEmbed 표시. 공식 공개 예시로 API 응답 성공 확인; 저장함·제목·장소 추출 아님 |
 | YouTube 가져오기 | 실제 API 키로 공개 재생목록 17개 조회·웹 후보 선택 확인. Web OAuth·페이지·중복·배치 저장 구현; 실제 계정 연결·50개 이상 페이지 이동·계정 가져오기 미검증 |
-| NAVER 장소 | HUB/기존 legacy 지역 검색·주소 확인·원문/지도 열기 구현. 신규 API 결과 저장·분류는 제공하지 않음. HUB 키 미등록으로 실제 검색·실기기 앱 실행 미검증 |
+| NAVER 보류 | 서비스 카드·검색 진입 제거. /places는 API 요청 없는 보류 안내. 검색 화면·HUB/legacy backend는 후속 작업용으로 보존. 직접 공유 지도 링크와 기존 데이터 유지 |
 | 파일 가져오기 | JSON/TXT 기기 선택·제한된 parser·후보 검토 후 저장. 실제 export·네이티브 파일 선택 미검증 |
 | 데이터 보존 | v1 배열→v2 envelope, YouTube provenance·30일 정리·단일 계정 연결 해제 삭제. 신규 NAVER API 입력 거부, 기존 v2 NAVER 읽기·방문 변경·기존 정리는 호환성 유지 |
 | 아직 없음 | 지도 SDK·장소 통합 엔터티, 행사 기간·위치 권한·근처 알림, 운영 로그인/배포·클라우드·AI·스토어 배포 |
 
 새 저장함은 비어 있다. 수동 링크·파일 저장은 기기 기능이며 API 요청은 서버를 거친다. 키 설정 상태, 계정 연결 상태, 실제 제공자 요청 성공을 구분한다.
 
-Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 실제 완료했다. OAuth client 발급·서버 등록, 사용자 계정 동의는 남아 있다. 공개 재생목록의 실제 17개 조회 성공을 OAuth 검증으로 설명하지 않는다. 발급 작업 중의 최신 상태는 [API 설정 기록](api-setup.md)을 확인한다.
+Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 실제 완료했다. OAuth client 발급·서버 등록·사용자 계정 동의는 후속 작업이며 공개 재생목록 사용을 막지 않는다. 공개 재생목록의 실제 17개 조회 성공을 OAuth 검증으로 설명하지 않는다. NAVER 발급·결제수단 등록은 사용자 요청으로 더 진행하지 않는다. 최신 상태는 [API 설정 기록](api-setup.md)을 확인한다.
 
 ## 실행과 키 설정
 
@@ -54,7 +54,7 @@ npm ci
 
 공개 YouTube 재생목록은 API key, 본인 재생목록은 Web OAuth client와 정확한 http://localhost:8787/api/youtube/callback 등록·consent screen 테스트 사용자·youtube.readonly 동의가 필요하다. 사용자가 실제 계정 화면에서 직접 로그인한다. [Google 공식 Web OAuth 안내](https://developers.google.com/identity/protocols/oauth2/web-server)
 
-NAVER 검색 신규 발급은 2026-07-31부터 NAVER API HUB에서 진행한다. `NAVER_API_PROVIDER=hub`, `NAVER_HUB_CLIENT_ID`, `NAVER_HUB_CLIENT_SECRET`을 사용한다. 기본 `legacy` 설정과 `NAVER_CLIENT_ID`/`NAVER_CLIENT_SECRET`은 기존 검색 권한을 가진 앱용이며 신규 검색 등록 경로가 아니다. HUB endpoint와 인증 헤더는 legacy와 다르고 키도 호환되지 않는다. [전환 공지](https://developers.naver.com/notice/article/32530), [HUB 신청](https://guide.ncloud-docs.com/docs/apihub-application), [마이그레이션](https://guide.ncloud-docs.com/docs/apihub-migration). 상세 변수·현재 발급 상태는 [API 서버](api-server.md)와 [API 설정](api-setup.md)을 따른다.
+현재 MVP에는 NAVER 키가 필요하지 않다. HUB/legacy backend 설정을 보존하지만 새 키 발급·카드 등록·실제 검색은 보류한다. 사용자 요청으로 연동을 재개할 때만 [API 설정의 보류 기록](api-setup.md#네이버-연동-보류)과 [API 서버](api-server.md)를 확인한다. HUB와 legacy의 키·endpoint·인증 헤더는 호환되지 않는다.
 
 서버·클라이언트는 로컬 주소만 허용하며 운영 배포용이 아니다. localhost와 127.0.0.1을 접속 주소에서 섞으면 OAuth cookie가 공유되지 않는다. 모바일 localhost는 개발 PC를 가리키지 않으므로 웹 경로를 실기기 API 연결로 설명하지 않는다.
 
@@ -66,7 +66,8 @@ NAVER 검색 신규 발급은 2026-07-31부터 NAVER API HUB에서 진행한다.
 | SCR-002 · src/app/add.tsx | 추가/수정·붙여넣기·YouTube 제목, 수동 제목·선택 장소/메모, 고정 저장 바·오류 초점 |
 | SCR-003 · src/app/content/[id].tsx | 표시 제목·원본·확인된 장소, 지도 열기·Instagram 원문, 수정·방문 |
 | SCR-004 · src/app/integrations.tsx | 설정/연결 상태, OAuth·재생목록/파일 후보·선택, 페이지·중복·해제 |
-| SCR-005 · src/app/places.tsx | 네이버 검색·주소 확인·원문/지도 열기. 새 검색/화면 이탈·최대 24시간 결과 삭제. API 저장·분류 없음 |
+| SCR-005 · src/app/places.tsx | NAVER 보류 안내·기본 링크 저장으로 돌아가기. 검색 UI·API 요청 없음 |
+| src/features/integrations/NaverPlacesScreen.tsx | 보류한 검색 UI 코드. 현재 route에서 사용하지 않음. 새 검색/화면 이탈·최대 24시간 메모리 만료·API 저장 금지 계약 보존 |
 | CMP-001–006 · src/components/ | 카드·칩·버튼·출처·빈 상태·CategoryStamp. 토큰·접근성 유지 |
 | CMP-007 · src/components/InstagramEmbed.tsx | 요청·오류·접기. InstagramFrame.web.tsx로 격리한 원문 표시; 현재 웹에서 활성화 |
 | src/features/integrations/api.ts | 로컬 주소·cookie·timeout·오류·타입 계약 |
@@ -87,9 +88,9 @@ NAVER 검색 신규 발급은 2026-07-31부터 NAVER API HUB에서 진행한다.
 
 **Instagram:** 2026-06-15부터 공개 oEmbed는 토큰·App Review가 필요하지 않다. HTML은 원문 표시용이며 제목·장소·작성자·썸네일 추출·저장·분석에 쓰지 않는다. private·비활성·연령 제한·embed 금지 계정·Stories는 지원되지 않는다. 실패해도 원본 열기를 제공한다. 소비자 저장함 endpoint나 작동하지 않는 로그인 버튼을 만들지 않는다.
 
-**NAVER:** 지역 검색은 개인 즐겨찾기 조회가 아니다. 최대 5개 결과의 주소를 확인하고 원문·지도를 연다. WGS84 공지 예시를 기준으로 longitude=mapx/10^7, latitude=mapy/10^7과 유효 범위를 검사하되 신규 결과를 저장함에 넣지 않는다. 오래된 KATECH XML 예시를 새 좌표 fixture로 쓰지 않는다. 사용자가 직접 제공한 지도 공유 링크는 API provenance·좌표 없이 수동 저장할 수 있으나, 공유 리스트의 모든 장소를 가져왔다고 설명하지 않는다. [HUB 지역 검색 계약](https://api.ncloud-docs.com/docs/naver-api-hub-search-local)
+**NAVER:** API 검색·발급은 보류했고 활성 화면에서 API 요청을 하지 않는다. 사용자가 직접 제공한 지도 공유 링크는 API provenance·좌표 없이 수동 저장할 수 있으나, 공유 리스트의 모든 장소를 가져왔다고 설명하지 않는다. 보존한 검색 코드의 지역 검색은 개인 즐겨찾기 조회가 아니며 최대 5개 결과의 원문·지도 확인용이다. 재개 시 WGS84 공지 예시의 longitude=mapx/10^7, latitude=mapy/10^7과 유효 범위를 유지하고 오래된 KATECH XML을 새 좌표 fixture로 쓰지 않는다. [HUB 지역 검색 계약](https://api.ncloud-docs.com/docs/naver-api-hub-search-local)
 
-[HUB 약관 2026-09-20 시행 공지](https://www.ncloud.com/support/notice/all/2243) 제2.3·2.4조에 따라 API 결과의 복사·저장·캐싱은 예외 범위로 제한된다. 기기 개인화 캐시는 24시간 또는 새 질의까지 중 짧은 기간이며, 사용자 선택을 장기 저장 허용으로 해석하지 않는다. [2026-10-07 개정](https://www.ncloud.com/support/notice/all/2271)도 저장 기간을 늘리지 않는다. 현재 화면은 새 검색·화면 이탈 때 결과를 즉시 지우며 최대 24시간만 메모리에 유지하고 저장·분류 CTA를 제공하지 않는다.
+[HUB 약관 2026-09-20 시행 공지](https://www.ncloud.com/support/notice/all/2243) 제2.3·2.4조에 따라 API 결과의 복사·저장·캐싱은 예외 범위로 제한된다. 기기 개인화 캐시는 24시간 또는 새 질의까지 중 짧은 기간이며, 사용자 선택을 장기 저장 허용으로 해석하지 않는다. [2026-10-07 개정](https://www.ncloud.com/support/notice/all/2271)도 저장 기간을 늘리지 않는다. 보류한 검색 코드는 새 검색·화면 이탈 때 결과를 즉시 지우며 최대 24시간만 메모리에 유지한다. 현재 보류 안내에는 결과·저장·분류 CTA가 없다.
 
 **파일:** UTF-8 2MiB·최대 200개. 한 줄당 HTTPS 하나인 TXT, 최상위 [{url,title?}], 제한된 saved_saved_media의 직접 string_map_data.*.href만 읽는다. 호환 입력이며 검증된 공식 export 규격이 아니다. unknown JSON은 오류를 내고 개인정보 전체를 재귀 탐색하지 않는다. 공식 도메인·안전 URL 후보를 사용자가 확인·선택한다. [파일 계약](import-files.md)
 
@@ -114,7 +115,7 @@ API 제목 수동 변경 시 외부 데이터와 사용자 작성 데이터가 �
 
 ## Figma 상태
 
-현재 작업 파일은 새로 만든 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이다. 연결된 팀 계정에서 생성했고 편집 가능한 텍스트·Auto Layout·컴포넌트·변수를 구성했다. 소스 59205e5 기준 초안은 [baseline manifest](../design/history/figma-manifest-2026-10-03-baseline.json)와 캡처로 보존한다. 최신 API 연결·NAVER 검색 흐름의 부분 갱신은 [현재 manifest](../design/figma-manifest.json)를 따른다. 픽셀 단위 동기화 결과가 아니다. 이전 sNrklbLn8Fd9HXMU3GLQUt 파일은 현재 계정에 편집 권한이 없어 변경하지 않았고 기록을 보존한다.
+현재 작업 파일은 새로 만든 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이다. 연결된 팀 계정에서 생성했고 편집 가능한 텍스트·Auto Layout·컴포넌트·변수를 구성했다. 소스 59205e5 기준 초안은 [baseline manifest](../design/history/figma-manifest-2026-10-03-baseline.json)와 캡처로 보존한다. NAVER 카드 제외·보류 안내에 맞춘 서비스 연결 흐름의 최신 부분 갱신은 [현재 manifest](../design/figma-manifest.json)를 따른다. 픽셀 단위 동기화 결과가 아니다. 이전 sNrklbLn8Fd9HXMU3GLQUt 파일은 현재 계정에 편집 권한이 없어 변경하지 않았고 기록을 보존한다.
 
 SCR-001–005/CMP-001–007의 실제 node, 화면·상태·서비스 전체 구성·컴포넌트·Handoff와 변수·스타일은 manifest를 기준으로 찾는다. 화면 이동 reaction의 현재 수와 읽기 확인 범위도 manifest를 따르며 프로토타입 재생 검증과 구분한다. 원본 화면은 페이지 최상위이며 리뷰 보드 복제본과 함께 관리한다.
 
@@ -122,13 +123,13 @@ SCR-001–005/CMP-001–007의 실제 node, 화면·상태·서비스 전체 구
 
 ## 다음 작업과 검사
 
-1. 브랜치/base·작업 파일을 확인하고 필요한 자격 증명을 .env.local에 설정한다. 값 출력 없이 설정 여부·실제 성공을 구분한다.
-2. 사용자 로그인으로 OAuth → 일반 재생목록 → 2페이지·중복·선택 저장 → 재실행을 검증한다. 거절·만료·해제 원격 실패/재시도·로컬 쓰기 실패를 함께 확인한다.
-3. 유효 NAVER HUB 키로 검색·다른 지점·주소·좌표·원문/지도 열기를 확인한다. 새 질의 실패·화면 이탈·늦은 응답·24시간 만료와 신규 저장 거부를 검증한다. 실기기 지도 앱 설치/미설치도 분리한다.
-4. 동의받은 익명화 export 샘플로 필요한 링크만 읽는지 확인한다. 검증된 형태만 추가한다.
-5. YouTube 제목 수동 편집·메모·30일 경계·해제 후 남는 데이터와 기존 NAVER v2 데이터 처리 방법을 확인하고 정책·UI·테스트를 맞춘다. 기존 NAVER 30일 호환성 동작을 준수 완료로 표시하지 않는다.
+1. 브랜치/base·작업 파일을 확인하고 공개 재생목록·수동 링크·파일 정리부터 이어간다. 필요한 API key만 .env.local에 설정하며 NAVER 발급·결제 등록을 요구하지 않는다. 값 출력 없이 설정 여부·실제 성공을 구분한다.
+2. 공개 재생목록 후보 → 선택 저장·중복 제외 → 재실행과 50개 이상 목록의 페이지 이동을 검증한다. 저장 실패·네트워크·제한과 제목/메모·30일 경계를 확인한다.
+3. 동의받은 익명화 export 샘플로 필요한 링크만 읽는지 확인한다. 검증된 형태만 추가한다. 네이티브 파일 선택·키보드·지도 링크 열기·접근성은 실기기에서 따로 확인한다.
+4. Google OAuth는 후속 범위다. client가 등록되면 사용자 로그인·일반 재생목록·거절·만료·연결 해제 원격 실패/재시도·로컬 쓰기 실패를 검증한다. 공개 API 성공을 계정 연동 완료로 설명하지 않는다.
+5. NAVER 검색·키 발급은 사용자 요청으로 보류한다. 기존 저장 데이터·직접 공유 링크·신규 API 입력 거부 계약을 유지한다. 재개 시 검색 메모리 만료·HUB 실제 응답·기존 v2 데이터 처리 방법을 별도 검토한다.
 6. 운영 배포 전 HTTPS·사용자별 세션·토큰 보호·취소 감지·네이티브 callback·개인정보처리방침·OAuth 검증을 마련한다.
-7. 새 Figma 파일의 실제 node·컴포넌트·변수를 보존하며 원본·리뷰 복제본을 함께 갱신한다. 변경에 영향받는 상태를 추가하고 시각·프로토타입 재생·320px/접근성의 별도 검증 범위를 기록한다.
+7. 새 Figma 파일의 실제 node·컴포넌트·변수를 보존하며 NAVER 제외 MVP에 맞춰 원본·리뷰 복제본을 함께 갱신한다. 변경에 영향받는 상태를 추가하고 시각·프로토타입 재생·320px/접근성의 별도 검증 범위를 기록한다.
 
 ~~~sh
 npm run typecheck
@@ -142,4 +143,4 @@ npm run build:web
 
 다른 개발자의 Codex에 전달할 시작 프롬프트:
 
-> AGENTS.md, README.md, docs/codex-handoff.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest를 읽고 Figma SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. 59205e5 초안은 baseline이며 최신 부분 갱신·reaction 수·확인 범위는 manifest가 기준입니다. API는 localhost 웹 미리보기이며 공개 YouTube 제목·Instagram oEmbed와 실제 키를 사용한 공개 재생목록 17개 조회·웹 후보 선택을 확인했습니다. Google 프로젝트·YouTube API 활성화는 완료했고 OAuth 발급·계정 검증과 NAVER HUB 키·실제 검색은 남아 있으므로 api-setup.md의 최신 상태부터 확인해 주세요. NAVER 신규 발급은 HUB, API 결과는 새 검색/화면 이탈·최대 24시간 메모리 확인용이며 저장·분류를 제공하지 않습니다. createContent의 신규 NAVER provenance/place 거부·mixed batch/중복 검증과 기존 v2 읽기·방문 toggle·30일 정리 호환성을 보존해 주세요. 사용자 데이터를 조기 삭제하거나 기존 호환성 동작을 준수 완료로 설명하지 마세요. 직접 공유한 지도 링크는 수동 저장할 수 있습니다. 기존 데이터와 다른 개발자의 변경을 보존하고 비밀값 출력 없이 실제 계정 재생목록·NAVER 검색·해제/저장 실패를 검증해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.
+> AGENTS.md, README.md, docs/codex-handoff.md, docs/api-server.md, docs/storage-v2.md를 읽고 브랜치·PR base·git status를 확인해 주세요. 현재 MVP는 공개 YouTube 재생목록·Instagram 링크·JSON/TXT 후보 검토와 기본 저장함입니다. 사용자 요청으로 NAVER API 검색·발급·결제수단 등록은 보류했고 서비스 카드·검색 진입을 제외했습니다. /places는 API 요청 없는 보류 안내이며 이전 검색 코드는 src/features/integrations/NaverPlacesScreen.tsx에 보관합니다. Google 프로젝트·YouTube API 활성화는 완료했지만 OAuth client·실제 계정 연동은 후속 범위입니다. 공개 재생목록 17개 조회·웹 후보 선택 성공을 OAuth 성공으로 설명하지 마세요. 공개 목록·수동 링크·파일 정리의 선택 저장·중복·실패·재실행부터 검증해 주세요. NAVER 직접 공유 링크와 기존 데이터, createContent의 신규 NAVER provenance/place 거부·mixed batch/중복 검증, 기존 v2 읽기·방문 toggle·30일 정리 호환성을 보존해 주세요. 사용자 데이터를 조기 삭제하거나 기존 호환성을 약관 준수 완료로 설명하지 마세요. 화면 작업은 docs/design-handoff.md, docs/figma-sync.md와 현재 manifest를 읽고 SCR/CMP 원본·리뷰 복제본을 함께 관리해 주세요. 59205e5는 baseline이며 최신 부분 갱신·reaction 수·확인 범위는 manifest가 기준입니다. 비밀값과 사용자 export를 출력·커밋하지 않고 다른 개발자의 변경을 보존해 주세요. 지원하지 않는 개인 저장함 API나 미검증 export 규격을 만들지 마세요. 수행 검사·남은 범위와 SCR/CMP ID를 기능별 PR로 전달해 주세요.

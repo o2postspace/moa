@@ -12,10 +12,10 @@
 ## 현재 제품·API 범위
 
 - 새 설치의 저장함은 비어 있다. 예시·모의 응답·실제 가져온 결과를 구분한다.
-- 기본 수동 링크 저장·정리와 웹 개발 API 코드가 있다. 공개 YouTube 제목·Instagram tokenless oEmbed와 실제 API 키를 사용한 공개 재생목록 17개 조회·웹 후보 선택을 확인했다. Google Cloud 프로젝트 생성·YouTube Data API 활성화도 완료했으나 OAuth client는 아직 발급·등록하지 않았고, 실제 계정 연결과 NAVER HUB 키·검색 검증은 남았다. 최신 상태는 docs/api-setup.md와 검증 기록을 확인한다.
+- 현재 MVP는 수동 링크·파일 정리, 공개 YouTube 제목·재생목록, Instagram 공개 원문에 집중한다. 실제 API 키를 사용한 공개 재생목록 17개 조회·웹 후보 선택을 확인했다. Google Cloud 프로젝트 생성·YouTube Data API 활성화도 완료했으나 OAuth client는 아직 발급·등록하지 않았다. 공개 재생목록은 Google 로그인 없이 사용할 수 있다. 최신 상태는 docs/api-setup.md와 검증 기록을 확인한다.
 - Instagram 소비자 저장함·NAVER 지도 개인 저장 목록·YouTube Watch Later를 공식 API로 읽는 기능을 제공한다고 설명하지 않는다. 좋아요 영상은 이번 재생목록 흐름 밖이다.
 - 파일은 확인 전 후보이며 공식 export 규격으로 단정하지 않는다. JSON/TXT UTF-8 2MiB·200건 제한과 비재귀 탐색·검토·선택을 유지한다.
-- NAVER 지역 검색은 원문·지도 확인용이다. API 결과의 저장·분류 CTA를 제공하지 않는다. 새 검색·화면 이탈 때 결과를 즉시 지우고, 화면에 머물러도 최대 24시간만 메모리에 유지한다. 사용자가 직접 공유한 지도 링크는 API provenance·좌표 없이 수동 저장할 수 있다. 지도 앱/웹 열기를 앱 내 지도 SDK 완료로 설명하지 않는다.
+- 사용자 요청으로 NAVER API 연동·신규 발급·검색은 보류했다. 서비스 연결의 NAVER 카드와 검색 진입을 제거하고 /places는 API 요청 없는 보류 안내만 제공한다. 결제수단 등록·키 발급을 다시 요구하지 않는다. 사용자가 직접 공유한 지도 링크와 기존 저장 데이터는 보존하며, 지도 링크는 API provenance·좌표 없이 수동 저장할 수 있다. 지도 앱/웹 열기를 앱 내 지도 SDK 완료로 설명하지 않는다.
 - 근처 알림·행사 기간·지도 SDK·AI·클라우드·운영 로그인/배포는 미구현이다. 실기기 파일 선택·지도 앱·OAuth·접근성은 웹 검사와 구분한다.
 
 ## 비밀값·서버 경계
@@ -23,7 +23,7 @@
 - Node.js 24의 npm run api와 기본 환경 파일 loader를 사용한다. .env.example은 변수 설명만, 실제 .env.local과 토큰·사용자 export는 Git에 넣지 않는다. 비밀값을 출력하지 않는다.
 - 서버 비밀값에 EXPO_PUBLIC_를 붙이지 않는다. OAuth 토큰은 앱 코드·URL·AsyncStorage·브라우저 응답·로그에 보내지 않는다.
 - 현재 서버는 localhost 웹 개발용이며 기본 앱8081/API8787이다. Origin·cookie·Google callback과 호스트를 함께 맞춘다. 설정됨·연결됨·실제 응답 성공을 구분한다.
-- NAVER 검색 신규 발급은 2026-07-31부터 NAVER API HUB를 사용한다. NAVER_API_PROVIDER=hub와 별도 NAVER_HUB_CLIENT_ID/NAVER_HUB_CLIENT_SECRET을 설정한다. legacy NAVER_CLIENT_ID/NAVER_CLIENT_SECRET은 이전에 검색 권한을 발급받은 앱만 대상으로 하며 두 제공자의 키·endpoint·헤더를 섞지 않는다. [공식 전환 공지](https://developers.naver.com/notice/article/32530)와 docs/api-setup.md를 따른다.
+- NAVER backend의 HUB/legacy 어댑터는 후속 작업용으로 보존한다. 현재 MVP 실행에 NAVER 환경값·결제수단은 필요하지 않다. 연동을 다시 진행하라는 사용자 요청이 있을 때만 docs/api-setup.md의 보류 기록과 [공식 전환 공지](https://developers.naver.com/notice/article/32530)를 확인한다. HUB/legacy 키·endpoint·헤더를 섞지 않는다.
 - OAuth state·PKCE·cookie·단회 callback·refresh/revoke와 고정 제공자 endpoint, 입력/응답/시간/페이지 제한을 유지한다.
 - Instagram HTML은 사용자 요청의 원문 표시 전용이다. 제목·장소·썸네일·작성자를 추출·저장·분석하지 않는다. 실패 시 원본 열기를 제공한다.
 - 운영 배포는 HTTPS·사용자별 인증/격리·토큰 보호·취소 감지·네이티브 callback·출시 검증을 따로 마련한다. 개발 서버를 그대로 외부에 노출하지 않는다.
@@ -47,7 +47,7 @@
 
 - 기능별 브랜치와 리뷰 가능한 PR을 사용한다. 기존 UI PR을 base로 한 API PR의 의존관계를 기록하고 main에 강제 푸시하지 않는다.
 - 토큰 원본은 design/tokens.json이다. 변경 후 npm run tokens:generate로 생성 코드를 함께 갱신한다.
-- SCR-001–003을 보존하고 SCR-004 서비스 연결, SCR-005 장소 검색, CMP-007 InstagramEmbed를 현재 코드 매핑에 기록한다. 실제 node가 없는 매핑은 Figma 완료로 표시하지 않는다.
+- SCR-001–003을 보존하고 SCR-004 서비스 연결, SCR-005 NAVER 보류 안내, CMP-007 InstagramEmbed를 현재 코드 매핑에 기록한다. 기존 검색 구현은 src/features/integrations/NaverPlacesScreen.tsx에 보관하며 활성 route와 구분한다. 실제 node가 없는 매핑은 Figma 완료로 표시하지 않는다.
 - 현재 Figma는 연결 계정에 새로 만든 [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ)이다. docs/figma-sync.md와 현재 manifest의 실제 node를 따른다. 기존 sNrklbLn8Fd9HXMU3GLQUt 파일은 권한 부족으로 변경하지 않았으며 역사 기록을 보존한다.
 - 새 파일의 SCR/CMP node·스타일·변수·인스턴스를 보존하며 갱신한다. 최상위 원본 화면과 리뷰 보드 복제본을 함께 관리한다. 소스 59205e5 기준 초안은 design/history/의 baseline으로 보존하고 최신 부분 갱신·실제 node·reaction 수·확인 범위는 현재 design/figma-manifest.json을 따른다. 자동 픽셀 동기화·프로토타입 재생 검증·팀 라이브러리/Code Connect 게시 완료를 주장하지 않는다. SVG·이전 Figma 캡처는 최신 검증 증거가 아니다.
 - 전체/방문 탭과 검색·분류·출처 조건을 함께 적용하고 선택 입력을 접어도 값을 보존한다. 상태·설정 전 안내·로딩·오류·고정 액션·초점을 검증한다.
@@ -56,7 +56,7 @@
 
 - typecheck·lint와 변경에 맞는 의미 있는 검사, 화면/토큰 변경의 tokens:check·build:web를 수행한다.
 - 정상·빈·오류·로딩·재실행·중복·페이지·보존 기한·삭제·읽기/쓰기 실패를 변경 범위에 맞춰 확인한다. 모의 응답·웹·실제 계정·실기기를 구분한다.
-- 공개 API 성공은 OAuth 계정 연결이나 다른 제공자의 키 검증 성공을 뜻하지 않는다. 실제 export·Google 계정·NAVER HUB 키·네이티브·기존 NAVER 데이터 처리와 API 제목 수동 변경 정책의 남은 검증을 명시한다.
+- 공개 API 성공은 OAuth 계정 연결이나 다른 제공자의 키 검증 성공을 뜻하지 않는다. 실제 export·Google 계정·네이티브·API 제목 수동 변경 정책의 남은 검증을 명시한다. NAVER 발급·실제 검색과 기존 API 데이터 처리 검토는 보류된 별도 범위다.
 - README·Codex 인수인계·로드맵·검증 기록·SCR/CMP와 관련 계약을 함께 갱신한다. PR에 문제·결과·검사·남은 한계·브랜치/base를 적는다.
 
 This is an Expo/React Native mobile application. Prioritize mobile-first patterns, performance, and cross-platform compatibility.
