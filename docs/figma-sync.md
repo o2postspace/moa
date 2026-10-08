@@ -4,12 +4,20 @@
 
 현재 기본 앱은 **React DOM · Vite · React Router 웹앱**이며 활성 코드는 `src/web/`에 있다. 같은 Figma 파일에 1440px 웹 저장함 초안과 웹 Handoff를 추가했다. 앱 소스 `59205e5`를 기준으로 만든 기존 390px 모바일 디자인은 참조 이력으로 보존했다. NAVER 제외 MVP는 유지하며 공개 YouTube·Instagram 링크·파일 정리부터 사용한다. SCR-005는 API 없는 보류 안내다. 기준 해시는 모바일 baseline이며 현재 웹 파일은 이 부분 갱신 시점에 미커밋 작업 트리였다. 픽셀 단위로 일치하는 자동 동기화 결과가 아니며 디자인 예시는 실제 계정 응답을 뜻하지 않는다.
 
+## 핀맵 이름과 AnyJev 협업 메모 · 2026-10-08
+
+사용자 요청으로 페이지 이름을 `핀맵 · 화면 & 디자인 시스템`으로 바꾸고 저장함의 브랜드·제목을 갱신했다. 웹 스탬프는 `PINMAP COLLECTION` / `핀`을 표시한다. 파일 자체의 기존 제목은 유지하며 과거 모바일·토큰·스타일의 내부 Moa 식별자를 일괄 교체하지 않았다. 원격 node ID와 기존 저장 데이터 계약은 유지한다.
+
+[웹 Handoff 28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877)은 1440×372이며 [AnyJev 코드 계약](instagram-analysis.md)을 기록했다. 사용자 캡션·이미 추출한 글자·자막을 2,400자 근거로 정리하고 두 선택형 판단에 전달하는 범위다. 실제 모델 서버는 없으며 영상·OCR·STT 자동 추출과 실토큰 절감은 검증하지 않았다. **CMP-008 분석 패널의 새 Figma 화면·컴포넌트는 아직 없다.** 코드와 디자인의 미반영 범위를 manifest에 명시했다.
+
+[핀맵 저장함 캡처](../design/pinmap-figma-library-2026-10-08.png)와 [핀맵 Handoff 캡처](../design/pinmap-figma-handoff-2026-10-08.png)를 확인했다. 변경 전 [manifest](../design/history/figma-manifest-2026-10-08-before-pinmap.json)를 보존하고 `manualPatches.pinmap-brand-and-anyjev-handoff-2026-10-08`에 부분 변경을 기록한다.
+
 ## 현재 파일의 실제 구성
 
 | 대상 | 실제 node / 상태 |
 | --- | --- |
 | 웹 저장함 · 1440×1100 편집 초안 | [25:774](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=25-774) · 사이드바 / 검색·필터 / 3열 가상 카드 |
-| 웹 개발 Handoff · 1440×332 | [28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877) · 현재 웹 파일·협업 범위 |
+| 웹 개발 Handoff · 1440×372 | [28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877) · 현재 웹 파일·협업 범위 |
 | 기존 390px 모바일 4화면 + NAVER 보류 참조 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) · 원본/리뷰 보존 |
 | 빈 저장함·입력 오류·후보 선택·보류된 향후 장소 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
 | 공통 컴포넌트 상태 보드 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |

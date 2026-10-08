@@ -41,3 +41,8 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# Optional local AnyJev runtime and downloaded Python caches
+.venv-anyjev/
+__pycache__/
+*.py[cod]

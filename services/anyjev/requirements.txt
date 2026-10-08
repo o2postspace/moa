@@ -1,0 +1,3 @@
+# AnyJev's published CPU / Transformers extra; install in a separate environment.
+# Transitive versions are upstream ranges, not a verified full runtime lock.
+anyjev[hf]==0.3.0

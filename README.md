@@ -1,8 +1,10 @@
-# 모아 · 저장 콘텐츠 비서
+# 핀맵 · 저장 콘텐츠 비서
 
-여러 서비스에서 저장한 콘텐츠를 한곳에 정리하고, 이후 장소와 시기에 맞춰 다시 발견하도록 확장하는 웹앱입니다. 이름은 임시 작업명입니다. 기본 화면은 React DOM·Vite·React Router로 구현하며 데스크톱과 모바일 브라우저에서 사용합니다. 기존 Expo·React Native 소스와 의존성은 후속 네이티브 작업용으로 보관합니다.
+여러 서비스에서 저장한 콘텐츠를 한곳에 정리하고, 이후 장소와 시기에 맞춰 다시 발견하도록 확장하는 웹앱입니다. 2026-10-08 사용자 요청으로 이름을 **핀맵**으로 바꿨습니다. 기존 저장소 주소와 브라우저 저장 키는 유지합니다. 기본 화면은 React DOM·Vite·React Router로 구현하며 데스크톱과 모바일 브라우저에서 사용합니다. 기존 Expo·React Native 소스와 의존성은 후속 네이티브 작업용으로 보관합니다.
 
-현재 개발 브랜치는 **codex/content-integrations**입니다. [UI PR #1](https://github.com/o2postspace/moa/pull/1)의 codex/mmm-ui-refresh head **835dd81**에서 시작한 기능 브랜치이며 main에는 아직 병합되지 않았습니다. API·Figma 협업 작업은 UI 브랜치를 base로 한 [draft PR #2](https://github.com/o2postspace/moa/pull/2)에서 검토합니다.
+현재 AnyJev 작업 브랜치는 **codex/anyjev-instagram-analysis**이며 웹 전환 브랜치 codex/content-integrations의 **03d73fd**에서 시작했습니다. [draft PR #3](https://github.com/o2postspace/moa/pull/3)에서 핀맵·AnyJev 작업을 검토합니다. 기존 웹·API·Figma 구현은 [draft PR #2](https://github.com/o2postspace/moa/pull/2), 그 기반 UI는 [PR #1](https://github.com/o2postspace/moa/pull/1)에서 검토합니다. main에는 아직 병합되지 않았습니다.
+
+Instagram 상세에 **간단 분석**을 추가했습니다. 사용자가 제공한 캡션·화면 글자·릴스 자막을 정리하고, 연결된 AnyJev 서버로 분류·추가 근거 필요 여부를 판단합니다. 동일 입력의 결과를 잠시 재사용하며 추천을 자동 저장하지 않습니다. 현재 모델 서버는 없어서 텍스트 정리 미리보기와 연결 코드까지 사용할 수 있습니다. 영상 자동 읽기·OCR/STT·실제 모델 추론·토큰 절감률은 미검증입니다. [분석 계약과 실행](docs/instagram-analysis.md)
 
 2026-10-03 React DOM 웹 전환을 완료했습니다. 기존 브라우저 저장 5건·방문 표시 보존, 1440/390/320px 레이아웃, 새로고침·검색/분류·방문 저장·수정·중복 방지와 실제 공개 재생목록 17개 조회·Instagram 원문 표시를 확인했습니다. 타입·린트·84개 테스트·토큰·웹 빌드가 통과했습니다. 확인 범위와 남은 파일 선택/계정 검증은 [검증 기록](docs/verification.md)을 따릅니다.
 
@@ -13,6 +15,7 @@
 | 링크 저장·정리 | 제목·분류·장소 이름·메모, 전체/방문 완료 탭, 검색·출처 필터, 상세·수정·방문 상태, 중복 안내와 기기 저장 |
 | YouTube 영상 링크 | 웹에서 붙여넣기 후 공식 oEmbed로 제목 불러오기. API 키 없이 실제 응답 성공 확인 |
 | Instagram 공개 원문 | 웹 상세에서 사용자 요청 시 공식 tokenless oEmbed 표시. 실제 API 응답 성공 확인; 개인 저장함 조회·제목/장소 추출과는 다름 |
+| Instagram 간단 분석 | 사용자 캡션·OCR·자막 텍스트를 2,400자 이하로 정리 → 선택형 분류·근거 판단 → 수동 확인. AnyJev 모델 서버 미연결이며 실제 추론·절감 효과 검증은 남음 |
 | YouTube 재생목록 | 실제 API 키로 공개 재생목록 17개 조회·웹 후보 선택 확인. 계정 연결·중복 제외·선택 저장 구현; 실제 Google OAuth·50개 이상 페이지 이동·계정 가져오기는 검증이 남음 |
 | 직접 공유한 지도 링크 | 링크·사용자가 작성한 제목을 수동 저장. NAVER API 검색·키 발급은 보류했으며 서비스 연결에 검색 진입을 제공하지 않음 |
 | JSON/TXT 가져오기 | 기기에서 파일 선택 → 링크 후보 검토·선택·일괄 저장. UTF-8 2MiB·최대 200건. 실제 계정 export 호환성 미검증 |
@@ -20,7 +23,7 @@
 
 첫 실행의 저장함은 비어 있습니다. 예시 데이터를 자동 삽입하지 않습니다. **Instagram 개인 저장함, YouTube ‘나중에 볼 동영상’, NAVER 지도 개인 저장 목록의 자동 동기화는 제공하지 않습니다.** YouTube 좋아요 영상 가져오기도 이번 범위 밖입니다. 파일·공유 링크·이름 있는 재생목록으로 사용자가 가져올 대상을 확인합니다.
 
-API 기능은 현재 localhost의 **웹 개발 미리보기**를 대상으로 합니다. 운영 로그인·HTTPS 배포·클라우드 저장, 앱 내 지도 SDK, 행사 날짜·근처 알림, AI·개인화는 남아 있습니다. 모바일 브라우저의 파일 선택·클립보드·외부 지도 열기와 보관한 네이티브 소스의 동작은 별도 검증 대상입니다.
+API 기능은 현재 localhost의 **웹 개발 미리보기**를 대상으로 합니다. 운영 로그인·HTTPS 배포·클라우드 저장, 앱 내 지도 SDK, 행사 날짜·근처 알림, 자유 생성 AI·개인화는 남아 있습니다. AnyJev 텍스트 분류 연결과 영상·음성 자체 분석을 구분합니다. 모바일 브라우저의 파일 선택·클립보드·외부 지도 열기와 보관한 네이티브 소스의 동작은 별도 검증 대상입니다.
 
 현재는 **공개 YouTube 재생목록·Instagram 링크·JSON/TXT 후보 가져오기**로 저장함을 정리합니다. 공개 재생목록은 등록된 API 키를 사용하며 Google 로그인 없이 시작할 수 있습니다. Google Cloud 프로젝트 생성과 YouTube Data API 활성화는 완료했지만 OAuth client 발급·서버 등록·실제 계정 동의는 후속 검증입니다. 사용자 요청에 따라 NAVER API 검색·발급은 보류했고 결제수단 등록을 요구하지 않습니다. 최신 범위는 [키·계정 설정 기록](docs/api-setup.md)을 확인합니다.
 
@@ -83,7 +86,7 @@ NAVER 검색은 현재 앱 흐름에서 제외했습니다. 사용자가 직접 
 - UI/UX 전달: [디자인 기준](docs/design-handoff.md), [UI 리디자인](docs/ui-refresh.md), [Figma 연결 상태](docs/figma-sync.md), [컴포넌트 매핑](design/component-map.json)
 - [GitHub 협업 절차](docs/github-setup.md)와 .github/의 이슈·PR 템플릿·CI
 
-앱은 모아 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 연결된 계정의 새 [Figma 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256)에 편집 가능한 화면·상태·공통 컴포넌트·변수를 구성했습니다. UI/UX 팀이 직접 수정할 수 있으며 원본 화면과 리뷰 보드 복제본을 함께 관리합니다. 소스 59205e5의 초안은 [baseline 기록](design/history/figma-manifest-2026-10-03-baseline.json)으로 보존합니다. NAVER 제외 범위에 맞춘 서비스 연결·보류 화면의 최신 부분 갱신, 실제 node·reaction 수·시각 확인 범위는 [현재 manifest](design/figma-manifest.json)를 따릅니다. 디자인 등록은 실제 API 성공·자동 픽셀 동기화·프로토타입 재생 검증을 뜻하지 않습니다. 팀 초대·라이브러리/Code Connect 게시는 수행하지 않았고 [이전 SVG](design/moa-ui-refresh.svg)와 이전 파일 기록은 보존합니다.
+앱은 핀맵 주황색 #C94C2B, 흰 배경·회색 카드·둥근 컨트롤을 사용합니다. 연결된 계정의 새 [Figma 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256)에 편집 가능한 화면·상태·공통 컴포넌트·변수를 구성했습니다. UI/UX 팀이 직접 수정할 수 있으며 원본 화면과 리뷰 보드 복제본을 함께 관리합니다. 소스 59205e5의 초안은 [baseline 기록](design/history/figma-manifest-2026-10-03-baseline.json)으로 보존합니다. NAVER 제외 범위에 맞춘 서비스 연결·보류 화면의 최신 부분 갱신, 실제 node·reaction 수·시각 확인 범위는 [현재 manifest](design/figma-manifest.json)를 따릅니다. 디자인 등록은 실제 API 성공·자동 픽셀 동기화·프로토타입 재생 검증을 뜻하지 않습니다. 팀 초대·라이브러리/Code Connect 게시는 수행하지 않았고 [이전 SVG](design/moa-ui-refresh.svg)와 이전 파일 기록은 보존합니다.
 
 ## 검사
 

@@ -1,8 +1,8 @@
 # 디자인 · 개발 협업
 
-2026-10-03 기준. 앱 작업명은 **모아**. React DOM + Vite + React Router + TypeScript 웹앱을 작은 기능 단위씩 만든다. 기존 Expo 코드는 보관한다. 현재 UI/UX 작업 파일과 실제 코드 연결을 아래에 기록한다.
+2026-10-08 기준. 사용자 요청으로 앱 이름을 모아에서 **핀맵**으로 바꿨다. React DOM + Vite + React Router + TypeScript 웹앱을 작은 기능 단위씩 만든다. 기존 Expo 코드와 2026-10-03 디자인 baseline은 보관한다. 현재 UI/UX 작업 파일과 실제 코드 연결을 아래에 기록한다.
 
-- 현재 Figma: [모아 · 저장 콘텐츠 & 서비스 연동](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ) — 연결 계정의 새 draft 파일
+- 현재 Figma: [핀맵 작업 파일](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ) — 기존 draft 파일의 `핀맵 · 화면 & 디자인 시스템` 페이지
 - GitHub: [o2postspace/moa](https://github.com/o2postspace/moa), [API·디자인 draft PR #2](https://github.com/o2postspace/moa/pull/2)
 - 개발 시작점: [Codex 인수인계](codex-handoff.md), 제품 / 디자인 / 개발 담당자는 팀 지정 후 기록
 
@@ -12,7 +12,7 @@
 
 웹 협업의 새 진입점은 [PC 저장함 25:774](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=25-774)와 [웹 Handoff 28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877)이다. PC 저장함은 1440×1100, 편집 가능한170개 하위 노드와 가상3카드로 구성했다. Noto Sans KR·기존 토큰/CMP를 재사용하며 전체 UI 이미지가 없다. 새 WEB-CMP-001 카드26:902와 WEB-CMP-006 스탬프26:897은 `src/web/components/Ui.tsx`의 ContentCard/CategoryStamp에 대응한다. 실행과 웹 검토 증거는 [웹앱 시작점](web-app.md), [검증 기록](verification.md)을 따른다.
 
-흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하고 모아의 브랜드색 `#C94C2B`를 유지한다. 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`이다. 전체/방문 탭, 출처·분류, CategoryStamp, 선택 정보와 하단 주요 액션을 공통 기준으로 관리한다.
+흰 배경·따뜻한 회색 카드·둥근 컨트롤을 사용하고 기존 브랜드색 `#C94C2B`를 핀맵에서도 유지한다. 보조색은 `#62685F`, 연한 주황색 위 강조 글자는 `#A83A20`이다. 전체/방문 탭, 출처·분류, CategoryStamp, 선택 정보와 하단 주요 액션을 공통 기준으로 관리한다. 이름 변경은 저장 데이터 이동이 아니며 내부 localStorage 키 `moa.library.v1`은 보존한다.
 
 새 파일에는 편집 가능한 텍스트·Auto Layout·컴포넌트 인스턴스로 현재 MVP 4화면과 NAVER 보류 안내, 상태·가져오기 전체 구성·컴포넌트·Handoff 보드를 유지한다. 앱 소스 `59205e5`를 전체 구성의 기준으로 만든 디자인 초안에 NAVER 제외 MVP를 부분 반영했다. SCR-004는 공개 재생목록 설정됨/OAuth 미설정 상태이며 NAVER 카드와 미설정 계정 버튼은 숨겼다. 이전 장소 결과 상태는 향후 검토용이다. 기준 해시를 전체 최신 동기화로 해석하지 않는다. 모든 코드 상태나 반응형·키보드·safe area를 구현한 파일 또는 앱과 픽셀 단위로 일치하는 동기화 결과로 보지 않는다.
 
@@ -22,12 +22,13 @@
 
 | 페이지 / 보드 | 역할 | 실제 node |
 | --- | --- | --- |
-| 모아 · 화면 & 디자인 시스템 | 현재 단일 페이지 | [0:1](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=0-1) |
+| 핀맵 · 화면 & 디자인 시스템 | 현재 단일 페이지. 이전 이름·baseline 기록 보존 | [0:1](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=0-1) |
 | 현재 화면 리뷰 | 저장함·추가·상세·콘텐츠 가져오기 + NAVER 보류 안내 | [4:256](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-256) |
 | 상태 리뷰 | 빈 저장함·입력 오류·후보 선택·보류된 향후 장소 예시 | [4:577](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-577) |
 | 공통 컴포넌트 상태 | CMP-001–007 variant·보조 입력·아이콘 | [2:929](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-929) |
 | 서비스 연결 전체 스크롤 | 첫 뷰포트 아래 내용 확인 | [4:797](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-797) |
 | Handoff | 토큰·코드·검증 범위·협업 안내 | [4:902](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=4-902) |
+| 웹 Handoff · 1440×372 | 웹 코드 연결·핀맵 이름·간단 분석의 기능 범위 메모 | [28:877](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=28-877) |
 
 페이지 최상위의 SCR/STATE 프레임은 프로토타입 원본이다. 리뷰 보드에는 편집 가능한 복제본을 배치했으며 컴포넌트 인스턴스는 메인 컴포넌트를 참조한다. 원본과 리뷰 복제본을 함께 갱신한다. 원본 화면의 실제 node를 아래 코드 표에 연결한다.
 
@@ -53,8 +54,21 @@
 | CMP-005 | EmptyState | [2:888](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-888) | `src/web/components/Ui.tsx · EmptyState` |
 | CMP-006 | CategoryStamp | [2:820](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-820) | `src/web/components/Ui.tsx · CategoryStamp` |
 | CMP-007 | InstagramEmbed | [2:928](https://www.figma.com/design/ejriXVtLOBDSwZ336vDKlZ?node-id=2-928) | `src/web/components/InstagramEmbed.tsx` |
+| CMP-008 | InstagramAnalysis | `null` · 분석 패널의 Figma 컴포넌트 아직 없음 | `src/web/components/InstagramAnalysis.tsx` |
 
 원격 node ID는 새 파일에서 확인한 값이다. 같은 SCR/CMP 제품 ID를 유지하되 이전 파일의 node와 혼용하지 않는다. 코드 이동·원본 교체 시 이 표와 manifest·component-map을 함께 갱신한다. 로컬 매핑은 게시된 Code Connect가 아니다.
+
+## SCR-003 간단 분석 · CMP-008 코드 계약
+
+2026-10-08 추가한 웹 코드 범위다. Instagram 상세에서 CMP-007 원문 표시 뒤에 접힌 **간단 분석** 패널을 둔다. 사용자가 직접 복사한 게시물 캡션, 이미 추출한 화면 글자, 릴스 자막을 세 입력으로 받는다. 하나 이상을 입력하며 합계 8,000자까지 허용한다. 중복 줄·공백을 정리하고 최대 2,400자로 앞뒤 내용을 남긴 텍스트를 접힌 미리보기에서 확인한다. 긴 내용의 일부 생략을 알리고 문자 수를 토큰 수나 절감률로 해석하지 않는다.
+
+패널 열기에서 분석 연결 상태를 확인하고, 모델 미설정·설정됐지만 응답 없음·준비됨을 구분한다. 연결 전에도 입력과 미리보기를 사용할 수 있지만 추천 요청은 막는다. 사용자가 **분류 추천받기**를 눌러야 텍스트를 서버에 보낸다. 요청 중 취소·입력 변경·URL 변경·화면 이탈은 오래된 응답을 무효화한다. 접기·펼치기와 오류에서 입력을 보존하며 **입력 비우기**는 분석 입력·결과만 초기화한다.
+
+추천 분류는 검토 단계다. 근거가 부족하면 원문 확인·캡션/자막 추가를 권하고, 점수가 모호하거나 텍스트가 생략됐으면 확인 안내를 표시한다. **분류 확인·수정**은 기존 `/add?id=…`로 이동하며 사용자가 직접 분류를 선택하고 저장한다. 기존 제목·메모·분류를 자동으로 덮어쓰지 않는다. 입력·결과는 이 화면에서만 유지한다. AnyJev 선택 판단·캐시 재사용과 측정된 추론 토큰은 분석 정보에서 보여주되 점수를 정확도로 표시하지 않는다. 자세한 설정·응답 계약은 [Instagram 분석](instagram-analysis.md)을 따른다.
+
+현재 실제 모델은 연결하지 않았고 추론 성공·토큰/비용 절감 효과는 검증하지 않았다. Instagram 원문 HTML 추출·릴스 다운로드·자동 OCR·자동 음성 자막 추출은 제공하지 않는다. NAVER 보류를 유지한다. 실제 UI 측정 결과와 모의 API 검사는 [검증 기록](verification.md)에 확인된 범위만 남긴다.
+
+이번 Figma 반영은 현재 `핀맵 · 화면 & 디자인 시스템` 페이지와 웹 Handoff `28:877`의 기능 범위 메모까지다. 웹 Handoff 높이는 372px이며 분석 패널의 새 화면·상태·메인 컴포넌트는 아직 생성하지 않았다. CMP-008의 원격 node는 `null`이고 SCR-003의 기존 디자인을 새 분석 패널의 구현 증거로 사용하지 않는다. 이전 baseline·노드·캡처는 보존한다.
 
 ## 첫 기능의 상태별 UX
 

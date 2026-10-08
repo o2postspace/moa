@@ -35,6 +35,8 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm test
+      - name: Test AnyJev worker guards without model dependencies
+        run: python3 -m unittest discover -s services/anyjev -p 'test_*.py'
       - name: Check design tokens
         run: npm run tokens:check
       - name: Build React web application

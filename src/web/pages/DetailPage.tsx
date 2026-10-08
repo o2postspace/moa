@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { API_RETENTION_MS, CATEGORIES, displayContentTitle } from '../../domain/content';
 import { InstagramEmbed } from '../components/InstagramEmbed';
+import { InstagramAnalysis } from '../components/InstagramAnalysis';
 import { Button, CategoryStamp, EmptyState, Icon, Notice, PageHeading, SourceBadge } from '../components/Ui';
 import { naverMapUrl } from '../lib/maps';
 import { useLibrary } from '../library/LibraryProvider';
@@ -72,6 +73,7 @@ function ContentDetail({ id }: { id?: string }) {
               {canEdit && <Link to={`/add?id=${encodeURIComponent(item.id)}`} className="text-link">메모 수정하기 <Icon name="edit" /></Link>}
             </section>
             {item.source === 'instagram' && <InstagramEmbed key={item.url} url={item.url} />}
+            {item.source === 'instagram' && <InstagramAnalysis url={item.url} contentId={item.id} />}
             <section className="panel detail-panel origin-panel">
               <h2>원본 링크</h2><a href={item.url} target="_blank" rel="noopener noreferrer" className="original-url">{item.url}</a>
               <p className="help-text"><Icon name="calendar" />{koreaDate(item.createdAt)} 저장</p>

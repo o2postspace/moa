@@ -26,7 +26,7 @@ export function LibraryPage() {
   const visitedEmpty = visitedOnly && !filtered;
 
   return <>
-    <PageHeading className="library-heading" kicker="MY COLLECTION" title="모아 둔 취향" subtitle="좋아한 순간들을 한곳에. 필요할 때 다시 꺼내보세요."
+    <PageHeading className="library-heading" kicker="MY COLLECTION" title="저장한 취향" subtitle="좋아한 순간들을 한곳에. 필요할 때 다시 꺼내보세요."
       action={<Button icon="plus" disabled={loading || Boolean(error)} onClick={() => navigate('/add')}>링크 추가</Button>} />
 
     <Link to="/integrations" className="import-banner" aria-label="저장한 콘텐츠 가져오기">
