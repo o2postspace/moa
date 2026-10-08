@@ -5,15 +5,15 @@
   "fileName": "모아 · 저장 콘텐츠 & 서비스 연동",
   "planKey": "team::1687325519407076016",
   "status": "editable-web-desktop-design-draft; native-mobile-baseline-preserved",
-  "date": "2026-10-08",
+  "date": "2026-10-03",
   "sourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp; web-desktop-handoff; pinmap-brand-and-anyjev-handoff-2026-10-08",
+  "figmaDesignRevision": "new-account-native-design-2026-10-03; naver-memory-only-subset; naver-deferred-mvp; web-desktop-handoff",
   "codeSyncStatus": "source-informed-design-draft; not-pixel-identical-or-automatically-synced",
   "referenceUrl": "https://wwit.design/2025/03/04/mmm/",
   "pages": {
     "design": {
       "id": "0:1",
-      "name": "핀맵 · 화면 & 디자인 시스템"
+      "name": "모아 · 화면 & 디자인 시스템"
     }
   },
   "sections": {
@@ -121,14 +121,6 @@
       "source": "src/web/components/InstagramEmbed.tsx",
       "webFigmaNodeId": null,
       "scope": "Native main preserved; web mapping is source informed, not published Code Connect"
-    },
-    {
-      "componentId": "CMP-008",
-      "figmaNodeId": null,
-      "component": "InstagramAnalysis",
-      "source": "src/web/components/InstagramAnalysis.tsx",
-      "webFigmaNodeId": null,
-      "scope": "Code only. Analysis panel design not yet created; scope note added to WEB Handoff 28:877."
     }
   ],
   "screenMappings": [
@@ -1935,69 +1927,6 @@
         "Draft is source informed, not pixel identical. Existing source badges/tokens/text stamp styling differ in small ways from browser CSS.",
         "Mobile responsive layout, keyboard/accessibility, actual app behaviors and presentation playback are outside this Figma visual check."
       ]
-    },
-    {
-      "id": "pinmap-brand-and-anyjev-handoff-2026-10-08",
-      "date": "2026-10-08",
-      "baselineSourceAppCommit": "59205e5f2a39d74e63d9b938af3a19c764cb8d5c",
-      "sourceWorkingTree": "codex/anyjev-instagram-analysis; base 03d73fd from codex/content-integrations",
-      "sourceFiles": [
-        "src/web/App.tsx",
-        "src/web/components/Ui.tsx",
-        "src/web/components/InstagramAnalysis.tsx",
-        "src/web/pages/LibraryPage.tsx",
-        "server/anyjev.ts",
-        "docs/instagram-analysis.md"
-      ],
-      "scope": "Selected visible brand text/page name plus existing WEB Handoff note. No new analysis panel or model inference design.",
-      "affectedRoots": [
-        "0:1",
-        "4:250",
-        "4:982",
-        "4:262",
-        "4:1091",
-        "4:583",
-        "25:774",
-        "26:897",
-        "28:877"
-      ],
-      "mutatedExistingNodeIds": [
-        "0:1",
-        "4:251",
-        "4:985",
-        "4:267",
-        "4:1093",
-        "4:585",
-        "4:987",
-        "4:270",
-        "4:1094",
-        "4:586",
-        "26:780",
-        "26:834",
-        "26:898",
-        "26:900",
-        "28:877",
-        "28:878",
-        "28:882"
-      ],
-      "changes": [
-        "Visible brand Pinmap / 핀맵 and library title 저장한 취향; web stamp PINMAP COLLECTION / 핀.",
-        "WEB Handoff 1440x372 documents two-choice text analysis and missing model server/OCR/STT.",
-        "Original native component, variable, style IDs and internal Moa mapping identifiers retained."
-      ],
-      "evidence": [
-        "design/pinmap-figma-library-2026-10-08.png",
-        "design/pinmap-figma-handoff-2026-10-08.png"
-      ],
-      "verification": [
-        "Selected text/font readback and exported library/Handoff render visual review.",
-        "Existing main category stamp 26:897 changed glyph 26:900; instances inherit."
-      ],
-      "limitations": [
-        "Historical file title retained; not a wholesale rename of historical labels or internal identifiers.",
-        "CMP-008 analysis panel has no Figma node yet.",
-        "No live model inference, token-savings measurement, prototype playback, published Code Connect or permission change."
-      ]
     }
   ],
   "mvp": {
@@ -2144,10 +2073,7 @@
       "/content/:id": "src/web/pages/DetailPage.tsx",
       "/integrations": "src/web/pages/IntegrationsPage.tsx",
       "/places": "src/web/pages/PlacesPage.tsx"
-    },
-    "productName": "Pinmap",
-    "featureBranch": "codex/anyjev-instagram-analysis",
-    "branchBaseCommit": "03d73fdb3acf52394931885fde76405833b9b86a"
+    }
   },
   "verifiedWebStructure": {
     "source": "Scoped type-indexed readback plus post-fix desktop and Handoff screenshots; all content examples are fictional.",
@@ -2173,7 +2099,7 @@
     "handoff": {
       "id": "28:877",
       "width": 1440,
-      "height": 372,
+      "height": 332,
       "textNodes": 5
     },
     "preservedNativeRoots": "5 canonical + 5 review screens remain 390x844",
@@ -2187,11 +2113,5 @@
   "beforeWebRecord": {
     "manifest": "design/history/figma-manifest-2026-10-03-before-web.json",
     "note": "NAVER-deferred mobile design and source mappings before the web working-tree update. Existing native screenshot assets and baseline records remain preserved."
-  },
-  "productName": "핀맵 / Pinmap",
-  "fileNameNote": "The historical Figma file title is retained; canvas page and selected brand text were renamed to Pinmap.",
-  "beforePinmapRecord": {
-    "manifest": "design/history/figma-manifest-2026-10-08-before-pinmap.json",
-    "note": "Web and native baseline history before selected Pinmap brand/Handoff patch."
   }
 }

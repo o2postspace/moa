@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "figmaManifest": "design/figma-manifest.json",
   "screens": {
     "SCR-001": "src/web/pages/LibraryPage.tsx",
@@ -15,7 +15,8 @@
     "CMP-004": "src/web/components/Ui.tsx",
     "CMP-005": "src/web/components/Ui.tsx",
     "CMP-006": "src/web/components/Ui.tsx",
-    "CMP-007": "src/web/components/InstagramEmbed.tsx"
+    "CMP-007": "src/web/components/InstagramEmbed.tsx",
+    "CMP-008": "src/web/components/InstagramAnalysis.tsx"
   },
   "note": "기본 웹앱 코드 경로와 보관한 Expo 경로를 구분합니다. Figma 기존 모바일 원본은 브랜드/흐름 기준이며 웹 데스크톱 초안과 부분 갱신 범위는 manifest를 따릅니다. CMP-002는 LibraryPage/AddPage의 DOM 필터 버튼이며 독립 웹 컴포넌트가 아닙니다. Ui.tsx는 CMP-001/003/004/005/006의 각 named export입니다. 게시된 Code Connect나 픽셀 자동 동기화가 아닙니다.",
   "figmaFileKey": "ejriXVtLOBDSwZ336vDKlZ",
@@ -49,5 +50,14 @@
     "WEB-CMP-006": "26:897",
     "WEB-CMP-001": "26:902",
     "WEB-001": "25:774"
+  },
+  "productName": "Pinmap",
+  "pendingDesignComponents": {
+    "CMP-008": {
+      "source": "src/web/components/InstagramAnalysis.tsx",
+      "figmaNodeId": null,
+      "screenId": "SCR-003",
+      "status": "Code only; WEB Handoff 28:877 contains scope note. No analysis panel design node yet."
+    }
   }
 }

@@ -30,7 +30,7 @@ export function SourceBadge({ source }: { source: SourceType }) {
 
 export function CategoryStamp({ category, visited = false, large = false }: { category: Category; visited?: boolean; large?: boolean }) {
   const label = CATEGORIES.find(item => item.id === category)?.label ?? '기타';
-  return <div className={`category-stamp stamp-${category} ${large ? 'stamp-large' : ''}`} aria-hidden="true"><span className="stamp-caption">MOA COLLECTION</span><span className="stamp-symbol">{category === 'food' ? '밥' : category === 'cafe' ? '차' : category === 'event' ? '날' : '모'}</span><span className="stamp-label">{label}</span>{visited && <span className="stamp-visited"><Icon name="check" size={15} />다녀왔어요</span>}</div>;
+  return <div className={`category-stamp stamp-${category} ${large ? 'stamp-large' : ''}`} aria-hidden="true"><span className="stamp-caption">PINMAP COLLECTION</span><span className="stamp-symbol">{category === 'food' ? '밥' : category === 'cafe' ? '차' : category === 'event' ? '날' : '핀'}</span><span className="stamp-label">{label}</span>{visited && <span className="stamp-visited"><Icon name="check" size={15} />다녀왔어요</span>}</div>;
 }
 
 export function ContentCard({ item }: { item: SavedContent }) {

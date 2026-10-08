@@ -1,6 +1,7 @@
 import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import { createServer } from 'node:http';
 import type { IncomingMessage, ServerResponse } from 'node:http';
+import { AnyJevError, anyJevConfigFromEnv, createAnyJevGateway } from './anyjev.ts';
 
 const SCOPE = 'https://www.googleapis.com/auth/youtube.readonly';
 const COOKIE = 'moa_api_session';
@@ -35,6 +36,8 @@ export type ApiConfig = {
   naverClientSecret: string;
   naverHubClientId: string;
   naverHubClientSecret: string;
+  anyjevBaseUrl?: string;
+  anyjevTimeoutMs?: number;
 };
 
 function loopbackUrl(value: string): URL {
@@ -58,6 +61,7 @@ export function configFromEnv(env: Record<string, string | undefined>): ApiConfi
   }
   const naverApiProvider = env.NAVER_API_PROVIDER?.trim() || 'legacy';
   if (naverApiProvider !== 'legacy' && naverApiProvider !== 'hub') throw new Error('NAVER_API_PROVIDER는 legacy 또는 hub만 허용합니다.');
+  const anyjev = anyJevConfigFromEnv(env);
   return {
     host, port, appOrigin: app.origin, callbackUrl: callback.href,
     googleClientId: env.GOOGLE_CLIENT_ID?.trim() || '',
@@ -68,6 +72,8 @@ export function configFromEnv(env: Record<string, string | undefined>): ApiConfi
     naverClientSecret: env.NAVER_CLIENT_SECRET?.trim() || '',
     naverHubClientId: env.NAVER_HUB_CLIENT_ID?.trim() || '',
     naverHubClientSecret: env.NAVER_HUB_CLIENT_SECRET?.trim() || '',
+    anyjevBaseUrl: anyjev.baseUrl,
+    anyjevTimeoutMs: anyjev.timeoutMs,
   };
 }
 
@@ -154,6 +160,7 @@ export function createApiServer(options: ApiOptions = {}) {
   const config = options.config || configFromEnv(process.env);
   const fetchImpl = options.fetchImpl || fetch;
   const now = options.now || Date.now;
+  const anyjev = createAnyJevGateway({ config: { baseUrl: config.anyjevBaseUrl || '', timeoutMs: config.anyjevTimeoutMs ?? 45_000 }, fetchImpl, now });
   const sessions = new Map<string, Session>();
   const rates = new Map<string, { count: number; expiresAt: number }>();
   const oauthConfigured = Boolean(config.googleClientId && config.googleClientSecret);
@@ -314,14 +321,14 @@ export function createApiServer(options: ApiOptions = {}) {
     return jsonResponse(response);
   }
 
-  async function body(req: IncomingMessage): Promise<Record<string, unknown>> {
+  async function body(req: IncomingMessage, maxBytes = 8192): Promise<Record<string, unknown>> {
     if (req.headers['content-type']?.split(';')[0].trim() !== 'application/json') throw new ApiError(415, 'invalid_body', 'JSON 형식으로 요청해 주세요.');
-    if (Number(req.headers['content-length']) > 8192) throw new ApiError(413, 'invalid_body', '요청이 너무 커요.');
+    if (Number(req.headers['content-length']) > maxBytes) throw new ApiError(413, 'invalid_body', '요청이 너무 커요.');
     let size = 0;
     const chunks: Buffer[] = [];
     for await (const chunk of req) {
       size += Buffer.byteLength(chunk);
-      if (size > 8192) throw new ApiError(413, 'invalid_body', '요청이 너무 커요.');
+      if (size > maxBytes) throw new ApiError(413, 'invalid_body', '요청이 너무 커요.');
       chunks.push(Buffer.from(chunk));
     }
     let value: unknown;
@@ -404,6 +411,20 @@ export function createApiServer(options: ApiOptions = {}) {
         if (typeof data.html !== 'string' || !data.html || data.html.length > 250_000) throw new ApiError(502, 'upstream_invalid', '공개 게시물 미리보기를 불러오지 못했어요. 원본 링크를 열어 주세요.');
         // Official oEmbed HTML is forwarded for immediate display only. Never parse metadata or persist it.
         send(res, { html: data.html, provider: 'instagram', fetchedAt });
+        return;
+      }
+
+      if (req.method === 'GET' && url.pathname === '/api/instagram/analysis/status') {
+        send(res, await anyjev.status());
+        return;
+      }
+
+      if (req.method === 'POST' && url.pathname === '/api/instagram/analysis') {
+        const input = await body(req, 40 * 1024);
+        const canonicalUrl = instagramUrl(input.url);
+        // Analysis uses only explicitly supplied text. It never fetches the URL,
+        // scrapes Instagram, or parses the display-only oEmbed HTML.
+        send(res, await anyjev.analyze(input, canonicalUrl));
         return;
       }
 
@@ -537,7 +558,7 @@ export function createApiServer(options: ApiOptions = {}) {
       }
       throw new ApiError(404, 'not_found', '요청한 기능을 찾을 수 없어요.');
     } catch (error) {
-      const failure = error instanceof ApiError ? error : new ApiError(500, 'internal', '요청을 처리하지 못했어요.');
+      const failure = error instanceof ApiError || error instanceof AnyJevError ? error : new ApiError(500, 'internal', '요청을 처리하지 못했어요.');
       if (!res.headersSent) send(res, { error: { code: failure.code, message: failure.message } }, failure.status);
       else res.end();
     }
