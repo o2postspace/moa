@@ -2,7 +2,7 @@
 
 여러 서비스에서 저장한 콘텐츠를 한곳에 정리하고, 이후 장소와 시기에 맞춰 다시 발견하도록 확장하는 웹앱입니다. 2026-10-08 사용자 요청으로 이름을 **핀맵**으로 바꿨습니다. 기존 저장소 주소와 브라우저 저장 키는 유지합니다. 기본 화면은 React DOM·Vite·React Router로 구현하며 데스크톱과 모바일 브라우저에서 사용합니다. 기존 Expo·React Native 소스와 의존성은 후속 네이티브 작업용으로 보관합니다.
 
-현재 AnyJev 작업 브랜치는 **codex/anyjev-instagram-analysis**이며 웹 전환 브랜치 codex/content-integrations의 **03d73fd**에서 시작했습니다. 기존 웹·API·Figma 구현은 [draft PR #2](https://github.com/o2postspace/moa/pull/2), 그 기반 UI는 [PR #1](https://github.com/o2postspace/moa/pull/1)에서 검토합니다. main에는 아직 병합되지 않았습니다.
+현재 AnyJev 작업 브랜치는 **codex/anyjev-instagram-analysis**이며 웹 전환 브랜치 codex/content-integrations의 **03d73fd**에서 시작했습니다. [draft PR #3](https://github.com/o2postspace/moa/pull/3)에서 핀맵·AnyJev 작업을 검토합니다. 기존 웹·API·Figma 구현은 [draft PR #2](https://github.com/o2postspace/moa/pull/2), 그 기반 UI는 [PR #1](https://github.com/o2postspace/moa/pull/1)에서 검토합니다. main에는 아직 병합되지 않았습니다.
 
 Instagram 상세에 **간단 분석**을 추가했습니다. 사용자가 제공한 캡션·화면 글자·릴스 자막을 정리하고, 연결된 AnyJev 서버로 분류·추가 근거 필요 여부를 판단합니다. 동일 입력의 결과를 잠시 재사용하며 추천을 자동 저장하지 않습니다. 현재 모델 서버는 없어서 텍스트 정리 미리보기와 연결 코드까지 사용할 수 있습니다. 영상 자동 읽기·OCR/STT·실제 모델 추론·토큰 절감률은 미검증입니다. [분석 계약과 실행](docs/instagram-analysis.md)
 

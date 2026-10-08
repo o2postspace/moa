@@ -29,7 +29,7 @@ Instagram 분석을 이어갈 때는 [분석 계약](instagram-analysis.md)과 [
 - main은 초기 앱이며 UI/API 작업은 아직 병합하지 않았다.
 - [PR #1](https://github.com/o2postspace/moa/pull/1)은 codex/mmm-ui-refresh의 열린 draft다.
 - 기반 브랜치 **codex/content-integrations**는 UI 브랜치 head **835dd81**에서 시작했다. [draft PR #2](https://github.com/o2postspace/moa/pull/2)는 UI 브랜치를 base로 웹·API·Figma 협업 작업을 검토한다. 최종 head·검사는 해당 PR과 [Actions](https://github.com/o2postspace/moa/actions)에서 확인한다.
-- 현재 **codex/anyjev-instagram-analysis**는 codex/content-integrations의 웹 전환 commit **03d73fd**에서 시작했다. 핀맵 표기·AnyJev 텍스트 분류 작업이며 이 문서 갱신 시 새 PR은 아직 생성하지 않았다. 이후 PR을 만들 때 실제 URL과 base를 기록한다.
+- 현재 **codex/anyjev-instagram-analysis**는 codex/content-integrations의 웹 전환 commit **03d73fd**에서 시작했다. 핀맵 표기·AnyJev 텍스트 분류 작업이며 [draft PR #3](https://github.com/o2postspace/moa/pull/3)는 codex/content-integrations를 base로 검토한다. 실제 모델 서버와 추론 검증은 후속 단계다.
 - 리뷰어 초대·필수 리뷰·보호 규칙은 [GitHub 협업 절차](github-setup.md)를 따른다. CI 파일만으로 원격 권한·규칙이 적용되지는 않는다.
 
 ## 현재 구현과 검증 경계
